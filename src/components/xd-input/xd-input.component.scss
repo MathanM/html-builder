@@ -1,0 +1,23 @@
+:host{
+  display: block;
+  padding: 5px 0;
+}
+label{
+  font-size: var(--font-s);
+  color: var(--primary-color);
+  letter-spacing: 1px;
+}
+input{
+  background: transparent;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid var(--grey-bg);
+  padding: 5px 0;
+  margin-left: 8px;
+  font-size: var(--font-l);
+  color: var(--dark-color);
+  &:focus{
+    border-bottom-color: var(--active-blue);
+    color: var(--black);
+  }
+}

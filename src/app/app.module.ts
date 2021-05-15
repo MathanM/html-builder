@@ -3,14 +3,32 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HomeComponent } from '../pages/home/home.component';
+import {SideNavComponent} from "../components/side-nav/side-nav.component";
+import {ArtBoardComponent} from "../components/art-board/art-board.component";
+import {NavCardComponent} from "../components/nav-card/nav-card.component";
+import {XdInputComponent} from "../components/xd-input/xd-input.component";
+import {FormsModule} from "@angular/forms";
+import {ColorPickerModule} from "ngx-color-picker";
+import {XdColorPickerComponent} from "../components/xd-color-picker/xd-color-picker.component";
+import {XdSelectComponent} from "../components/xd-select/xd-select.component";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    SideNavComponent,
+    NavCardComponent,
+    ArtBoardComponent,
+    XdInputComponent,
+    XdColorPickerComponent,
+    XdSelectComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ColorPickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

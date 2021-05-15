@@ -1,0 +1,19 @@
+:host{
+  display: block;
+  padding: 5px 0;
+}
+span{
+  width: 35px;
+  height: 20px;
+  display: inline-block;
+  border: 1px solid var(--grey-bg);
+  border-radius: 2px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+label{
+  font-size: var(--font-s);
+  color: var(--primary-color);
+  vertical-align: middle;
+  letter-spacing: 1px;
+}

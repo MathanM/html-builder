@@ -1,0 +1,9 @@
+:host{
+  display: flex;
+}
+.main-content{
+  background: var(--grey-bg);
+  min-height: 100vh;
+  overflow: hidden;
+  flex-grow: 1;
+}

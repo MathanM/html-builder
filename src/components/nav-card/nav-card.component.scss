@@ -1,0 +1,13 @@
+:host{
+  padding: 10px;
+  display: block;
+  border-top: 2px solid var(--grey-bg);
+  border-bottom: 2px solid var(--grey-bg);
+}
+h4{
+  font-size: var(--font-s);
+  letter-spacing: 1px;
+  font-weight: normal;
+  color: var(--primary-color);
+  text-transform: uppercase;
+}
