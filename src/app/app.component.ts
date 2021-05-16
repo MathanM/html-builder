@@ -14,9 +14,9 @@ export class AppComponent implements OnInit, OnDestroy {
   activeTab: string = '';
   destroy$: Subject<void> = new Subject<void>();
   artBoard: ArtBoardModel = {
-    width: 1920,
+    width: "1440px",
     background: '#fff',
-    scale: 1,
+    zoom: 0.835,
   }
   @ViewChild('artBoardForm', { static: false }) artBoardForm!: NgForm;
   constructor(private state: StateService) {}
@@ -37,9 +37,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.artBoardForm.form.valueChanges.pipe(
           withLatestFrom(this.state.styleData)
         ).subscribe(([val, styleData]) => {
-          if(this.activeTab == 'artboard'){
-            this.state.styleData.next({...styleData, artBoard: val});
-          }
+          this.state.styleData.next({...styleData, artBoard: this.artBoard});
         });
       }
     });

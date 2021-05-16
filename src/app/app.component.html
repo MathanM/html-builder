@@ -8,8 +8,8 @@
   <ng-container *ngIf="activeTab == 'artboard'">
     <form #artBoardForm="ngForm">
     <nav-card title="Transform">
-      <xd-input type="number" label="W" name="width" [(ngModel)]="artBoard.width"></xd-input>
-      <xd-input type="number" label="Scale" name="scale" [(ngModel)]="artBoard.scale"></xd-input>
+      <xd-input type="number" label="W" name="width" [(ngModel)]="artBoard.width" unit="px"></xd-input>
+      <xd-input type="number" label="Scale" name="scale" [(ngModel)]="artBoard.zoom"></xd-input>
     </nav-card>
     <nav-card title="Appearance">
       <xd-color-picker label="Fill" name="background" [(ngModel)]="artBoard.background"></xd-color-picker>

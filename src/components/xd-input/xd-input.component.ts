@@ -16,8 +16,9 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 export class XdInputComponent implements ControlValueAccessor  {
   @Input() label = '';
   @Input() type = 'text'
-  @Input() value = '';
+  @Input() value!: any;
   @Input() width = 50;
+  @Input() unit!: string;
 
   onChange = (value: any) => {};
   onTouched = () => {};
@@ -26,11 +27,19 @@ export class XdInputComponent implements ControlValueAccessor  {
 
   onBlur(): void {
     this.markAsTouched();
-    this.onChange(this.value);
+    if(this.unit){
+      this.onChange(this.value+this.unit);
+    }else{
+      this.onChange(this.value);
+    }
   }
 
   writeValue(value: any) {
-    this.value = value;
+    if(this.type == 'number'){
+      this.value = parseFloat(value);
+    }else{
+      this.value = value;
+    }
   }
 
   registerOnChange(onChange: any) {

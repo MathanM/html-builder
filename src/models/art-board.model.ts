@@ -1,5 +1,5 @@
 export type ArtBoardModel = {
-  width: number;
+  width: string;
   background: string;
-  scale: number;
+  zoom: number;
 }
