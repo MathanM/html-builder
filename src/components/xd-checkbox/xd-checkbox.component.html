@@ -1,1 +1,2 @@
-<input type="checkbox" [(ngModel)]="value" (change)="onToggle()">
+<input [id]="id" type="checkbox" [(ngModel)]="value" (change)="onToggle()">
+<label *ngIf="label" [for]="id">{{ label }}</label>

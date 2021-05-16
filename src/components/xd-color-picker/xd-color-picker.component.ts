@@ -23,7 +23,7 @@ export class XdColorPickerComponent implements ControlValueAccessor {
   disabled = false;
   onTouched = () => {};
   onChange = (color: string) => {};
-  onApplyColor(flag: boolean): void{
+  onApplyColor(flag: any): void{
     this.markAsTouched();
     this.isApplied = flag
     if(this.isApplied) {

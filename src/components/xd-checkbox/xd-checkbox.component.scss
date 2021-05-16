@@ -1,8 +1,24 @@
 :host{
-  display: inline-block;
+  display: block;
   vertical-align: middle;
+  padding: 5px 0;
+}
+:host-context(.inline){
+  display: inline-block;
   margin-right: 10px;
 }
 input{
   vertical-align: middle;
+}
+label{
+  font-size: var(--font-s);
+  color: var(--primary-color);
+  vertical-align: middle;
+  letter-spacing: 1px;
+  margin-left: 10px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: inline-block;
+  overflow: hidden;
+  width: calc( 100% - 10px - 20px);
 }

@@ -1,0 +1,5 @@
+<label class="xd-file-upload" [for]="id">
+  Drag and drop image <br> or <br> Click to browse for image
+  <input [id]="id" type="file" accept="image/png, image/jpeg" (change)="onImageUpload($any($event.target).files)">
+</label>
+

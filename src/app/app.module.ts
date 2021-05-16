@@ -13,6 +13,7 @@ import {ColorPickerModule} from "ngx-color-picker";
 import {XdColorPickerComponent} from "../components/xd-color-picker/xd-color-picker.component";
 import {XdSelectComponent} from "../components/xd-select/xd-select.component";
 import {XdCheckboxComponent} from "../components/xd-checkbox/xd-checkbox.component";
+import {XdFileUploadComponent} from "../components/xd-file-upload/xd-file-upload.component";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {XdCheckboxComponent} from "../components/xd-checkbox/xd-checkbox.compone
     XdInputComponent,
     XdColorPickerComponent,
     XdSelectComponent,
-    XdCheckboxComponent
+    XdCheckboxComponent,
+    XdFileUploadComponent
   ],
   imports: [
     BrowserModule,

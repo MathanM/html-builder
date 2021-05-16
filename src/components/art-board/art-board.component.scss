@@ -3,7 +3,23 @@
   min-height: 100vh;
   zoom: 0.835;
   background: var(--white);
+  position: relative;
   &.active{
     outline: 1px solid var(--active-blue);
+  }
+  &.design-helper:before{
+    content: '';
+    width: var(--design-helper-width);
+    height: var(--design-helper-height);
+    background: var(--design-helper-url) no-repeat;
+    background-size: var(--design-helper-width) var(--design-helper-height);
+    pointer-events: none;
+    filter: grayscale(0.5);
+    opacity: var(--design-helper-opacity);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: var(--design-helper-offset);
+    z-index: 9999;
   }
 }

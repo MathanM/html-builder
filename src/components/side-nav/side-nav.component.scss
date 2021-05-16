@@ -1,5 +1,6 @@
 :host{
   min-width: var(--side-nav-width);
+  max-width: var(--side-nav-width);
   min-height: 100vh;
   border-right: 2px solid var(--grey-bg);
   border-left: 2px solid var(--grey-bg);
