@@ -1,2 +1,3 @@
-<span [(colorPicker)]="color" [style.background]="color"></span>
+<xd-checkbox [value]="color != 'none'" (toggleEvent)="onApplyColor($event)"></xd-checkbox>
+<span [colorPicker]="color" (colorPickerChange)="onColorChange($event)" [style.background]="color"></span>
 <label>{{ label }}</label>

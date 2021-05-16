@@ -12,6 +12,7 @@ import {FormsModule} from "@angular/forms";
 import {ColorPickerModule} from "ngx-color-picker";
 import {XdColorPickerComponent} from "../components/xd-color-picker/xd-color-picker.component";
 import {XdSelectComponent} from "../components/xd-select/xd-select.component";
+import {XdCheckboxComponent} from "../components/xd-checkbox/xd-checkbox.component";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {XdSelectComponent} from "../components/xd-select/xd-select.component";
     ArtBoardComponent,
     XdInputComponent,
     XdColorPickerComponent,
-    XdSelectComponent
+    XdSelectComponent,
+    XdCheckboxComponent
   ],
   imports: [
     BrowserModule,

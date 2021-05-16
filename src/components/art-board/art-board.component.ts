@@ -2,6 +2,7 @@ import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {StateService} from "../../services/state.service";
 import {takeUntil, tap} from "rxjs/operators";
 import {Subject} from "rxjs";
+import {ArtBoardModel} from "../../models/art-board.model";
 
 @Component({
   selector: 'app-art-board',
@@ -11,6 +12,7 @@ import {Subject} from "rxjs";
 export class ArtBoardComponent implements OnInit, OnDestroy {
   active = false;
   destroy$: Subject<void> = new Subject<void>();
+  artBoard!: ArtBoardModel;
   constructor(private state: StateService) {}
 
   ngOnInit(): void {
@@ -19,7 +21,12 @@ export class ArtBoardComponent implements OnInit, OnDestroy {
         this.active = activeTab == 'artboard';
       }),
       takeUntil(this.destroy$)
-    ).subscribe()
+    ).subscribe();
+    this.state.styleData.pipe(
+      tap((data:any) => {
+        this.artBoard = data.artBoard;
+      })
+    ).subscribe();
   }
 
   @HostListener('click', ['$event'])

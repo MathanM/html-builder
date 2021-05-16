@@ -1,7 +1,6 @@
 :host{
   padding: 10px;
   display: block;
-  border-top: 2px solid var(--grey-bg);
   border-bottom: 2px solid var(--grey-bg);
 }
 h4{
@@ -10,4 +9,5 @@ h4{
   font-weight: normal;
   color: var(--primary-color);
   text-transform: uppercase;
+  margin-bottom: 5px;
 }

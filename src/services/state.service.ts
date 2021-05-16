@@ -7,5 +7,6 @@ import {BehaviorSubject} from "rxjs";
 export class StateService {
   unit: BehaviorSubject<string> = new BehaviorSubject<string>('px');
   activeItem: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  styleData: BehaviorSubject<object> = new BehaviorSubject<object>({});
   constructor() { }
 }
