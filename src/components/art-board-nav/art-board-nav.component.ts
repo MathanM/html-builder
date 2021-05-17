@@ -10,16 +10,18 @@ import {Subject} from "rxjs";
   templateUrl: './art-board-nav.component.html',
   styleUrls: ['./art-board-nav.component.scss']
 })
-export class ArtBoardNavComponent implements AfterViewInit, OnDestroy {
-  artBoard: ArtBoardModel = {
-    width: "1440px",
-    background: '#fff',
-    zoom: 0.833,
-    designHelper: null
-  }
+export class ArtBoardNavComponent implements OnInit, AfterViewInit, OnDestroy {
+  artBoard!: ArtBoardModel;
   @ViewChild('artBoardForm', { static: false }) artBoardForm!: NgForm;
   destroy$: Subject<void> = new Subject<void>();
-  constructor(private state: StateService) { }
+  constructor(private state: StateService) {}
+  ngOnInit() : void{
+    this.state.styleData.pipe(
+      take(1)
+    ).subscribe((styleData: any) => {
+      this.artBoard = styleData.artBoard
+    });
+  }
 
   ngAfterViewInit(): void{
     this.initFormChange();

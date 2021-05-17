@@ -7,6 +7,13 @@ import {BehaviorSubject} from "rxjs";
 export class StateService {
   unit: BehaviorSubject<string> = new BehaviorSubject<string>('px');
   activeItem: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  styleData: BehaviorSubject<object> = new BehaviorSubject<object>({});
+  styleData: BehaviorSubject<object> = new BehaviorSubject<object>({
+    artBoard: {
+      width: "1440px",
+      background: '#fff',
+      zoom: 0.833,
+      designHelper: null
+    }
+  });
   constructor() { }
 }
