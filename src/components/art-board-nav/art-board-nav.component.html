@@ -1,0 +1,24 @@
+<form #artBoardForm="ngForm">
+  <nav-card title="Transform">
+    <xd-input type="number" label="W" name="width" [(ngModel)]="artBoard.width" (ngModelChange)="onArtBoardWidthChange()" unit="px"></xd-input>
+    <xd-input type="number" label="Zoom" name="zoom" [(ngModel)]="artBoard.zoom"></xd-input>
+  </nav-card>
+  <nav-card title="Appearance">
+    <xd-color-picker label="Fill" name="background" [(ngModel)]="artBoard.background"></xd-color-picker>
+  </nav-card>
+  <nav-card title="Design Helper">
+    <xd-file-upload id="designHelper" (fileUploadEvent)="onDesignHelperUpload($event)" type="image"></xd-file-upload>
+    <ng-container *ngIf="artBoard.designHelper">
+      <xd-checkbox [label]="artBoard.designHelper.name" id="design-toggle" name="design-toggle"
+                   [(ngModel)]="artBoard.designHelper.toggle"></xd-checkbox>
+      <div class="xd-flex xd-gap-20">
+        <xd-input type="number" label="W" name="design-width" [(ngModel)]="artBoard.designHelper.width"
+                  unit="px"></xd-input>
+        <xd-input type="number" label="H" name="design-height" [(ngModel)]="artBoard.designHelper.height"
+                  unit="px"></xd-input>
+      </div>
+      <xd-input type="number" label="Offset" name="design-offset" [(ngModel)]="artBoard.designHelper.top"
+                unit="px"></xd-input>
+    </ng-container>
+  </nav-card>
+</form>

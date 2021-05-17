@@ -14,6 +14,7 @@ import {XdColorPickerComponent} from "../components/xd-color-picker/xd-color-pic
 import {XdSelectComponent} from "../components/xd-select/xd-select.component";
 import {XdCheckboxComponent} from "../components/xd-checkbox/xd-checkbox.component";
 import {XdFileUploadComponent} from "../components/xd-file-upload/xd-file-upload.component";
+import {ArtBoardNavComponent} from "../components/art-board-nav/art-board-nav.component";
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {XdFileUploadComponent} from "../components/xd-file-upload/xd-file-upload
     XdColorPickerComponent,
     XdSelectComponent,
     XdCheckboxComponent,
-    XdFileUploadComponent
+    XdFileUploadComponent,
+    ArtBoardNavComponent
   ],
   imports: [
     BrowserModule,
