@@ -5,6 +5,14 @@ export type ArtBoardModel = {
   zoom: number;
   designHelper: any;
 }
+export type ElementModel = {
+  width?: string;
+  height?: string;
+  backgroundColor?: string;
+  borderColor?: string;
+  boxShadow?: string;
+  borderRadius?: string;
+}
 export interface FileUploadEvent {
   name: string;
   width?: string;

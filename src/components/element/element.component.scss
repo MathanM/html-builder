@@ -1,0 +1,7 @@
+.xd-element{
+  width: 100px;
+  height: 100px;
+  &.active{
+    outline: 1px solid var(--active-blue);
+  }
+}

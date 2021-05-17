@@ -15,6 +15,9 @@ import {XdSelectComponent} from "../components/xd-select/xd-select.component";
 import {XdCheckboxComponent} from "../components/xd-checkbox/xd-checkbox.component";
 import {XdFileUploadComponent} from "../components/xd-file-upload/xd-file-upload.component";
 import {ArtBoardNavComponent} from "../components/art-board-nav/art-board-nav.component";
+import {ElementComponent} from "../components/element/element.component";
+import {ElementNavComponent} from "../components/element-nav/element-nav.component";
+import {ElementHelperDirective} from "../directives/element-helper.directive";
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import {ArtBoardNavComponent} from "../components/art-board-nav/art-board-nav.co
     XdSelectComponent,
     XdCheckboxComponent,
     XdFileUploadComponent,
-    ArtBoardNavComponent
+    ArtBoardNavComponent,
+    ElementComponent,
+    ElementNavComponent,
+    ElementHelperDirective
   ],
   imports: [
     BrowserModule,

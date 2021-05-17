@@ -13,3 +13,39 @@
 .xd-gap-20{
   gap: 20px !important;
 }
+
+
+// handle knob styles
+
+.xd-handle{
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--white);
+  position: absolute;
+  border: 1px solid var(--active-blue);
+}
+.l-knob{
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 0;
+  cursor: ew-resize;
+}
+.r-knob{
+  top: 50%;
+  transform: translate(50%, -50%);
+  right: 0;
+  cursor: ew-resize;
+}
+.t-knob{
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 0;
+  cursor: ns-resize;
+}
+.b-knob{
+  left: 50%;
+  transform: translate(-50%, 50%);
+  bottom: 0;
+  cursor: ns-resize;
+}

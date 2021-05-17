@@ -1,0 +1,12 @@
+<form #elementForm="ngForm">
+  <nav-card title="Transform">
+    <div class="xd-flex xd-gap-20">
+      <xd-input type="number" label="W" name="width" [(ngModel)]="element.width" unit="px"></xd-input>
+      <xd-input type="number" label="H" name="height" [(ngModel)]="element.height" unit="px"></xd-input>
+    </div>
+  </nav-card>
+  <nav-card title="Appearance">
+    <xd-color-picker label="Fill" name="backgroundColor" [(ngModel)]="element.backgroundColor"></xd-color-picker>
+    <xd-color-picker label="Border" name="borderColor" [(ngModel)]="element.borderColor"></xd-color-picker>
+  </nav-card>
+</form>
