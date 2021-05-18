@@ -1,9 +1,7 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {StateService} from "../services/state.service";
 import {Subject} from "rxjs";
-import {takeUntil, tap, withLatestFrom} from "rxjs/operators";
-import {ArtBoardModel, FileUploadEvent} from "../models/art-board.model";
-import {NgForm} from "@angular/forms";
+import {distinctUntilChanged, takeUntil, tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-root',
@@ -18,6 +16,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.state.activeItem.pipe(
+      distinctUntilChanged(),
       tap((activeTab) => {
         this.activeTab = activeTab;
       }),

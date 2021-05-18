@@ -1,6 +1,6 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {StateService} from "../../services/state.service";
-import {takeUntil, tap} from "rxjs/operators";
+import {distinctUntilChanged, takeUntil, tap} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {ArtBoardModel} from "../../models/art-board.model";
 import {isEmpty} from "lodash";
@@ -19,6 +19,7 @@ export class ArtBoardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.state.activeItem.pipe(
+      distinctUntilChanged(),
       tap((activeTab) => {
         this.active = activeTab == 'artboard';
       }),
