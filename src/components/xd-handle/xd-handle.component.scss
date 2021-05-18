@@ -1,0 +1,34 @@
+:host{
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--white);
+  position: absolute;
+  border: 1px solid var(--active-blue);
+  display: block;
+  z-index: 10;
+}
+:host-context(.l-knob) {
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 0;
+  cursor: ew-resize;
+}
+:host-context(.r-knob) {
+  top: 50%;
+  transform: translate(50%, -50%);
+  right: 0;
+  cursor: ew-resize;
+}
+:host-context(.t-knob) {
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 0;
+  cursor: ns-resize;
+}
+:host-context(.b-knob) {
+  left: 50%;
+  transform: translate(-50%, 50%);
+  bottom: 0;
+  cursor: ns-resize;
+}

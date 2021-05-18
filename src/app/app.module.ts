@@ -18,6 +18,7 @@ import {ArtBoardNavComponent} from "../components/art-board-nav/art-board-nav.co
 import {ElementComponent} from "../components/element/element.component";
 import {ElementNavComponent} from "../components/element-nav/element-nav.component";
 import {ElementHelperDirective} from "../directives/element-helper.directive";
+import {XdHandleComponent} from "../components/xd-handle/xd-handle.component";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {ElementHelperDirective} from "../directives/element-helper.directive";
     ArtBoardNavComponent,
     ElementComponent,
     ElementNavComponent,
-    ElementHelperDirective
+    ElementHelperDirective,
+    XdHandleComponent
   ],
   imports: [
     BrowserModule,

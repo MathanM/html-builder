@@ -1,7 +1,9 @@
-.xd-element{
+:host{
   width: 100px;
   height: 100px;
-  &.active{
+  display: block;
+  position: relative;
+  &.active, &:hover{
     outline: 1px solid var(--active-blue);
   }
 }

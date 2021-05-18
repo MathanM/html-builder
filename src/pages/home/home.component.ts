@@ -9,7 +9,7 @@ import {StateService} from "../../services/state.service";
 export class HomeComponent {
   constructor(private state: StateService) { }
 
-  @HostListener('click', ['$event'])
+  @HostListener('mousedown', ['$event'])
   onEditorClick(e: MouseEvent): void {
     e.stopPropagation();
     this.state.activeItem.next('');

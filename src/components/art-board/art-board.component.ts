@@ -32,7 +32,7 @@ export class ArtBoardComponent implements OnInit, OnDestroy {
     ).subscribe();
   }
 
-  @HostListener('click', ['$event'])
+  @HostListener('mousedown', ['$event'])
   onArtBoardClick(e: MouseEvent): void {
     e.stopPropagation();
     this.state.activeItem.next('artboard');
