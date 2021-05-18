@@ -43,8 +43,7 @@ export class ArtBoardNavComponent implements OnInit, AfterViewInit, OnDestroy {
     this.artBoard.height = e.height;
     this.calcArtBoardZoom(parseFloat(e.width || ''));
     this.artBoard.designHelper = {...e, top: "0px", toggle: true};
-    const styleData = this.state.styleData.getValue();
-    this.state.styleData.next({...styleData, artBoard: this.artBoard});
+    this.state.updateStyleData('artBoard', this.artBoard);
   }
   calcArtBoardZoom(width: number){
     const appHome = document.getElementsByTagName('app-home');

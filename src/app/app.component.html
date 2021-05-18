@@ -9,6 +9,6 @@
     <app-art-board-nav></app-art-board-nav>
   </ng-container>
   <ng-container *ngIf="activeTab.indexOf('element') != -1">
-    <app-element-nav></app-element-nav>
+    <app-element-nav [elementId]="activeTab"></app-element-nav>
   </ng-container>
 </app-side-nav>

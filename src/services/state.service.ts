@@ -7,7 +7,7 @@ import {BehaviorSubject} from "rxjs";
 export class StateService {
   unit: BehaviorSubject<string> = new BehaviorSubject<string>('px');
   activeItem: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  styleData: BehaviorSubject<object> = new BehaviorSubject<object>({
+  styleData: BehaviorSubject<any> = new BehaviorSubject<any>({
     artBoard: {
       width: "1440px",
       background: '#fff',
@@ -16,4 +16,9 @@ export class StateService {
     }
   });
   constructor() { }
+
+  updateStyleData(id: string, data: any){
+    const styleData = this.styleData.getValue();
+    this.styleData.next({ ...styleData, [id]: data });
+  }
 }
