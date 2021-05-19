@@ -21,3 +21,10 @@ input{
     color: var(--black);
   }
 }
+:host-context(.input-col){
+  display: flex;
+  flex-direction: column;
+  input{
+    margin-left: 0;
+  }
+}

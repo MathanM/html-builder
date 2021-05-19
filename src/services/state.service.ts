@@ -12,7 +12,7 @@ export class StateService {
     artBoard: {
       width: "1440px",
       background: '#fff',
-      zoom: 0.833,
+      zoom: 0.82,
       designHelper: null
     }
   });

@@ -31,7 +31,19 @@ export class ElementComponent extends ElementHelperDirective implements OnInit, 
   }
 
   styleChange = () => {
-    const elementData = pick(this.elementRef.nativeElement.style, ['width','height','backgroundColor','borderColor']);
+    const elementData = pick(
+      this.elementRef.nativeElement.style,
+      [
+        'width',
+        'height',
+        'backgroundColor',
+        'borderColor',
+        'paddingLeft',
+        'paddingRight',
+        'paddingTop',
+        'paddingBottom'
+      ]
+    );
     this.state.updateStyleData('element-'+this.xdId, elementData);
   }
   styleObserver$ = new MutationObserver(this.styleChange);

@@ -12,6 +12,10 @@ export type ElementModel = {
   borderColor?: string;
   boxShadow?: string;
   borderRadius?: string;
+  paddingLeft?: string;
+  paddingRight?: string;
+  paddingTop?: string;
+  paddingBottom?: string;
 }
 export interface LayerModel {
   expanded?: boolean;

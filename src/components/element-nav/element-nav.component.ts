@@ -12,12 +12,17 @@ import {takeUntil, tap, withLatestFrom} from "rxjs/operators";
 })
 export class ElementNavComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() elementId: string = 'element-1';
-  element: ElementModel = {
+  initValue: ElementModel = {
     width: '100px',
     height: '100px',
     backgroundColor: '',
-    borderColor: ''
-  };
+    borderColor: '',
+    paddingLeft: "0px",
+    paddingRight: "0px",
+    paddingTop: "0px",
+    paddingBottom: "0px"
+  }
+  element!: ElementModel;
   @ViewChild('elementForm', { static: false }) elementForm!: NgForm;
   destroy$: Subject<void> = new Subject<void>();
   constructor(private state: StateService) { }
@@ -31,12 +36,7 @@ export class ElementNavComponent implements OnInit, AfterViewInit, OnDestroy {
         if(styleData[activeTab]){
           this.element = styleData[activeTab];
         }else{
-          this.element = {
-            width: '100px',
-            height: '100px',
-            backgroundColor: '',
-            borderColor: ''
-          }
+          this.element = this.initValue;
         }
       }),
       takeUntil(this.destroy$)

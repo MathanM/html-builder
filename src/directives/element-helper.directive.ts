@@ -17,7 +17,7 @@ import {Subject} from "rxjs";
 })
 export class ElementHelperDirective implements OnInit, OnDestroy {
   @Input() xdId!: string;
-  @Input() property: string = 'size';
+  @Input() property: string = 'padding';
   private handleRefs: ComponentRef<XdHandleComponent>[] = [];
   @HostBinding('class.active') active!: boolean;
   destroy$: Subject<void> = new Subject<void>();
@@ -48,6 +48,7 @@ export class ElementHelperDirective implements OnInit, OnDestroy {
   }
 
   createDragHandles(){
+    this.elementRef.nativeElement.classList.add(`xd-${this.property}`);
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(XdHandleComponent);
     const lRef = this.viewContainerRef.createComponent<XdHandleComponent>(componentFactory);
     const rRef = this.viewContainerRef.createComponent<XdHandleComponent>(componentFactory);
@@ -58,11 +59,15 @@ export class ElementHelperDirective implements OnInit, OnDestroy {
     this.renderer.addClass(rRef.location.nativeElement, 'r-knob');
     this.renderer.addClass(tRef.location.nativeElement, 't-knob');
     this.renderer.addClass(bRef.location.nativeElement, 'b-knob');
+
     this.handleRefs = [lRef, rRef, tRef, bRef];
-    tRef.instance.axis = 'y'
-    bRef.instance.axis = 'y'
+    tRef.instance.axis = 'y';
+    bRef.instance.axis = '-y';
+    lRef.instance.axis = 'x';
+    rRef.instance.axis = '-x'
   }
   removeDragHandles(){
+    this.elementRef.nativeElement.classList.remove(`xd-${this.property}`);
     this.handleRefs.forEach(ref => ref.destroy());
     this.handleRefs = [];
   }

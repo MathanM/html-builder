@@ -7,13 +7,24 @@
   box-sizing: border-box;
   font-family: sans-serif;;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .xd-flex{
   display: flex;
 }
 .xd-gap-20{
   gap: 20px !important;
 }
-
+.xd-gap-10{
+  gap: 10px !important;
+}
 
 // handle knob styles
 
