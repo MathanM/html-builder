@@ -1,0 +1,23 @@
+<ng-container *ngIf="layersData">
+  <ul class="layer-group-start">
+    <li class="layer-item">
+      <a [class.active]="layersData.selected" (click)="onLayerClick(layersData)">{{ layersData.name }}</a>
+      <ul class="layer-group" *ngIf="layersData.children">
+        <ng-container
+          *ngTemplateOutlet="layerGroup; context:{ layers: layersData.children }"
+        ></ng-container>
+      </ul>
+    </li>
+  </ul>
+</ng-container>
+
+<ng-template #layerGroup let-layers="layers">
+  <li class="layer-item" *ngFor="let layer of layers">
+    <a [class.active]="layer.selected" (click)="onLayerClick(layer)">{{ layer.name }}</a>
+    <ul class="layer-group" *ngIf="layer.children && layer.children.length > 0">
+      <ng-container
+        *ngTemplateOutlet="layerGroup; context:{ layers: layer.children }"
+      ></ng-container>
+    </ul>
+  </li>
+</ng-template>

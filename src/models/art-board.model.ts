@@ -13,6 +13,16 @@ export type ElementModel = {
   boxShadow?: string;
   borderRadius?: string;
 }
+export interface LayerModel {
+  expanded?: boolean;
+  children?: LayerModel[] | null;
+  parentId?: string | null;
+  elementId: string;
+  selected?: boolean;
+  name: string;
+  sortOrder: number;
+  icon?: string;
+}
 export interface FileUploadEvent {
   name: string;
   width?: string;

@@ -1,0 +1,21 @@
+.layer-group{
+  padding-left: 15px;
+  list-style: none;
+}
+.layer-group-start{
+  padding: 0;
+  list-style: none;
+}
+.layer-item a{
+  padding: 5px 10px;
+  font-size: var(--font-m);
+  color: var(--primary-color);
+  width: 100%;
+  border-radius: 3px;
+  display: block;
+  cursor: pointer;
+  &.active, &:hover{
+    background: var(--blue-light);
+    color: var(--dark-color);
+  }
+}

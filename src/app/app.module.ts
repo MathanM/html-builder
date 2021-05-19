@@ -19,6 +19,7 @@ import {ElementComponent} from "../components/element/element.component";
 import {ElementNavComponent} from "../components/element-nav/element-nav.component";
 import {ElementHelperDirective} from "../directives/element-helper.directive";
 import {XdHandleComponent} from "../components/xd-handle/xd-handle.component";
+import {XdLayersComponent} from "../components/xd-layers/xd-layers.component";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import {XdHandleComponent} from "../components/xd-handle/xd-handle.component";
     ElementComponent,
     ElementNavComponent,
     ElementHelperDirective,
-    XdHandleComponent
+    XdHandleComponent,
+    XdLayersComponent
   ],
   imports: [
     BrowserModule,

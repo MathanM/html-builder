@@ -4,14 +4,12 @@ import {
   ComponentFactoryResolver,
   ElementRef,
   HostListener,
-  Input,
   OnDestroy,
   OnInit,
   Renderer2,
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {Subject} from "rxjs";
 import {StateService} from "../../services/state.service";
 import {takeUntil, tap} from "rxjs/operators";
 import {pick} from 'lodash';
