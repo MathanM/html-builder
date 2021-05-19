@@ -16,6 +16,7 @@ export type ElementModel = {
 export interface LayerModel {
   expanded?: boolean;
   children?: LayerModel[] | null;
+  allChildren?: string[] | null;
   parentId?: string | null;
   elementId: string;
   selected?: boolean;

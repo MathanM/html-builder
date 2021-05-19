@@ -10,7 +10,7 @@ import {takeUntil, tap} from "rxjs/operators";
   styleUrls: ['./xd-layers.component.scss']
 })
 export class XdLayersComponent implements OnInit, OnDestroy {
-  layersData!: LayerModel;
+  layersData!: LayerModel[];
   destroy$: Subject<void> = new Subject<void>();
   activeLayer!: LayerModel;
   constructor(private state: StateService) { }
@@ -24,7 +24,7 @@ export class XdLayersComponent implements OnInit, OnDestroy {
     ).subscribe();
     this.state.activeItem.pipe(
       tap((activeId) => {
-
+        this.getActiveLayer(this.layersData,activeId);
       }),
       takeUntil(this.destroy$)
     ).subscribe()
@@ -41,5 +41,21 @@ export class XdLayersComponent implements OnInit, OnDestroy {
     selectedLayer.selected = true;
     this.activeLayer = selectedLayer;
     this.state.activeItem.next(this.activeLayer.elementId);
+  }
+  layerId(index: number, layer: LayerModel): string{
+    return layer.elementId;
+  }
+  getActiveLayer(layers: LayerModel[], layerId: string){
+    layers.forEach(layer => {
+      if(layer.elementId == layerId){
+        if(this.activeLayer)
+          this.activeLayer.selected = false;
+        this.activeLayer = layer;
+        this.activeLayer.selected = true;
+      }else if(layer.children && layer.allChildren?.includes(layerId)){
+        layer.expanded = true;
+        this.getActiveLayer(layer.children, layerId);
+      }
+    });
   }
 }

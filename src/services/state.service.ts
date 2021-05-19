@@ -16,35 +16,30 @@ export class StateService {
       designHelper: null
     }
   });
-  layersData: BehaviorSubject<LayerModel> = new BehaviorSubject<LayerModel>({
+  layersData: BehaviorSubject<LayerModel[]> = new BehaviorSubject<LayerModel[]>([{
     expanded: true,
     sortOrder: 1,
-    children: [{
-      elementId: 'element-ab123',
-      name: 'div.xd-element',
-      sortOrder: 1
-    },
-      {
-        elementId: 'element-ab122',
-        name: 'div.xd-element-2',
-        sortOrder: 2,
-        children: [
-          {
-            elementId: 'element-3',
-            name: 'div.xd-element-3',
-            sortOrder: 1
-          }
-        ]
-      },{
-        elementId: 'element-ab124',
-        name: 'div.xd-element',
-        sortOrder: 1
-      }],
     parentId: null,
     elementId: 'artboard',
     name: 'body',
     icon: 'body',
-  })
+    allChildren: ['element-ab123', 'element-ab122', 'element-ab124'],
+    children: [
+      {
+        elementId: 'element-ab123',
+        name: 'div.xd-element',
+        sortOrder: 1
+      },
+      {
+        elementId: 'element-ab122',
+        name: 'div.xd-element-2',
+        sortOrder: 2,
+      }, {
+        elementId: 'element-ab124',
+        name: 'div.xd-element',
+        sortOrder: 1
+      }]
+  }]);
   constructor() { }
 
   updateStyleData(id: string, data: any){
