@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, Inject, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, Inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {fromEvent, Observable, Subject} from "rxjs";
 import {switchMapTo, takeUntil, tap} from "rxjs/operators";
 import {DOCUMENT} from "@angular/common";
@@ -9,8 +9,15 @@ import {DOCUMENT} from "@angular/common";
   styleUrls: ['./xd-handle.component.scss']
 })
 export class XdHandleComponent implements OnInit, OnDestroy {
+  _prop!: string;
   @Input() axis: string = 'x';
-  @Input() property: string = 'padding';
+  @Input() set property(prop: string){
+    this._prop = prop;
+    this.initHandlePosition();
+  }
+  get property(){
+    return this._prop;
+  }
   startValue: number = 0;
   currentValue: number = 0;
   private destroy$ = new Subject<void>();
@@ -24,28 +31,6 @@ export class XdHandleComponent implements OnInit, OnDestroy {
     const mousemove$: Observable<Event> = fromEvent(document, 'mousemove');
     const mouseup$: Observable<Event> = fromEvent(document, 'mouseup');
     const root: any = document.querySelector(':root');
-
-    // Init handle positions
-    if(this.property == 'padding'){
-      let value = 0;
-      if(this.axis == 'x'){
-        value = parseInt(host.style.paddingLeft) || 0;
-        element.style.left = value + 'px';
-        root.style.setProperty('--xd-pl', element.style.left);
-      }else if(this.axis == '-x'){
-        value = parseInt(host.style.paddingRight) || 0;
-        element.style.right = value + 'px';
-        root.style.setProperty('--xd-pr', element.style.right);
-      }else if(this.axis == 'y'){
-        value = parseInt(host.style.paddingTop) || 0;
-        element.style.top = value + 'px';
-        root.style.setProperty('--xd-pt', element.style.top);
-      }else if(this.axis == '-y'){
-        value = parseInt(host.style.paddingBottom) || 0;
-        element.style.bottom = value + 'px';
-        root.style.setProperty('--xd-pb', element.style.bottom);
-      }
-    }
 
     //Handle Drag Events
     mousedown$.pipe(
@@ -118,7 +103,42 @@ export class XdHandleComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     ).subscribe();
   }
-
+  initHandlePosition(){
+    const element = this.elementRef.nativeElement;
+    const root: any = document.querySelector(':root');
+    const host = element.parentElement;
+    // Init handle positions
+    if(this.property == 'size'){
+      if(this.axis == 'x'){
+        element.style.left = '0px';
+      }else if(this.axis == '-x'){
+        element.style.right = '0px'
+      }else if(this.axis == 'y'){
+        element.style.top = '0px';
+      }else if(this.axis == '-y'){
+        element.style.bottom = '0px'
+      }
+    }else if(this.property == 'padding'){
+      let value = 0;
+      if(this.axis == 'x'){
+        value = parseInt(host.style.paddingLeft) || 0;
+        element.style.left = value + 'px';
+        root.style.setProperty('--xd-pl', element.style.left);
+      }else if(this.axis == '-x'){
+        value = parseInt(host.style.paddingRight) || 0;
+        element.style.right = value + 'px';
+        root.style.setProperty('--xd-pr', element.style.right);
+      }else if(this.axis == 'y'){
+        value = parseInt(host.style.paddingTop) || 0;
+        element.style.top = value + 'px';
+        root.style.setProperty('--xd-pt', element.style.top);
+      }else if(this.axis == '-y'){
+        value = parseInt(host.style.paddingBottom) || 0;
+        element.style.bottom = value + 'px';
+        root.style.setProperty('--xd-pb', element.style.bottom);
+      }
+    }
+  }
   ngOnDestroy() {
     this.destroy$.next();
   }

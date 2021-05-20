@@ -40,6 +40,7 @@ export class StateService {
         sortOrder: 1
       }]
   }]);
+  activeUtility: BehaviorSubject<string> = new BehaviorSubject<string>('Size');
   constructor() { }
 
   updateStyleData(id: string, data: any){

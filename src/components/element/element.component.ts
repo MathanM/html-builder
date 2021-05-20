@@ -72,6 +72,12 @@ export class ElementComponent extends ElementHelperDirective implements OnInit, 
         }
       }),
       takeUntil(this.destroy$)
+    ).subscribe();
+    this.state.activeUtility.pipe(
+      tap((prop) => {
+        this.property = prop.toLowerCase();
+      }),
+      takeUntil(this.destroy$)
     ).subscribe()
   }
 

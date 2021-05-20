@@ -4,7 +4,8 @@
       <xd-input type="number" label="W" name="width" [(ngModel)]="element.width" unit="px"></xd-input>
       <xd-input type="number" label="H" name="height" [(ngModel)]="element.height" unit="px"></xd-input>
     </div>
-    <div class="xd-flex xd-gap-10">
+    <nav-tabs [tabs]="['Size','Padding','Margin']" [(tab)]="transformTab" (tabChange)="onTabChange()"></nav-tabs>
+    <div [class.xd-hidden]="transformTab != 'Padding'" class="xd-flex xd-gap-10">
       <xd-input class="input-col" type="number" label="PT" [width]="40" name="paddingTop" [(ngModel)]="element.paddingTop" unit="px"></xd-input>
       <xd-input class="input-col" type="number" label="PR" [width]="40" name="paddingRight" [(ngModel)]="element.paddingRight" unit="px"></xd-input>
       <xd-input class="input-col" type="number" label="PB" [width]="40" name="paddingBottom" [(ngModel)]="element.paddingBottom" unit="px"></xd-input>

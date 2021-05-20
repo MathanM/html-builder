@@ -23,6 +23,7 @@ export class ElementNavComponent implements OnInit, AfterViewInit, OnDestroy {
     paddingBottom: "0px"
   }
   element!: ElementModel;
+  transformTab: string = 'Size';
   @ViewChild('elementForm', { static: false }) elementForm!: NgForm;
   destroy$: Subject<void> = new Subject<void>();
   constructor(private state: StateService) { }
@@ -41,6 +42,7 @@ export class ElementNavComponent implements OnInit, AfterViewInit, OnDestroy {
       }),
       takeUntil(this.destroy$)
     ).subscribe();
+    this.transformTab = this.state.activeUtility.getValue();
   }
   ngAfterViewInit(): void{
     this.initFormChange();
@@ -56,6 +58,9 @@ export class ElementNavComponent implements OnInit, AfterViewInit, OnDestroy {
         })
       });
     }
+  }
+  onTabChange(){
+    this.state.activeUtility.next(this.transformTab);
   }
   ngOnDestroy(): void {
     this.destroy$.next();

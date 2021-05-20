@@ -1,0 +1,7 @@
+<ng-container *ngIf="tabs; else noInput">
+  <div class="tab" [class.active]="i == tab" *ngFor="let i of tabs" (click)="onTabClick(i)">{{i}}</div>
+</ng-container>
+<ng-template #noInput>
+  <ng-content></ng-content>
+</ng-template>
+
