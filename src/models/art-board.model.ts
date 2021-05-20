@@ -16,6 +16,10 @@ export type ElementModel = {
   paddingRight?: string;
   paddingTop?: string;
   paddingBottom?: string;
+  marginLeft?: string;
+  marginRight?: string;
+  marginTop?: string;
+  marginBottom?: string;
 }
 export interface LayerModel {
   expanded?: boolean;

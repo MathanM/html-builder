@@ -11,6 +11,12 @@
       <xd-input class="input-col" type="number" label="PB" [width]="40" name="paddingBottom" [(ngModel)]="element.paddingBottom" unit="px"></xd-input>
       <xd-input class="input-col" type="number" label="PL" [width]="40" name="paddingLeft" [(ngModel)]="element.paddingLeft" unit="px"></xd-input>
     </div>
+    <div [class.xd-hidden]="transformTab != 'Margin'" class="xd-flex xd-gap-10">
+      <xd-input class="input-col" type="number" label="MT" [width]="40" name="marginTop" [(ngModel)]="element.marginTop" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="MR" [width]="40" name="marginRight" [(ngModel)]="element.marginRight" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="MB" [width]="40" name="marginBottom" [(ngModel)]="element.marginBottom" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="ML" [width]="40" name="marginLeft" [(ngModel)]="element.marginLeft" unit="px"></xd-input>
+    </div>
   </nav-card>
   <nav-card title="Appearance">
     <xd-color-picker label="Fill" name="backgroundColor" [(ngModel)]="element.backgroundColor"></xd-color-picker>
