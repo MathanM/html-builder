@@ -80,7 +80,7 @@ export class XdHandleComponent implements OnInit, OnDestroy {
               element.style.left = host.style.paddingLeft;
               root.style.setProperty('--xd-pl', host.style.paddingLeft);
             }else if (this.axis == '-x'){
-              host.style.paddingRight = (this.currentValue + pos[0] - this.startValue) * -1 + 'px';
+              host.style.paddingRight = (this.currentValue + ((pos[0] - this.startValue) * -1)) + 'px';
               element.style.right = host.style.paddingRight;
               root.style.setProperty('--xd-pr', host.style.paddingRight);
             }else if(this.axis == 'y'){
@@ -88,7 +88,7 @@ export class XdHandleComponent implements OnInit, OnDestroy {
               element.style.top = host.style.paddingTop;
               root.style.setProperty('--xd-pt', host.style.paddingTop);
             }else if (this.axis == '-y'){
-              host.style.paddingBottom = (this.currentValue + pos[1] - this.startValue) * -1 + 'px';
+              host.style.paddingBottom = (this.currentValue + ((pos[1] - this.startValue) * -1)) + 'px';
               element.style.bottom = host.style.paddingBottom;
               root.style.setProperty('--xd-pb', host.style.paddingBottom);
             }
