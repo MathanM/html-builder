@@ -18,6 +18,11 @@ export class XdHandleComponent implements OnInit, OnDestroy {
   get property(){
     return this._prop;
   }
+  @Input() set reInitHandles(flag: boolean){
+    if(flag){
+      this.initHandlePosition();
+    }
+  }
   startValue: number = 0;
   currentValue: number = 0;
   private destroy$ = new Subject<void>();

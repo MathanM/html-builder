@@ -92,8 +92,8 @@ export class ElementComponent extends ElementHelperDirective implements OnInit, 
       Object.keys(this.elementData).forEach(style => {
         this.renderer.setStyle(this.elementRef.nativeElement, style, this.elementData[style]);
       });
-      this.updatePropVariables();
     }
+    this.rePositionHandles();
   }
   watchStyles(watch: boolean = true){
     if(watch){
@@ -103,20 +103,6 @@ export class ElementComponent extends ElementHelperDirective implements OnInit, 
       });
     }else{
       this.styleObserver$.disconnect();
-    }
-  }
-  updatePropVariables(){
-    const root: any = document.querySelector(':root');
-    if(this._property == 'padding'){
-      root.style.setProperty('--xd-pl', this.elementData.paddingLeft);
-      root.style.setProperty('--xd-pr', this.elementData.paddingRight);
-      root.style.setProperty('--xd-pt', this.elementData.paddingTop);
-      root.style.setProperty('--xd-pb', this.elementData.paddingBottom);
-    }else if(this._property == 'margin'){
-      root.style.setProperty('--xd-ml', this.elementData.marginLeft);
-      root.style.setProperty('--xd-mr', this.elementData.marginRight);
-      root.style.setProperty('--xd-mt', this.elementData.marginTop);
-      root.style.setProperty('--xd-mb', this.elementData.marginBottom);
     }
   }
   ngOnDestroy(): void {

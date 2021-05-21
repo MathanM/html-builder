@@ -79,6 +79,11 @@ export class ElementHelperDirective implements OnInit, OnDestroy {
       ref.instance.property = this._property;
     });
   }
+  rePositionHandles(){
+    this.handleRefs.forEach(ref => {
+      ref.instance.reInitHandles = true;
+    })
+  }
   removeDragHandles(){
     this.elementRef.nativeElement.classList.remove(`xd-${this._property}`);
     this.handleRefs.forEach(ref => ref.destroy());
