@@ -31,7 +31,6 @@ export class XdHandleComponent implements OnInit, OnDestroy {
     const mousemove$: Observable<Event> = fromEvent(document, 'mousemove');
     const mouseup$: Observable<Event> = fromEvent(document, 'mouseup');
     const root: any = document.querySelector(':root');
-    this.initHandlePosition();
     //Handle Drag Events
     mousedown$.pipe(
       tap((e: MouseEvent) => {

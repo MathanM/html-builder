@@ -1,0 +1,9 @@
+img, object{
+  vertical-align: middle;
+}
+:host-context(.icon-sm){
+  img, object{
+    width: 15px !important;
+    height: 15px !important;
+  }
+}

@@ -36,8 +36,6 @@ export class ElementComponent extends ElementHelperDirective implements OnInit, 
       [
         'width',
         'height',
-        'backgroundColor',
-        'borderColor',
         'paddingLeft',
         'paddingRight',
         'paddingTop',

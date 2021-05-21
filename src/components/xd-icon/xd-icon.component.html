@@ -1,0 +1,6 @@
+<ng-container *ngIf="tag == 'img'">
+  <img [src]="'assets/icons/'+icon+'.svg'" [width]="width" [height]="height" />
+</ng-container>
+<ng-template>
+  <object type="image/svg+xml" [data]="'assets/icons/'+icon+'.svg'" [width]="width" [height]="height"></object>
+</ng-template>

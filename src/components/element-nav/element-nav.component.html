@@ -1,4 +1,33 @@
 <form #elementForm="ngForm">
+  <div class="xd-flex">
+    <nav-card class="xd-grow">
+      <div class="xd-flex xd-gap-15 xd-f-center">
+        <xd-icon [class.active]="element.alignItems == 'flex-start'" (click)="setStyle({display:'flex',alignItems:'flex-start'})" class="icon-sm justify-top" icon="align-bottom"></xd-icon>
+        <xd-icon [class.active]="element.alignItems == 'center'" (click)="setStyle({display:'flex',alignItems:'center'})" class="icon-sm" icon="align-center"></xd-icon>
+        <xd-icon [class.active]="element.alignItems == 'flex-end'" (click)="setStyle({display:'flex',alignItems:'flex-end'})" class="icon-sm" icon="align-bottom"></xd-icon>
+      </div>
+    </nav-card>
+    <nav-card class="xd-grow">
+      <div class="xd-flex xd-gap-15 xd-f-center">
+      <xd-icon [class.active]="element.justifyContent == 'flex-start'" (click)="setStyle({display:'flex',justifyContent:'flex-start'})" class="icon-sm align-top" icon="align-bottom"></xd-icon>
+      <xd-icon [class.active]="element.justifyContent == 'center'" (click)="setStyle({display:'flex',justifyContent:'center'})" class="icon-sm align-center" icon="align-center"></xd-icon>
+      <xd-icon [class.active]="element.justifyContent == 'flex-end'" (click)="setStyle({display:'flex',justifyContent:'flex-end'})" class="icon-sm align-bottom" icon="align-bottom"></xd-icon>
+      </div>
+    </nav-card>
+  </div>
+  <div class="xd-flex">
+    <nav-card class="xd-grow xd-br-2">
+      <div class="xd-flex xd-gap-15 xd-f-center">
+        <xd-icon [class.active]="element.flexDirection == 'row'" (click)="setStyle({display:'flex',flexDirection:'row'})" class="icon-sm " icon="f-row"></xd-icon>
+        <xd-icon [class.active]="element.flexDirection == 'column'" (click)="setStyle({display:'flex',flexDirection:'column'})" class="icon-sm" icon="f-column"></xd-icon>
+        <xd-icon [class.active]="element.flexWrap == 'nowrap'" (click)="setStyle({display:'flex',flexWrap:'nowrap'})" class="icon-sm" icon="f-no-wrap"></xd-icon>
+        <xd-icon [class.active]="element.flexWrap == 'wrap'" (click)="setStyle({display:'flex',flexWrap:'wrap'})" class="icon-sm" icon="f-wrap"></xd-icon>
+      </div>
+    </nav-card>
+    <nav-card class="xd-grow">
+    </nav-card>
+  </div>
+
   <nav-card title="Transform">
     <div class="xd-flex xd-gap-20">
       <xd-input type="number" label="W" name="width" [(ngModel)]="element.width" unit="px"></xd-input>
@@ -6,16 +35,26 @@
     </div>
     <nav-tabs [tabs]="['Size','Padding','Margin']" [(tab)]="transformTab" (tabChange)="onTabChange()"></nav-tabs>
     <div [class.xd-hidden]="transformTab != 'Padding'" class="xd-flex xd-gap-10">
-      <xd-input class="input-col" type="number" label="PT" [width]="40" name="paddingTop" [(ngModel)]="element.paddingTop" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="PR" [width]="40" name="paddingRight" [(ngModel)]="element.paddingRight" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="PB" [width]="40" name="paddingBottom" [(ngModel)]="element.paddingBottom" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="PL" [width]="40" name="paddingLeft" [(ngModel)]="element.paddingLeft" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="PT" [width]="43" name="paddingTop" [(ngModel)]="element.paddingTop" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="PR" [width]="43" name="paddingRight" [(ngModel)]="element.paddingRight" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="PB" [width]="43" name="paddingBottom" [(ngModel)]="element.paddingBottom" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="PL" [width]="43" name="paddingLeft" [(ngModel)]="element.paddingLeft" unit="px"></xd-input>
     </div>
     <div [class.xd-hidden]="transformTab != 'Margin'" class="xd-flex xd-gap-10">
-      <xd-input class="input-col" type="number" label="MT" [width]="40" name="marginTop" [(ngModel)]="element.marginTop" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="MR" [width]="40" name="marginRight" [(ngModel)]="element.marginRight" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="MB" [width]="40" name="marginBottom" [(ngModel)]="element.marginBottom" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="ML" [width]="40" name="marginLeft" [(ngModel)]="element.marginLeft" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="MT" [width]="43" name="marginTop" [(ngModel)]="element.marginTop" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="MR" [width]="43" name="marginRight" [(ngModel)]="element.marginRight" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="MB" [width]="43" name="marginBottom" [(ngModel)]="element.marginBottom" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="ML" [width]="43" name="marginLeft" [(ngModel)]="element.marginLeft" unit="px"></xd-input>
+    </div>
+    <div [class.xd-hidden]="transformTab != 'Size'">
+      <div class="xd-flex xd-gap-20">
+        <xd-input type="number" label="Max W" [width]="40" name="maxWidth" [(ngModel)]="element.maxWidth" unit="px"></xd-input>
+        <xd-input type="number" label="Max H" [width]="40" name="maxHeight" [(ngModel)]="element.maxHeight" unit="px"></xd-input>
+      </div>
+      <div class="xd-flex xd-gap-20">
+        <xd-input type="number" label="Min W" [width]="40" name="maxWidth" [(ngModel)]="element.minWidth" unit="px"></xd-input>
+        <xd-input type="number" label="Min H" [width]="40" name="maxHeight" [(ngModel)]="element.minHeight" unit="px"></xd-input>
+      </div>
     </div>
   </nav-card>
   <nav-card title="Appearance">

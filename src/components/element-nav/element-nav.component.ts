@@ -24,7 +24,16 @@ export class ElementNavComponent implements OnInit, AfterViewInit, OnDestroy {
     marginLeft: "0px",
     marginRight: "0px",
     marginTop: "0px",
-    marginBottom: "0px"
+    marginBottom: "0px",
+    display: "",
+    alignItems: "",
+    justifyContent: "",
+    flexDirection:"",
+    flexWrap:"",
+    minHeight:"",
+    maxHeight:"",
+    maxWidth:"",
+    minWidth:""
   }
   element!: ElementModel;
   transformTab: string = 'Size';
@@ -62,6 +71,10 @@ export class ElementNavComponent implements OnInit, AfterViewInit, OnDestroy {
         })
       });
     }
+  }
+  setStyle(prop: {[prop: string]: string}){
+    this.element = {...this.element, ...prop};
+    this.state.updateStyleData(this.elementId, this.element);
   }
   onTabChange(){
     this.state.activeUtility.next(this.transformTab);

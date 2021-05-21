@@ -19,16 +19,27 @@ input[type=number] {
 .xd-flex{
   display: flex;
 }
+.xd-grow{
+  flex-grow: 1;
+}
+.xd-f-center{
+  justify-content: center;
+}
 .xd-gap-20{
   gap: 20px !important;
 }
 .xd-gap-10{
   gap: 10px !important;
 }
+.xd-gap-15{
+  gap: 15px !important;
+}
 .xd-hidden{
   display: none !important;
 }
-
+.xd-br-2{
+  border-right: 2px solid var(--grey-bg);
+}
 // handle knob styles
 
 .xd-handle{

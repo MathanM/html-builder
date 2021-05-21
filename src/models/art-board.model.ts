@@ -20,6 +20,15 @@ export type ElementModel = {
   marginRight?: string;
   marginTop?: string;
   marginBottom?: string;
+  display?: string;
+  alignItems?: string;
+  justifyContent?: string;
+  flexDirection?: string;
+  flexWrap?: string;
+  minWidth?: string;
+  maxWidth?: string;
+  minHeight?: string;
+  maxHeight?: string;
 }
 export interface LayerModel {
   expanded?: boolean;

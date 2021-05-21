@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="992" height="872" xmlns:v="https://vecta.io/nano">
+  <style>
+    rect{
+      fill: #666;
+    }
+    svg:hover rect{
+      fill: #0095eb;
+    }
+  </style>
+  <rect width="234" height="436" rx="28"/>
+  <rect width="234" height="436" rx="28" x="379"/>
+  <rect width="234" height="436" rx="28" x="758"/>
+</svg>

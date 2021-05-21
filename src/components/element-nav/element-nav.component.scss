@@ -1,0 +1,21 @@
+.justify-top{
+  transform: rotate(180deg);
+  transform-origin: center;
+}
+.align-top, .align-center{
+  transform: rotate(90deg);
+  transform-origin: center;
+}
+.align-bottom{
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+.icon-sm{
+  cursor: pointer;
+  filter: brightness(1.2);
+  &.active{
+    filter: brightness(1) sepia(0.5) saturate(100) hue-rotate(
+        225deg
+    );
+  }
+}

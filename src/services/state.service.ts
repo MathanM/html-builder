@@ -45,6 +45,7 @@ export class StateService {
 
   updateStyleData(id: string, data: any){
     const styleData = this.styleData.getValue();
-    this.styleData.next({ ...styleData, [id]: data });
+    const elementData = {...styleData[id], ...data};
+    this.styleData.next({ ...styleData, [id]: elementData });
   }
 }
