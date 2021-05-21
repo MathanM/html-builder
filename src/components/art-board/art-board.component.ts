@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {StateService} from "../../services/state.service";
 import {distinctUntilChanged, takeUntil, tap} from "rxjs/operators";
 import {Subject} from "rxjs";
@@ -10,11 +10,12 @@ import {isEmpty} from "lodash";
   templateUrl: './art-board.component.html',
   styleUrls: ['./art-board.component.scss']
 })
-export class ArtBoardComponent implements OnInit, OnDestroy {
+export class ArtBoardComponent implements OnInit,AfterViewInit, OnDestroy {
   active = false;
   destroy$: Subject<void> = new Subject<void>();
   artBoard!: ArtBoardModel;
   designHelper = false;
+  @ViewChild('elementContainer', { read: ViewContainerRef }) elementContainer!: ViewContainerRef;
   constructor(private state: StateService) {}
 
   ngOnInit(): void {
@@ -31,6 +32,9 @@ export class ArtBoardComponent implements OnInit, OnDestroy {
         this.checkDesignHelper();
       })
     ).subscribe();
+  }
+  ngAfterViewInit() {
+    this.state.artBoardViewContainer = this.elementContainer;
   }
 
   @HostListener('mousedown', ['$event'])
