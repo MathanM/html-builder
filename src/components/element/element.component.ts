@@ -20,16 +20,13 @@ import {ElementHelperDirective} from "../../directives/element-helper.directive"
   templateUrl: './element.component.html',
   styleUrls: ['./element.component.scss']
 })
-export class ElementComponent extends ElementHelperDirective implements OnInit, AfterViewInit, OnDestroy {
+export class ElementComponent extends ElementHelperDirective implements OnInit, OnDestroy {
   elementData!: any;
-  @ViewChild('handleContainer', { read: ViewContainerRef }) handleContainer!: ViewContainerRef;
-  @ViewChild('elementContainer', { read: ViewContainerRef }) elementContainer!: ViewContainerRef;
 
   @HostListener('mousedown', ['$event'])
   onElementClick(e: MouseEvent): void {
     e.stopPropagation();
     this.state.activeItem.next('element-'+this.xdId);
-    this.state.activeViewContainer = this.elementContainer;
   }
 
   styleChange = () => {
@@ -85,11 +82,6 @@ export class ElementComponent extends ElementHelperDirective implements OnInit, 
     ).subscribe()
   }
 
-  ngAfterViewInit() {
-    super.updateViewContainer(this.handleContainer);
-    this.state.activeViewContainer = this.elementContainer;
-  }
-
   updateStyles(){
     if(this.elementData){
       Object.keys(this.elementData).forEach(style => {
@@ -107,6 +99,10 @@ export class ElementComponent extends ElementHelperDirective implements OnInit, 
     }else{
       this.styleObserver$.disconnect();
     }
+  }
+  deleteElement(){
+    this.state.deleteElement('element-'+this.xdId);
+    this.elementRef.nativeElement.remove();
   }
   ngOnDestroy(): void {
     super.ngOnDestroy();

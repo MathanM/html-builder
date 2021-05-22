@@ -2,6 +2,7 @@ import {Component, ElementRef, Inject, Input, OnDestroy, OnInit} from '@angular/
 import {fromEvent, Observable, Subject} from "rxjs";
 import {switchMapTo, takeUntil, tap} from "rxjs/operators";
 import {DOCUMENT} from "@angular/common";
+import {eventPosition} from "../../models/constant";
 
 @Component({
   selector: 'app-xd-handle',
@@ -40,7 +41,7 @@ export class XdHandleComponent implements OnInit, OnDestroy {
     mousedown$.pipe(
       tap((e: MouseEvent) => {
         e.stopPropagation();
-        const pos = XdHandleComponent.eventPosition(e);
+        const pos = eventPosition(e);
         if (this.property == 'size') {
           if (this.axis == 'x' || this.axis == '-x') {
             this.startValue = pos[0];
@@ -89,7 +90,7 @@ export class XdHandleComponent implements OnInit, OnDestroy {
       }),
       switchMapTo(mousemove$.pipe(
         tap((e: Event) => {
-          const pos = XdHandleComponent.eventPosition(e as MouseEvent);
+          const pos = eventPosition(e as MouseEvent);
           if (this.property === 'size') {
             if (this.axis == 'x' || this.axis == '-x') {
               host.style.width = (this.currentValue + pos[0] - this.startValue) + 'px';
@@ -204,11 +205,5 @@ export class XdHandleComponent implements OnInit, OnDestroy {
     this.destroy$.next();
   }
 
-  static eventPosition(e: TouchEvent | MouseEvent) {
-    if (e instanceof TouchEvent) {
-      return [e.touches[0].clientX, e.touches[0].clientY];
-    } else {
-      return [e.clientX, e.clientY];
-    }
-  }
+
 }

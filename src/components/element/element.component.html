@@ -1,3 +1,10 @@
 <ng-template #handleContainer></ng-template>
 <ng-template #elementContainer></ng-template>
 <ng-content></ng-content>
+<ng-template #contextMenuTemplate>
+  <div class="xd-context-menu">
+      <ul>
+        <li (click)="deleteElement()">Delete</li>
+      </ul>
+  </div>
+</ng-template>

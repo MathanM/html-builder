@@ -74,3 +74,23 @@ input[type=number] {
   bottom: 0;
   cursor: ns-resize;
 }
+
+// xd context menu
+
+.xd-context-menu{
+  ul{
+    list-style: none;
+    padding: 5px 0;
+    li{
+      font-size: var(--font-m);
+      color: var(--dark-color-2);
+      letter-spacing: 1px;
+      cursor: pointer;
+      padding: 4px 10px;
+      &:hover{
+        color: var(--white);
+        background: var(--orange-bg);
+      }
+    }
+  }
+}

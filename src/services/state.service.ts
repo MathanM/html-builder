@@ -12,8 +12,9 @@ import {take, tap} from "rxjs/operators";
 export class StateService {
   unit: BehaviorSubject<string> = new BehaviorSubject<string>('px');
   activeItem: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  activeViewContainer!: ViewContainerRef;
+  activeViewContainer!: ViewContainerRef | null;
   artBoardViewContainer!: ViewContainerRef;
+  contextViewContainer!: ViewContainerRef;
   styleData: BehaviorSubject<any> = new BehaviorSubject<any>({
     artBoard: {
       width: "1440px",
@@ -67,10 +68,40 @@ export class StateService {
       this.activeItem.next(`element-${xdId}`);
     })
   }
+  deleteElement(id: string){
+    combineLatest([
+      this.layersData,
+      this.styleData
+    ]).pipe(
+      take(1),
+      tap(([layerData, styleData]) => {
+        delete styleData[id];
+        this.deleteLayer(id, layerData);
+        this.activeViewContainer = null;
+        this.activeItem.next('');
+      })
+    ).subscribe();
+  }
   updateAllChildren(childId: string, activeLayer: LayerModel){
     activeLayer.allChildren?.push(childId);
     if(activeLayer.parentId){
       this.updateAllChildren(childId, activeLayer.parentId);
+    }
+  }
+  deleteLayer(id: string, layerData: LayerModel[] | undefined | null){
+    if(layerData){
+      for(let i = 0; i < layerData.length; i++){
+        if(layerData[i].elementId == id){
+          layerData.splice(i,1);
+          break;
+        }else{
+          const index = layerData[i].allChildren?.indexOf(id);
+          if(index && index != -1){
+            layerData[i].allChildren?.splice(index, 1);
+          }
+          this.deleteLayer(id, layerData[i].children);
+        }
+      }
     }
   }
 }

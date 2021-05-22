@@ -23,29 +23,31 @@ import {XdLayersComponent} from "../components/xd-layers/xd-layers.component";
 import {NavTabsComponent} from "../components/nav-tabs/nav-tabs.component";
 import {XdIconComponent} from "../components/xd-icon/xd-icon.component";
 import {XdWidgetComponent} from "../components/xd-widget/xd-widget.component";
+import {XdMenuComponent} from "../components/xd-menu/xd-menu.component";
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        HomeComponent,
-        SideNavComponent,
-        NavCardComponent,
-        ArtBoardComponent,
-        XdInputComponent,
-        XdColorPickerComponent,
-        XdSelectComponent,
-        XdCheckboxComponent,
-        XdFileUploadComponent,
-        ArtBoardNavComponent,
-        ElementComponent,
-        ElementNavComponent,
-        ElementHelperDirective,
-        XdHandleComponent,
-        XdLayersComponent,
-        NavTabsComponent,
-        XdIconComponent,
-        XdWidgetComponent
-    ],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    SideNavComponent,
+    NavCardComponent,
+    ArtBoardComponent,
+    XdInputComponent,
+    XdColorPickerComponent,
+    XdSelectComponent,
+    XdCheckboxComponent,
+    XdFileUploadComponent,
+    ArtBoardNavComponent,
+    ElementComponent,
+    ElementNavComponent,
+    ElementHelperDirective,
+    XdHandleComponent,
+    XdLayersComponent,
+    NavTabsComponent,
+    XdIconComponent,
+    XdWidgetComponent,
+    XdMenuComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

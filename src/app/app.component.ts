@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {StateService} from "../services/state.service";
 import {Subject} from "rxjs";
 import {distinctUntilChanged, takeUntil, tap} from "rxjs/operators";
@@ -8,9 +8,10 @@ import {distinctUntilChanged, takeUntil, tap} from "rxjs/operators";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   activeTab: string = '';
   destroy$: Subject<void> = new Subject<void>();
+  @ViewChild('contextContainer', { read: ViewContainerRef }) contextContainer!: ViewContainerRef;
 
   constructor(private state: StateService) {}
 
@@ -22,6 +23,9 @@ export class AppComponent implements OnInit, OnDestroy {
       }),
       takeUntil(this.destroy$)
     ).subscribe();
+  }
+  ngAfterViewInit() {
+    this.state.contextViewContainer = this.contextContainer;
   }
 
   ngOnDestroy(): void {
