@@ -1,30 +1,34 @@
 <form #elementForm="ngForm">
   <div class="xd-flex">
-    <nav-card class="xd-grow">
+    <nav-card class="xd-grow xd-br-2">
       <div class="xd-flex xd-gap-15 xd-f-center">
         <xd-icon [class.active]="element.alignItems == 'flex-start'" (click)="setStyle({display:'flex',alignItems:'flex-start'})" class="icon-sm justify-top" icon="align-bottom"></xd-icon>
         <xd-icon [class.active]="element.alignItems == 'center'" (click)="setStyle({display:'flex',alignItems:'center'})" class="icon-sm" icon="align-center"></xd-icon>
         <xd-icon [class.active]="element.alignItems == 'flex-end'" (click)="setStyle({display:'flex',alignItems:'flex-end'})" class="icon-sm" icon="align-bottom"></xd-icon>
+        <xd-icon [class.active]="element.alignItems == 'stretch'" (click)="setStyle({display:'flex',alignItems:'stretch'})" class="icon-sm" icon="stretch"></xd-icon>
       </div>
     </nav-card>
     <nav-card class="xd-grow">
       <div class="xd-flex xd-gap-15 xd-f-center">
-      <xd-icon [class.active]="element.justifyContent == 'flex-start'" (click)="setStyle({display:'flex',justifyContent:'flex-start'})" class="icon-sm align-top" icon="align-bottom"></xd-icon>
-      <xd-icon [class.active]="element.justifyContent == 'center'" (click)="setStyle({display:'flex',justifyContent:'center'})" class="icon-sm align-center" icon="align-center"></xd-icon>
-      <xd-icon [class.active]="element.justifyContent == 'flex-end'" (click)="setStyle({display:'flex',justifyContent:'flex-end'})" class="icon-sm align-bottom" icon="align-bottom"></xd-icon>
+        <xd-icon [class.active]="element.flexDirection == 'row'" (click)="setStyle({display:'flex',flexDirection:'row'})" class="icon-sm " icon="f-row"></xd-icon>
+        <xd-icon [class.active]="element.flexDirection == 'column'" (click)="setStyle({display:'flex',flexDirection:'column'})" class="icon-sm" icon="f-column"></xd-icon>
       </div>
     </nav-card>
   </div>
   <div class="xd-flex">
     <nav-card class="xd-grow xd-br-2">
       <div class="xd-flex xd-gap-15 xd-f-center">
-        <xd-icon [class.active]="element.flexDirection == 'row'" (click)="setStyle({display:'flex',flexDirection:'row'})" class="icon-sm " icon="f-row"></xd-icon>
-        <xd-icon [class.active]="element.flexDirection == 'column'" (click)="setStyle({display:'flex',flexDirection:'column'})" class="icon-sm" icon="f-column"></xd-icon>
-        <xd-icon [class.active]="element.flexWrap == 'nowrap'" (click)="setStyle({display:'flex',flexWrap:'nowrap'})" class="icon-sm" icon="f-no-wrap"></xd-icon>
-        <xd-icon [class.active]="element.flexWrap == 'wrap'" (click)="setStyle({display:'flex',flexWrap:'wrap'})" class="icon-sm" icon="f-wrap"></xd-icon>
+        <xd-icon [class.active]="element.justifyContent == 'flex-start'" (click)="setStyle({display:'flex',justifyContent:'flex-start'})" class="icon-sm align-top" icon="align-bottom"></xd-icon>
+        <xd-icon [class.active]="element.justifyContent == 'center'" (click)="setStyle({display:'flex',justifyContent:'center'})" class="icon-sm align-center" icon="align-center"></xd-icon>
+        <xd-icon [class.active]="element.justifyContent == 'flex-end'" (click)="setStyle({display:'flex',justifyContent:'flex-end'})" class="icon-sm align-bottom" icon="align-bottom"></xd-icon>
+        <xd-icon [class.active]="element.justifyContent == 'space-between'" (click)="setStyle({display:'flex',justifyContent:'space-between'})" class="icon-sm" icon="space-btw"></xd-icon>
       </div>
     </nav-card>
     <nav-card class="xd-grow">
+      <div class="xd-flex xd-gap-15 xd-f-center">
+        <xd-icon [class.active]="element.flexWrap == 'nowrap'" (click)="setStyle({display:'flex',flexWrap:'nowrap'})" class="icon-sm" icon="f-no-wrap"></xd-icon>
+        <xd-icon [class.active]="element.flexWrap == 'wrap'" (click)="setStyle({display:'flex',flexWrap:'wrap'})" class="icon-sm" icon="f-wrap"></xd-icon>
+      </div>
     </nav-card>
   </div>
 

@@ -23,11 +23,13 @@ import {ElementHelperDirective} from "../../directives/element-helper.directive"
 export class ElementComponent extends ElementHelperDirective implements OnInit, AfterViewInit, OnDestroy {
   elementData!: any;
   @ViewChild('handleContainer', { read: ViewContainerRef }) handleContainer!: ViewContainerRef;
+  @ViewChild('elementContainer', { read: ViewContainerRef }) elementContainer!: ViewContainerRef;
 
   @HostListener('mousedown', ['$event'])
   onElementClick(e: MouseEvent): void {
     e.stopPropagation();
     this.state.activeItem.next('element-'+this.xdId);
+    this.state.activeViewContainer = this.elementContainer;
   }
 
   styleChange = () => {
@@ -85,6 +87,7 @@ export class ElementComponent extends ElementHelperDirective implements OnInit, 
 
   ngAfterViewInit() {
     super.updateViewContainer(this.handleContainer);
+    this.state.activeViewContainer = this.elementContainer;
   }
 
   updateStyles(){

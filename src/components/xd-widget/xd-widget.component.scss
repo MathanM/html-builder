@@ -1,0 +1,10 @@
+:host{
+  display: flex;
+  width: 40px;
+  flex-direction: column;
+  gap: 10px;
+  border-right: 2px solid var(--grey-bg);
+  padding: 15px 2px 15px 0;
+  align-items: center;
+  justify-content: flex-start;
+}

@@ -22,6 +22,7 @@ import {XdHandleComponent} from "../components/xd-handle/xd-handle.component";
 import {XdLayersComponent} from "../components/xd-layers/xd-layers.component";
 import {NavTabsComponent} from "../components/nav-tabs/nav-tabs.component";
 import {XdIconComponent} from "../components/xd-icon/xd-icon.component";
+import {XdWidgetComponent} from "../components/xd-widget/xd-widget.component";
 
 @NgModule({
     declarations: [
@@ -42,7 +43,8 @@ import {XdIconComponent} from "../components/xd-icon/xd-icon.component";
         XdHandleComponent,
         XdLayersComponent,
         NavTabsComponent,
-        XdIconComponent
+        XdIconComponent,
+        XdWidgetComponent
     ],
   imports: [
     BrowserModule,

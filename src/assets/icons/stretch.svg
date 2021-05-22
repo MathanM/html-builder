@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="789.167" height="778.167" xmlns:v="https://vecta.io/nano">
+  <style>
+    rect{
+      fill: #666;
+    }
+    svg:hover rect{
+      fill: #0095eb;
+    }
+    path{
+      stroke: #666;
+    }
+    svg:hover path{
+      stroke: #0095eb;
+    }
+  </style>
+  <g fill="#666">
+    <rect width="172" height="503" rx="20" x="173.583" y="137.583"/>
+    <rect width="185" height="503" rx="20" x="442.583" y="137.583"/>
+  </g>
+  <path d="M30.083 32.083l719-2m-709 718l719-2" fill="none" stroke="#666" stroke-linecap="round" stroke-width="60"/>
+</svg>

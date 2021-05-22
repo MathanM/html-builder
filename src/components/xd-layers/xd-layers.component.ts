@@ -12,7 +12,7 @@ import {takeUntil, tap} from "rxjs/operators";
 export class XdLayersComponent implements OnInit, OnDestroy {
   layersData!: LayerModel[];
   destroy$: Subject<void> = new Subject<void>();
-  activeLayer!: LayerModel;
+  activeLayer!: LayerModel | null;
   constructor(private state: StateService) { }
 
   ngOnInit(): void {
@@ -22,8 +22,16 @@ export class XdLayersComponent implements OnInit, OnDestroy {
       }),
       takeUntil(this.destroy$)
     ).subscribe();
+    this.state.activeLayer.pipe(
+      tap((layer) =>{
+        this.activeLayer = layer;
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe();
     this.state.activeItem.pipe(
       tap((activeId) => {
+        if(this.activeLayer)
+          this.activeLayer.selected = false;
         this.getActiveLayer(this.layersData,activeId);
       }),
       takeUntil(this.destroy$)
@@ -39,19 +47,14 @@ export class XdLayersComponent implements OnInit, OnDestroy {
       this.activeLayer.selected = false;
     }
     selectedLayer.selected = true;
-    this.activeLayer = selectedLayer;
-    this.state.activeItem.next(this.activeLayer.elementId);
-  }
-  layerId(index: number, layer: LayerModel): string{
-    return layer.elementId;
+    this.state.activeLayer.next(selectedLayer);
+    this.state.activeItem.next(selectedLayer.elementId);
   }
   getActiveLayer(layers: LayerModel[], layerId: string){
     layers.forEach(layer => {
       if(layer.elementId == layerId){
-        if(this.activeLayer)
-          this.activeLayer.selected = false;
-        this.activeLayer = layer;
-        this.activeLayer.selected = true;
+        layer.selected = true;
+        this.state.activeLayer.next(layer);
       }else if(layer.children && layer.allChildren?.includes(layerId)){
         layer.expanded = true;
         this.getActiveLayer(layer.children, layerId);

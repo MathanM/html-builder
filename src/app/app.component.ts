@@ -23,9 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     ).subscribe();
   }
-  createElement(){
-    this.state.createElement();
-  }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

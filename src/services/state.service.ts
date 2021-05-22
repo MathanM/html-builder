@@ -1,8 +1,10 @@
 import {ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, combineLatest, Subject} from "rxjs";
 import {LayerModel} from "../models/art-board.model";
 import {XdHandleComponent} from "../components/xd-handle/xd-handle.component";
 import {ElementComponent} from "../components/element/element.component";
+import {initArtBoard} from "../models/constant";
+import {take, tap} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -20,30 +22,8 @@ export class StateService {
       designHelper: null
     }
   });
-  layersData: BehaviorSubject<LayerModel[]> = new BehaviorSubject<LayerModel[]>([{
-    expanded: true,
-    sortOrder: 1,
-    parentId: null,
-    elementId: 'artboard',
-    name: 'body',
-    icon: 'body',
-    allChildren: ['element-ab123', 'element-ab122', 'element-ab124'],
-    children: [
-      {
-        elementId: 'element-ab123',
-        name: 'div.xd-element',
-        sortOrder: 1
-      },
-      {
-        elementId: 'element-ab122',
-        name: 'div.xd-element-2',
-        sortOrder: 2,
-      }, {
-        elementId: 'element-ab124',
-        name: 'div.xd-element',
-        sortOrder: 1
-      }]
-  }]);
+  layersData: BehaviorSubject<LayerModel[]> = new BehaviorSubject<LayerModel[]>([initArtBoard]);
+  activeLayer: BehaviorSubject<LayerModel> = new BehaviorSubject<LayerModel>(initArtBoard);
   activeUtility: BehaviorSubject<string> = new BehaviorSubject<string>('Size');
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
@@ -52,7 +32,7 @@ export class StateService {
     const elementData = {...styleData[id], ...data};
     this.styleData.next({ ...styleData, [id]: elementData });
   }
-  randomId(length: number) {
+  randomId(length: number): string {
     let chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     let result = '';
     for (let i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
@@ -60,15 +40,37 @@ export class StateService {
   }
   createElement(){
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ElementComponent);
-    const xdId = this.randomId(10);
-    console.log(xdId);
+    const xdId = this.randomId(6);
     let componentRef: ComponentRef<ElementComponent>;
-    if(this.activeViewContainer){
+    this.activeLayer.pipe(
+      take(1),
+      tap((activeLayer) => {
+        let newLayer: LayerModel = {
+          elementId: `element-${xdId}`,
+          parentId: activeLayer,
+          name: 'div',
+          sortOrder: activeLayer.children?.length || 1,
+          children: [],
+          allChildren: [],
+        };
+        activeLayer.children?.push(newLayer);
+        this.updateAllChildren(newLayer.elementId, activeLayer);
+      })
+    ).subscribe();
+    if (this.activeViewContainer) {
       componentRef = this.activeViewContainer.createComponent<ElementComponent>(componentFactory);
-      componentRef.instance.xdId = xdId
-    }else{
+    } else {
       componentRef = this.artBoardViewContainer.createComponent<ElementComponent>(componentFactory);
-      componentRef.instance.xdId = xdId
+    }
+    componentRef.instance.xdId = xdId;
+    setTimeout(() => {
+      this.activeItem.next(`element-${xdId}`);
+    })
+  }
+  updateAllChildren(childId: string, activeLayer: LayerModel){
+    activeLayer.allChildren?.push(childId);
+    if(activeLayer.parentId){
+      this.updateAllChildren(childId, activeLayer.parentId);
     }
   }
 }
