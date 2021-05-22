@@ -1,5 +1,6 @@
 :host{
   display: flex;
+  min-width: 40px;
   width: 40px;
   flex-direction: column;
   gap: 10px;
@@ -7,4 +8,10 @@
   padding: 15px 2px 15px 0;
   align-items: center;
   justify-content: flex-start;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: var(--menu-bg);
+  z-index: 10;
 }
