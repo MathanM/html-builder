@@ -37,9 +37,11 @@ export interface LayerModel {
   parentId?: LayerModel | null;
   elementId: string;
   selected?: boolean;
-  name: string;
+  label: string;
   sortOrder: number;
   icon?: string;
+  expandedIcon?: string;
+  collapsedIcon?: string;
 }
 export interface FileUploadEvent {
   name: string;

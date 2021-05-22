@@ -1,15 +1,19 @@
-<ul class="layer-group-start" *ngIf="layersData">
-  <ng-container
-    *ngTemplateOutlet="layerGroup; context:{ layers: layersData }"
-  ></ng-container>
-</ul>
-<ng-template #layerGroup let-layers="layers">
-  <li class="layer-item" *ngFor="let layer of layers" >
-    <a [class.active]="layer.selected" (click)="onLayerClick(layer)">{{ layer.name }}</a>
-    <ul class="layer-group" *ngIf="layer.children && layer.children.length > 0">
-      <ng-container
-        *ngTemplateOutlet="layerGroup; context:{ layers: layer.children }"
-      ></ng-container>
-    </ul>
-  </li>
-</ng-template>
+<!--<ul class="layer-group-start" *ngIf="layersData">-->
+<!--  <ng-container-->
+<!--    *ngTemplateOutlet="layerGroup; context:{ layers: layersData }"-->
+<!--  ></ng-container>-->
+<!--</ul>-->
+<!--<ng-template #layerGroup let-layers="layers">-->
+<!--  <li class="layer-item" *ngFor="let layer of layers" >-->
+<!--    <a [class.active]="layer.selected" (click)="onLayerClick(layer)">{{ layer.label }}</a>-->
+<!--    <ul class="layer-group" *ngIf="layer.children && layer.children.length > 0">-->
+<!--      <ng-container-->
+<!--        *ngTemplateOutlet="layerGroup; context:{ layers: layer.children }"-->
+<!--      ></ng-container>-->
+<!--    </ul>-->
+<!--  </li>-->
+<!--</ng-template>-->
+<ng-container *ngIf="layersData">
+  <p-tree [value]="$any(layersData)" selectionMode="single" (onNodeSelect)="onLayerClick($event.node)" [(selection)]="activeLayer"></p-tree>
+</ng-container>
+

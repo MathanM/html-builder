@@ -24,6 +24,7 @@ import {NavTabsComponent} from "../components/nav-tabs/nav-tabs.component";
 import {XdIconComponent} from "../components/xd-icon/xd-icon.component";
 import {XdWidgetComponent} from "../components/xd-widget/xd-widget.component";
 import {XdMenuComponent} from "../components/xd-menu/xd-menu.component";
+import {TreeModule} from "primeng/tree";
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import {XdMenuComponent} from "../components/xd-menu/xd-menu.component";
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ColorPickerModule
+    ColorPickerModule,
+    TreeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

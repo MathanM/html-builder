@@ -5,8 +5,8 @@ export const initArtBoard: LayerModel = {
   sortOrder: 1,
   parentId: null,
   elementId: 'artboard',
-  name: 'body',
-  icon: 'body',
+  label: 'body',
+  icon: "pi pi-inbox",
   allChildren: [],
   children: []
 }

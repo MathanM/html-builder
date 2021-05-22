@@ -49,10 +49,12 @@ export class StateService {
         let newLayer: LayerModel = {
           elementId: `element-${xdId}`,
           parentId: activeLayer,
-          name: 'div',
+          label: 'div',
           sortOrder: activeLayer.children?.length || 1,
           children: [],
           allChildren: [],
+          expandedIcon: "pi pi-folder-open",
+          collapsedIcon: "pi pi-folder",
         };
         activeLayer.children?.push(newLayer);
         this.updateAllChildren(newLayer.elementId, activeLayer);

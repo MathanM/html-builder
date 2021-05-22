@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "variables";
+@import "primeng-overrides";
 
 * {
   margin: 0;
@@ -40,8 +41,11 @@ input[type=number] {
 .xd-br-2{
   border-right: 2px solid var(--grey-bg);
 }
-.xd-pl-40{
-  padding-left: 40px !important;
+.xd-pl-38{
+  padding-left: 38px !important;
+}
+.xd-overflow{
+  overflow: auto;
 }
 // handle knob styles
 

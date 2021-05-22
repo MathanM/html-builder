@@ -1,0 +1,36 @@
+.p-tree{
+  border: 0;
+  padding: 0;
+  background: transparent;
+  font-size: var(--font-l);
+  color: var(--primary-color);
+  .p-tree-container .p-treenode{
+    padding: 0;
+    .p-treenode-content{
+      padding: 7px 10px;
+      border-radius: 0;
+      &:focus{
+        box-shadow: none;
+      }
+      &.p-highlight{
+        background: var(--blue-light);
+        color: var(--dark-color);
+      }
+      .p-treenode-icon{
+        font-size: var(--font-l);
+        color: var(--primary-color);
+      }
+      .p-tree-toggler{
+        width: 10px;
+        height: 10px;
+        color: var(--primary-color);
+        &:focus{
+          box-shadow: none;
+        }
+      }
+    }
+  }
+  .p-treenode-children{
+    padding-left: 10px;
+  }
+}

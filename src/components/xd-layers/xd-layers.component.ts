@@ -51,14 +51,18 @@ export class XdLayersComponent implements OnInit, OnDestroy {
     this.state.activeItem.next(selectedLayer.elementId);
   }
   getActiveLayer(layers: LayerModel[], layerId: string){
-    layers.forEach(layer => {
-      if(layer.elementId == layerId){
-        layer.selected = true;
-        this.state.activeLayer.next(layer);
-      }else if(layer.children && layer.allChildren?.includes(layerId)){
-        layer.expanded = true;
-        this.getActiveLayer(layer.children, layerId);
-      }
-    });
+    if(layerId){
+      layers.forEach(layer => {
+        if(layer.elementId == layerId){
+          layer.selected = true;
+          this.state.activeLayer.next(layer);
+        }else if(layer.children && layer.allChildren?.includes(layerId)){
+          layer.expanded = true;
+          this.getActiveLayer(layer.children, layerId);
+        }
+      });
+    }else{
+      this.state.activeLayer.next(layers[0]);
+    }
   }
 }
