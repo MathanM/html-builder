@@ -19,6 +19,7 @@ import {eventPosition} from "../models/constant";
 })
 export class ElementHelperDirective implements OnInit, OnDestroy {
   _property: string = 'size';
+  @HostBinding('attr.xd-id')
   @Input() xdId!: string;
   @Input() set property(prop: string){
     this.elementRef.nativeElement.classList.remove(`xd-${this._property}`);

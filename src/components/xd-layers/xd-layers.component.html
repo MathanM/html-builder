@@ -14,6 +14,16 @@
 <!--  </li>-->
 <!--</ng-template>-->
 <ng-container *ngIf="layersData">
-  <p-tree [value]="$any(layersData)" selectionMode="single" (onNodeSelect)="onLayerClick($event.node)" [(selection)]="activeLayer"></p-tree>
+  <p-tree
+    [value]="$any(layersData)"
+    selectionMode="single"
+    (onNodeSelect)="onLayerClick($event.node)"
+    [(selection)]="activeLayer"
+    [draggableNodes]="true"
+    [droppableNodes]="true"
+    draggableScope="self"
+    droppableScope="self"
+    (onNodeDrop)="onDragDropLayer($event.dragNode, $event.dropNode, $event.index, $event)"
+  ></p-tree>
 </ng-container>
 

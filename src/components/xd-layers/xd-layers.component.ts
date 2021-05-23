@@ -1,19 +1,21 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {StateService} from "../../services/state.service";
 import {LayerModel} from "../../models/art-board.model";
 import {Subject} from "rxjs";
 import {takeUntil, tap} from "rxjs/operators";
+import {TreeDragDropService} from 'primeng/api';
 
 @Component({
   selector: 'xd-layers',
   templateUrl: './xd-layers.component.html',
-  styleUrls: ['./xd-layers.component.scss']
+  styleUrls: ['./xd-layers.component.scss'],
+  providers: [TreeDragDropService],
 })
 export class XdLayersComponent implements OnInit, OnDestroy {
   layersData!: LayerModel[];
   destroy$: Subject<void> = new Subject<void>();
   activeLayer!: LayerModel | null;
-  constructor(private state: StateService) { }
+  constructor(private state: StateService, private renderer: Renderer2,) { }
 
   ngOnInit(): void {
     this.state.layersData.pipe(
@@ -49,6 +51,15 @@ export class XdLayersComponent implements OnInit, OnDestroy {
     selectedLayer.selected = true;
     this.state.activeLayer.next(selectedLayer);
     this.state.activeItem.next(selectedLayer.elementId);
+  }
+  onDragDropLayer(dragLayer: LayerModel, dropLayer: LayerModel, dropIndex: number, e: any){
+    const dragElement = document.querySelector(`[xd-id=${dragLayer.elementId.split("-")[1]}]`);
+    const dropElement: any = document.querySelector(`[xd-id=${dropLayer.elementId.split("-")[1]}]`);
+    if(dropIndex != 0){
+      this.renderer.insertBefore(dropElement.parent, dragElement, dropElement);
+    }else{
+      this.renderer.appendChild(dropElement, dragElement);
+    }
   }
   getActiveLayer(layers: LayerModel[], layerId: string){
     if(layerId){

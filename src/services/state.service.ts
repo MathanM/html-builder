@@ -34,7 +34,7 @@ export class StateService {
     this.styleData.next({ ...styleData, [id]: elementData });
   }
   randomId(length: number): string {
-    let chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     let result = '';
     for (let i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
     return result;
@@ -43,9 +43,14 @@ export class StateService {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ElementComponent);
     const xdId = this.randomId(6);
     let componentRef: ComponentRef<ElementComponent>;
-    this.activeLayer.pipe(
+    let activeElement;
+    combineLatest([
+      this.activeItem,
+      this.activeLayer
+    ]).pipe(
       take(1),
-      tap((activeLayer) => {
+      tap(([activeItem, activeLayer]) => {
+        activeElement = activeItem;
         let newLayer: LayerModel = {
           elementId: `element-${xdId}`,
           parentId: activeLayer,
@@ -60,7 +65,7 @@ export class StateService {
         this.updateAllChildren(newLayer.elementId, activeLayer);
       })
     ).subscribe();
-    if (this.activeViewContainer) {
+    if (this.activeViewContainer && activeElement != 'artboard' ) {
       componentRef = this.activeViewContainer.createComponent<ElementComponent>(componentFactory);
     } else {
       componentRef = this.artBoardViewContainer.createComponent<ElementComponent>(componentFactory);

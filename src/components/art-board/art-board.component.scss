@@ -4,6 +4,8 @@
   zoom: 0.82;
   background: var(--white);
   position: relative;
+  padding-top: 0.1px;
+  margin-top: -0.1px;
   &.active{
     outline: 1px solid var(--active-blue);
   }
