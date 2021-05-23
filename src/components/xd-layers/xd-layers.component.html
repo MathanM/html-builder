@@ -23,7 +23,11 @@
     [droppableNodes]="true"
     draggableScope="self"
     droppableScope="self"
-    (onNodeDrop)="onDragDropLayer($event.dragNode, $event.dropNode, $event.index, $event)"
-  ></p-tree>
+    (onNodeDrop)="onDragDropLayer($event.dragNode, $event.dropNode, $event.index)"
+  >
+    <ng-template let-node pTemplate="default">
+      <div class="layer-label" [contenteditable]="true" (blur)="onLabelChange(node)">{{node.elementId}}</div>
+    </ng-template>
+  </p-tree>
 </ng-container>
 

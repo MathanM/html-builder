@@ -25,6 +25,7 @@ import {XdIconComponent} from "../components/xd-icon/xd-icon.component";
 import {XdWidgetComponent} from "../components/xd-widget/xd-widget.component";
 import {XdMenuComponent} from "../components/xd-menu/xd-menu.component";
 import {TreeModule} from "primeng/tree";
+import {ContenteditableDirective} from "../directives/content-editable.directive";
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {TreeModule} from "primeng/tree";
     NavTabsComponent,
     XdIconComponent,
     XdWidgetComponent,
-    XdMenuComponent
+    XdMenuComponent,
+    ContenteditableDirective
   ],
   imports: [
     BrowserModule,

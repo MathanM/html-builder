@@ -60,6 +60,7 @@ export class StateService {
           allChildren: [],
           expandedIcon: "pi pi-folder-open",
           collapsedIcon: "pi pi-folder",
+          tag:'div'
         };
         activeLayer.children?.push(newLayer);
         this.updateAllChildren(newLayer.elementId, activeLayer);

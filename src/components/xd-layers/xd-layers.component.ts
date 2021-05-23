@@ -52,13 +52,25 @@ export class XdLayersComponent implements OnInit, OnDestroy {
     this.state.activeLayer.next(selectedLayer);
     this.state.activeItem.next(selectedLayer.elementId);
   }
-  onDragDropLayer(dragLayer: LayerModel, dropLayer: LayerModel, dropIndex: number, e: any){
+  onDragDropLayer(dragLayer: LayerModel, dropLayer: LayerModel, dropIndex: number){
     const dragElement = document.querySelector(`[xd-id=${dragLayer.elementId.split("-")[1]}]`);
     const dropElement: any = document.querySelector(`[xd-id=${dropLayer.elementId.split("-")[1]}]`);
-    if(dropIndex != 0){
-      this.renderer.insertBefore(dropElement.parent, dragElement, dropElement);
-    }else{
-      this.renderer.appendChild(dropElement, dragElement);
+    if(dropLayer.children && dropLayer.children.length > 0){
+      const index = dropLayer.children.findIndex(layer => layer.elementId == dragLayer.elementId);
+      if(index != -1){
+        this.renderer.appendChild(dropElement, dragElement);
+      }
+    }
+    const parent = dropLayer.parent;
+    if(parent && parent.children && parent.children.length > 0){
+      const index = parent.children.findIndex((layer: any) => layer.elementId == dragLayer.elementId);
+      if(index != -1){
+        if(parent.children.length -1 == index){
+          this.renderer.appendChild(dropElement.parentElement, dragElement);
+        }else{
+          this.renderer.insertBefore(dropElement.parentElement, dragElement, dropElement.parentElement.children[dropIndex]);
+        }
+      }
     }
   }
   getActiveLayer(layers: LayerModel[], layerId: string){
@@ -74,6 +86,33 @@ export class XdLayersComponent implements OnInit, OnDestroy {
       });
     }else{
       this.state.activeLayer.next(layers[0]);
+    }
+  }
+  onLabelChange(node: LayerModel){
+    let classes = node.label.split(".");
+    if(classes[0] == ""){
+      classes.splice(0,1);
+      node.tag = "div"
+    }else if(classes[0].indexOf("#") == -1){
+      node.tag = classes[0];
+      classes.splice(0,1);
+    }
+    for(let i = 1; i < classes.length; i++){
+      if(classes[i].indexOf("#") != -1){
+        let val = classes[i].split("#");
+        node.id = val[1];
+        classes[i] = val[0];
+      }
+    }
+    node.classList = classes;
+    const element = document.querySelector(`[xd-id=${node.elementId.split("-")[1]}]`);
+    if(element){
+      if(classes.length > 0){
+        element.className += " "+classes.join(" ");
+      }
+      if(node.id){
+        element.id = node.id
+      }
     }
   }
 }

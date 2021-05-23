@@ -8,7 +8,8 @@ export const initArtBoard: LayerModel = {
   label: 'body',
   icon: "pi pi-inbox",
   allChildren: [],
-  children: []
+  children: [],
+  tag: 'body'
 }
 export function eventPosition(e: TouchEvent | MouseEvent) {
   if (e instanceof TouchEvent) {

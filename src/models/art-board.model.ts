@@ -42,6 +42,10 @@ export interface LayerModel {
   icon?: string;
   expandedIcon?: string;
   collapsedIcon?: string;
+  classList?: string[];
+  id?: string;
+  tag?: string;
+  parent?: any;
 }
 export interface FileUploadEvent {
   name: string;
