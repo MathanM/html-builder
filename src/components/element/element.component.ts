@@ -104,6 +104,9 @@ export class ElementComponent extends ElementHelperDirective implements OnInit, 
     this.state.deleteElement('element-'+this.xdId);
     this.elementRef.nativeElement.remove();
   }
+  copyElement(){
+    this.state.copyElement('element-'+this.xdId);
+  }
   ngOnDestroy(): void {
     super.ngOnDestroy();
     this.destroy$.next();

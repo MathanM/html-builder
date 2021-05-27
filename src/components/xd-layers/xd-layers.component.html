@@ -26,7 +26,7 @@
     (onNodeDrop)="onDragDropLayer($event.dragNode, $event.dropNode, $event.index)"
   >
     <ng-template let-node pTemplate="default">
-      <div class="layer-label" [contenteditable]="true" (blur)="onLabelChange(node)">{{node.elementId}}</div>
+      <div class="layer-label" [contenteditable]="true" [(ngModel)]="node.label" (blur)="onLabelChange(node)"></div>
     </ng-template>
   </p-tree>
 </ng-container>

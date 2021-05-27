@@ -49,3 +49,11 @@ export const normalizePosition = (mouseX: number, mouseY: number, scope: HTMLEle
 
   return { normalizedX, normalizedY };
 };
+const camel2KebabCase = (value: string) => {
+  const reg = new RegExp('/[A-Z]/', 'g');
+  return value.replace(reg, (str) => `-${str.toLowerCase()}`);
+}
+export const object2css = (cssObject: any) => {
+  const props = Object.keys(cssObject).map(property => `${camel2KebabCase(property)}: ${cssObject[property]};`);
+  return props.join("\n");
+}

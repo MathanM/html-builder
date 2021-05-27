@@ -5,6 +5,7 @@ import {XdHandleComponent} from "../components/xd-handle/xd-handle.component";
 import {ElementComponent} from "../components/element/element.component";
 import {initArtBoard} from "../models/constant";
 import {take, tap} from "rxjs/operators";
+import {cloneDeep} from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -89,6 +90,27 @@ export class StateService {
         this.activeItem.next('');
       })
     ).subscribe();
+  }
+  copyElement(elementId: string){
+    const id = this.randomId(6);
+    const xdId = 'element-'+id;
+    combineLatest([
+      this.styleData,
+      this.activeLayer
+    ]).pipe(
+      take(1),
+      tap(([styleData, activeLayer]) => {
+        styleData[xdId] = cloneDeep(styleData[elementId]);
+        //this.styleData.next(styleData);
+        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ElementComponent);
+        let componentRef: ComponentRef<ElementComponent>;
+        componentRef = this.artBoardViewContainer.createComponent<ElementComponent>(componentFactory);
+        componentRef.instance.xdId = id;
+        setTimeout(() => {
+          this.activeItem.next(xdId);
+        })
+      })
+    )
   }
   updateAllChildren(childId: string, activeLayer: LayerModel){
     activeLayer.allChildren?.push(childId);
