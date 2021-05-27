@@ -1,17 +1,14 @@
 import {
-  AfterViewInit,
   Component,
   ComponentFactoryResolver,
   ElementRef,
   HostListener,
   OnDestroy,
   OnInit,
-  Renderer2,
-  ViewChild,
-  ViewContainerRef
+  Renderer2
 } from '@angular/core';
 import {StateService} from "../../services/state.service";
-import {takeUntil, tap} from "rxjs/operators";
+import {pluck, takeUntil, tap} from "rxjs/operators";
 import {pick} from 'lodash';
 import {ElementHelperDirective} from "../../directives/element-helper.directive";
 
@@ -22,11 +19,11 @@ import {ElementHelperDirective} from "../../directives/element-helper.directive"
 })
 export class ElementComponent extends ElementHelperDirective implements OnInit, OnDestroy {
   elementData!: any;
-
+  type = 'element';
   @HostListener('mousedown', ['$event'])
   onElementClick(e: MouseEvent): void {
     e.stopPropagation();
-    this.state.activeItem.next('element-'+this.xdId);
+    this.state.activeItem.next(this.type+'-'+this.xdId);
   }
 
   styleChange = () => {
@@ -45,7 +42,7 @@ export class ElementComponent extends ElementHelperDirective implements OnInit, 
         'marginBottom'
       ]
     );
-    this.state.updateStyleData('element-'+this.xdId, elementData);
+    this.state.updateStyleData(this.type+'-'+this.xdId, elementData);
   }
   styleObserver$ = new MutationObserver(this.styleChange);
 
@@ -62,10 +59,11 @@ export class ElementComponent extends ElementHelperDirective implements OnInit, 
     super.ngOnInit();
     this.watchStyles();
     this.state.styleData.pipe(
-      tap((styleData: any) => {
-        if(styleData[`element-${this.xdId}`]){
+      pluck(`${this.type}-${this.xdId}`),
+      tap((elementStyle: any) => {
+        if(elementStyle){
           this.watchStyles(false);
-          this.elementData = styleData[`element-${this.xdId}`];
+          this.elementData = elementStyle;
           this.updateStyles();
           setTimeout(() => {
             this.watchStyles();
@@ -101,11 +99,11 @@ export class ElementComponent extends ElementHelperDirective implements OnInit, 
     }
   }
   deleteElement(){
-    this.state.deleteElement('element-'+this.xdId);
+    this.state.deleteElement(this.type+'-'+this.xdId);
     this.elementRef.nativeElement.remove();
   }
   copyElement(){
-    this.state.copyElement('element-'+this.xdId);
+    this.state.copyElement(this.type+'-'+this.xdId);
   }
   ngOnDestroy(): void {
     super.ngOnDestroy();

@@ -9,7 +9,7 @@
   <ng-container *ngIf="activeTab == 'artboard'">
     <app-art-board-nav></app-art-board-nav>
   </ng-container>
-  <ng-container *ngIf="activeTab.indexOf('element') != -1">
+  <ng-container *ngIf="activeTab.indexOf('element') != -1 || activeTab.indexOf('text') != -1">
     <app-element-nav [elementId]="activeTab"></app-element-nav>
   </ng-container>
 </app-side-nav>

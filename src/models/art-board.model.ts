@@ -29,6 +29,7 @@ export type ElementModel = {
   maxWidth?: string;
   minHeight?: string;
   maxHeight?: string;
+  text?: string;
 }
 export interface LayerModel {
   expanded?: boolean;

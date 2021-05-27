@@ -16,6 +16,6 @@ export class XdWidgetComponent implements OnInit {
     this.state.createElement();
   }
   createText(){
-    //this.state.createText();
+    this.state.createText();
   }
 }

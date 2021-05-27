@@ -6,6 +6,7 @@ import {ElementComponent} from "../components/element/element.component";
 import {initArtBoard} from "../models/constant";
 import {take, tap} from "rxjs/operators";
 import {cloneDeep} from 'lodash';
+import {TextElementComponent} from "../components/text-element/text-element.component";
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,43 @@ export class StateService {
     let result = '';
     for (let i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
     return result;
+  }
+  createText(){
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(TextElementComponent);
+    const xdId = this.randomId(6);
+    let componentRef: ComponentRef<TextElementComponent>;
+    let activeElement;
+    combineLatest([
+      this.activeItem,
+      this.activeLayer
+    ]).pipe(
+      take(1),
+      tap(([activeItem, activeLayer]) => {
+        activeElement = activeItem;
+        let newLayer: LayerModel = {
+          elementId: `text-${xdId}`,
+          parentId: activeLayer,
+          label: 'p',
+          sortOrder: activeLayer.children?.length || 1,
+          children: [],
+          allChildren: [],
+          expandedIcon: "pi pi-list",
+          collapsedIcon: "pi pi-list",
+          tag:'p'
+        };
+        activeLayer.children?.push(newLayer);
+        this.updateAllChildren(newLayer.elementId, activeLayer);
+      }),
+    ).subscribe();
+    if (this.activeViewContainer && activeElement != 'artboard' ) {
+      componentRef = this.activeViewContainer.createComponent<TextElementComponent>(componentFactory);
+    } else {
+      componentRef = this.artBoardViewContainer.createComponent<TextElementComponent>(componentFactory);
+    }
+    componentRef.instance.xdId = xdId;
+    setTimeout(() => {
+      this.activeItem.next(`text-${xdId}`);
+    })
   }
   createElement(){
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ElementComponent);

@@ -11,15 +11,15 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Directive({
-  selector: '[contenteditable]',
+  selector: '[editableDiv]',
   providers:
     [
-      {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ContenteditableDirective), multi: true}
+      {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => EditableDivDirective), multi: true}
     ]
 })
-export class ContenteditableDirective implements ControlValueAccessor {
+export class EditableDivDirective implements ControlValueAccessor {
   @Input() propValueAccessor = 'textContent';
-  @HostBinding('attr.contenteditable') @Input() contenteditable = true;
+  @HostBinding('attr.contenteditable') @Input() editableDiv = true;
 
   private onChange!: (value: string) => void;
   private onTouched!: () => void;

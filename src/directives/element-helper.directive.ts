@@ -19,6 +19,7 @@ import {eventPosition} from "../models/constant";
 })
 export class ElementHelperDirective implements OnInit, OnDestroy {
   _property: string = 'size';
+  type!: string;
   @HostBinding('attr.xd-id')
   @Input() xdId!: string;
   @Input() set property(prop: string){
@@ -61,7 +62,7 @@ export class ElementHelperDirective implements OnInit, OnDestroy {
     this.state.activeItem.pipe(
       distinctUntilChanged(),
       tap((activeTab) => {
-        this.active = activeTab == 'element-'+this.xdId;
+        this.active = activeTab == this.type+'-'+this.xdId;
         if(this.active){
           this.createDragHandles();
           this.state.activeViewContainer = this.elementContainer;

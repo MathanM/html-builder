@@ -1,18 +1,3 @@
-<!--<ul class="layer-group-start" *ngIf="layersData">-->
-<!--  <ng-container-->
-<!--    *ngTemplateOutlet="layerGroup; context:{ layers: layersData }"-->
-<!--  ></ng-container>-->
-<!--</ul>-->
-<!--<ng-template #layerGroup let-layers="layers">-->
-<!--  <li class="layer-item" *ngFor="let layer of layers" >-->
-<!--    <a [class.active]="layer.selected" (click)="onLayerClick(layer)">{{ layer.label }}</a>-->
-<!--    <ul class="layer-group" *ngIf="layer.children && layer.children.length > 0">-->
-<!--      <ng-container-->
-<!--        *ngTemplateOutlet="layerGroup; context:{ layers: layer.children }"-->
-<!--      ></ng-container>-->
-<!--    </ul>-->
-<!--  </li>-->
-<!--</ng-template>-->
 <ng-container *ngIf="layersData">
   <p-tree
     [value]="$any(layersData)"
@@ -26,7 +11,7 @@
     (onNodeDrop)="onDragDropLayer($event.dragNode, $event.dropNode, $event.index)"
   >
     <ng-template let-node pTemplate="default">
-      <div class="layer-label" [contenteditable]="true" [(ngModel)]="node.label" (blur)="onLabelChange(node)"></div>
+      <div class="layer-label" [editableDiv]="true" [(ngModel)]="node.label" (blur)="onLabelChange(node)"></div>
     </ng-template>
   </p-tree>
 </ng-container>
