@@ -1,0 +1,13 @@
+.icon-sm{
+  cursor: pointer;
+  filter: brightness(1.2);
+  &.active{
+    filter: brightness(1) sepia(0.5) saturate(100) hue-rotate(
+        225deg
+    );
+  }
+}
+.text-right{
+  transform: rotate(180deg);
+  transform-origin: center;
+}

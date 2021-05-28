@@ -5,6 +5,24 @@ export type ArtBoardModel = {
   zoom: number;
   designHelper: any;
 }
+export type TextModel = {
+  textAlign?: string;
+  color?: string;
+  lineHeight?: string;
+  fontSize?: string;
+  fontFamily?: string;
+  textTransform?: string;
+  width?: string;
+  height?: string;
+  paddingLeft?: string;
+  paddingRight?: string;
+  paddingTop?: string;
+  paddingBottom?: string;
+  marginLeft?: string;
+  marginRight?: string;
+  marginTop?: string;
+  marginBottom?: string;
+}
 export type ElementModel = {
   width?: string;
   height?: string;

@@ -27,6 +27,7 @@ import {XdMenuComponent} from "../components/xd-menu/xd-menu.component";
 import {TreeModule} from "primeng/tree";
 import { EditableDivDirective} from "../directives/content-editable.directive";
 import {TextElementComponent} from "../components/text-element/text-element.component";
+import {TextNavComponent} from "../components/text-nav/text-nav.component";
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import {TextElementComponent} from "../components/text-element/text-element.comp
     XdIconComponent,
     XdWidgetComponent,
     XdMenuComponent,
-    EditableDivDirective
+    EditableDivDirective,
+    TextNavComponent
   ],
   imports: [
     BrowserModule,
