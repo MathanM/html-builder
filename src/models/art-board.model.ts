@@ -56,7 +56,6 @@ export interface LayerModel {
   expanded?: boolean;
   children?: LayerModel[] | null;
   allChildren?: string[] | null;
-  parentId?: LayerModel | null;
   elementId: string;
   selected?: boolean;
   label: string;

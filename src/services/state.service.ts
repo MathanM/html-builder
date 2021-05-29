@@ -36,9 +36,9 @@ export class StateService {
     this.styleData.next({ ...styleData, [id]: elementData });
   }
 
-  createText(){
+  createText(id?: string, isImport?: boolean){
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(TextElementComponent);
-    const xdId = randomId(6);
+    const xdId = id || ('text-'+randomId(6));
     let componentRef: ComponentRef<TextElementComponent>;
     let activeElement;
     combineLatest([
@@ -48,34 +48,35 @@ export class StateService {
       take(1),
       tap(([activeItem, activeLayer]) => {
         activeElement = activeItem;
-        let newLayer: LayerModel = {
-          elementId: `text-${xdId}`,
-          parentId: activeLayer,
-          label: 'p',
-          sortOrder: activeLayer.children?.length || 1,
-          children: [],
-          allChildren: [],
-          expandedIcon: "xd xd-text",
-          collapsedIcon: "xd xd-text",
-          tag:'p'
-        };
-        activeLayer.children?.push(newLayer);
-        this.updateAllChildren(newLayer.elementId, activeLayer);
+        if(!isImport) {
+          let newLayer: LayerModel = {
+            elementId: xdId,
+            label: 'p',
+            sortOrder: activeLayer.children?.length || 1,
+            children: [],
+            allChildren: [],
+            expandedIcon: "xd xd-text",
+            collapsedIcon: "xd xd-text",
+            tag: 'p'
+          };
+          activeLayer.children?.push(newLayer);
+          this.updateAllChildren(newLayer.elementId, activeLayer);
+        }
+        if (this.activeViewContainer && activeElement != 'artboard' ) {
+          componentRef = this.activeViewContainer.createComponent<TextElementComponent>(componentFactory);
+        } else {
+          componentRef = this.artBoardViewContainer.createComponent<TextElementComponent>(componentFactory);
+        }
+        componentRef.instance.xdId = xdId.split("-")[1];
+        setTimeout(() => {
+          this.activeItem.next(xdId);
+        })
       }),
     ).subscribe();
-    if (this.activeViewContainer && activeElement != 'artboard' ) {
-      componentRef = this.activeViewContainer.createComponent<TextElementComponent>(componentFactory);
-    } else {
-      componentRef = this.artBoardViewContainer.createComponent<TextElementComponent>(componentFactory);
-    }
-    componentRef.instance.xdId = xdId;
-    setTimeout(() => {
-      this.activeItem.next(`text-${xdId}`);
-    })
   }
-  createElement(){
+  createElement(id?: string, isImport?: boolean){
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ElementComponent);
-    const xdId = randomId(6);
+    const xdId = id || ('element-'+randomId(6));
     let componentRef: ComponentRef<ElementComponent>;
     let activeElement;
     combineLatest([
@@ -85,30 +86,31 @@ export class StateService {
       take(1),
       tap(([activeItem, activeLayer]) => {
         activeElement = activeItem;
-        let newLayer: LayerModel = {
-          elementId: `element-${xdId}`,
-          parentId: activeLayer,
-          label: 'div',
-          sortOrder: activeLayer.children?.length || 1,
-          children: [],
-          allChildren: [],
-          expandedIcon: "pi pi-folder-open",
-          collapsedIcon: "pi pi-folder",
-          tag:'div'
-        };
-        activeLayer.children?.push(newLayer);
-        this.updateAllChildren(newLayer.elementId, activeLayer);
+        if(!isImport){
+          let newLayer: LayerModel = {
+            elementId: xdId,
+            label: 'div',
+            sortOrder: activeLayer.children?.length || 1,
+            children: [],
+            allChildren: [],
+            expandedIcon: "pi pi-folder-open",
+            collapsedIcon: "pi pi-folder",
+            tag:'div'
+          };
+          activeLayer.children?.push(newLayer);
+          this.updateAllChildren(newLayer.elementId, activeLayer);
+        }
+        if (this.activeViewContainer && activeElement != 'artboard' ) {
+          componentRef = this.activeViewContainer.createComponent<ElementComponent>(componentFactory);
+        } else {
+          componentRef = this.artBoardViewContainer.createComponent<ElementComponent>(componentFactory);
+        }
+        componentRef.instance.xdId = xdId.split("-")[1];
+        setTimeout(() => {
+          this.activeItem.next(xdId);
+        });
       })
     ).subscribe();
-    if (this.activeViewContainer && activeElement != 'artboard' ) {
-      componentRef = this.activeViewContainer.createComponent<ElementComponent>(componentFactory);
-    } else {
-      componentRef = this.artBoardViewContainer.createComponent<ElementComponent>(componentFactory);
-    }
-    componentRef.instance.xdId = xdId;
-    setTimeout(() => {
-      this.activeItem.next(`element-${xdId}`);
-    })
   }
   deleteElement(id: string){
     combineLatest([
@@ -147,8 +149,8 @@ export class StateService {
   }
   updateAllChildren(childId: string, activeLayer: LayerModel){
     activeLayer.allChildren?.push(childId);
-    if(activeLayer.parentId){
-      this.updateAllChildren(childId, activeLayer.parentId);
+    if(activeLayer.parent){
+      this.updateAllChildren(childId, activeLayer.parent);
     }
   }
   deleteLayer(id: string, layerData: LayerModel[] | undefined | null){

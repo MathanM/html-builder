@@ -1,1 +1,6 @@
+<input
+  style="display: none"
+  type="file" (change)="onImport($event)"
+  #fileInput>
+<button class="xd-button xd-mr-10" (click)="fileInput.click()">Import</button>
 <button class="xd-button" (click)="onSave()">Save</button>

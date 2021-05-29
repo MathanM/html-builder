@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {StateService} from "../../services/state.service";
 import {combineLatest} from "rxjs";
 import {take, tap} from "rxjs/operators";
+import {LayerModel} from "../../models/art-board.model";
 
 @Component({
   selector: 'app-top-nav',
@@ -34,9 +35,39 @@ export class TopNavComponent implements OnInit {
     ).subscribe();
   }
   replacer(key: string, value: any){
-    if(key == 'parent' || key == 'parentId'){
+    // for eliminating circular json
+    if(key == 'parent'){
       return null;
     }
     return value
+  }
+  onImport(e: any){
+    const jsonFile = e.target.files[0];
+    const fileReader: FileReader = new FileReader();
+    fileReader.readAsText(jsonFile, "UTF-8");
+    fileReader.onload = () => {
+      const response = JSON.parse(fileReader.result as string);
+      this.state.styleData.next(response.styleData);
+      this.state.layersData.next(response.layerData);
+      this.createBody(response.layerData[0].children)
+    }
+    fileReader.onerror = (error) => {
+      console.log(error);
+    }
+  }
+  createBody(layerData: LayerModel[] | null | undefined){
+    if(layerData && layerData.length > 0){
+      layerData.forEach(layer => {
+        //wait for viewContainerRef
+        setTimeout(() => {
+          if(layer.elementId.indexOf("element-") != -1){
+            this.state.createElement(layer.elementId, true);
+          }else if(layer.elementId.indexOf("text-") != -1){
+            this.state.createText(layer.elementId, true);
+          }
+          this.createBody(layer.children);
+        });
+      });
+    }
   }
 }

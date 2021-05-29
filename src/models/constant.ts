@@ -3,7 +3,6 @@ import {LayerModel} from "./art-board.model";
 export const initArtBoard: LayerModel = {
   expanded: true,
   sortOrder: 1,
-  parentId: null,
   elementId: 'artboard',
   label: 'body',
   icon: "pi pi-inbox",
