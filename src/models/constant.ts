@@ -57,3 +57,24 @@ export const object2css = (cssObject: any) => {
   const props = Object.keys(cssObject).map(property => `${camel2KebabCase(property)}: ${cssObject[property]};`);
   return props.join("\n");
 }
+export const fetchSelection = (): any => {
+  const e = document.getSelection();
+  if(e && e.type === "Range"){
+    const startIndex = e.anchorOffset;
+    const endIndex = e.anchorNode === e.focusNode ? e.focusOffset: (e.anchorNode?.nodeValue?.length || 0);
+    const textNode = e.anchorNode;
+    const selectedText = textNode?.nodeValue?.substring(startIndex, endIndex);
+    const textNodes = textNode?.nodeValue?.split(selectedText || "");
+    if(textNodes){
+      const startNode = document.createTextNode(textNodes[0]);
+      const endNode = document.createTextNode(textNodes[1]);
+      return {startNode, endNode, selectedText, textNode}
+    }
+  }
+}
+export const randomId = (length: number): string => {
+  let chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let result = '';
+  for (let i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+  return result;
+}

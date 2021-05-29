@@ -26,6 +26,9 @@ input[type=number] {
 .xd-f-center{
   justify-content: center;
 }
+.xd-f-sb{
+  justify-content: space-between;
+}
 .xd-gap-20{
   gap: 20px !important;
 }
@@ -88,6 +91,7 @@ input[type=number] {
   ul{
     list-style: none;
     padding: 5px 0;
+    user-select: none;
     li{
       font-size: var(--font-m);
       color: var(--dark-color-2);

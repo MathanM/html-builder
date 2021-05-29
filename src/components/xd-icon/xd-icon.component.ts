@@ -7,8 +7,8 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class XdIconComponent implements OnInit {
   @Input() icon!: string;
-  @Input() width: number = 20;
-  @Input() height: number = 20;
+  @Input() width!: number;
+  @Input() height!: number;
   @Input() tag: string = 'img';
   constructor() { }
 

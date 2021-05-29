@@ -3,7 +3,7 @@ import {BehaviorSubject, combineLatest, Subject} from "rxjs";
 import {LayerModel} from "../models/art-board.model";
 import {XdHandleComponent} from "../components/xd-handle/xd-handle.component";
 import {ElementComponent} from "../components/element/element.component";
-import {initArtBoard} from "../models/constant";
+import {initArtBoard, randomId} from "../models/constant";
 import {take, tap} from "rxjs/operators";
 import {cloneDeep} from 'lodash';
 import {TextElementComponent} from "../components/text-element/text-element.component";
@@ -35,15 +35,10 @@ export class StateService {
     const elementData = {...styleData[id], ...data};
     this.styleData.next({ ...styleData, [id]: elementData });
   }
-  randomId(length: number): string {
-    let chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    let result = '';
-    for (let i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
-    return result;
-  }
+
   createText(){
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(TextElementComponent);
-    const xdId = this.randomId(6);
+    const xdId = randomId(6);
     let componentRef: ComponentRef<TextElementComponent>;
     let activeElement;
     combineLatest([
@@ -80,7 +75,7 @@ export class StateService {
   }
   createElement(){
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ElementComponent);
-    const xdId = this.randomId(6);
+    const xdId = randomId(6);
     let componentRef: ComponentRef<ElementComponent>;
     let activeElement;
     combineLatest([
@@ -130,7 +125,7 @@ export class StateService {
     ).subscribe();
   }
   copyElement(elementId: string){
-    const id = this.randomId(6);
+    const id = randomId(6);
     const xdId = 'element-'+id;
     combineLatest([
       this.styleData,

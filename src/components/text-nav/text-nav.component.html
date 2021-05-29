@@ -1,38 +1,83 @@
 <form #textForm="ngForm">
-  <nav-card title="Transform">
+  <nav-card title="Transform" *ngIf="textId.indexOf('inline-text') == -1">
     <div class="xd-flex xd-gap-20">
       <xd-input type="number" label="W" name="width" [(ngModel)]="element.width" unit="px"></xd-input>
       <xd-input type="number" label="H" name="height" [(ngModel)]="element.height" unit="px"></xd-input>
     </div>
     <nav-tabs [tabs]="['Padding','Margin']" [(tab)]="transformTab" (tabChange)="onTabChange()"></nav-tabs>
     <div [class.xd-hidden]="transformTab != 'Padding'" class="xd-flex xd-gap-10">
-      <xd-input class="input-col" type="number" label="PT" [width]="43" name="paddingTop" [(ngModel)]="element.paddingTop" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="PR" [width]="43" name="paddingRight" [(ngModel)]="element.paddingRight" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="PB" [width]="43" name="paddingBottom" [(ngModel)]="element.paddingBottom" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="PL" [width]="43" name="paddingLeft" [(ngModel)]="element.paddingLeft" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="PT" [width]="43" name="paddingTop"
+                [(ngModel)]="element.paddingTop" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="PR" [width]="43" name="paddingRight"
+                [(ngModel)]="element.paddingRight" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="PB" [width]="43" name="paddingBottom"
+                [(ngModel)]="element.paddingBottom" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="PL" [width]="43" name="paddingLeft"
+                [(ngModel)]="element.paddingLeft" unit="px"></xd-input>
     </div>
     <div [class.xd-hidden]="transformTab != 'Margin'" class="xd-flex xd-gap-10">
-      <xd-input class="input-col" type="number" label="MT" [width]="43" name="marginTop" [(ngModel)]="element.marginTop" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="MR" [width]="43" name="marginRight" [(ngModel)]="element.marginRight" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="MB" [width]="43" name="marginBottom" [(ngModel)]="element.marginBottom" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="ML" [width]="43" name="marginLeft" [(ngModel)]="element.marginLeft" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="MT" [width]="43" name="marginTop" [(ngModel)]="element.marginTop"
+                unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="MR" [width]="43" name="marginRight"
+                [(ngModel)]="element.marginRight" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="MB" [width]="43" name="marginBottom"
+                [(ngModel)]="element.marginBottom" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="ML" [width]="43" name="marginLeft"
+                [(ngModel)]="element.marginLeft" unit="px"></xd-input>
     </div>
   </nav-card>
+  <div class="xd-flex" *ngIf="textId.indexOf('inline-text') == -1">
+    <nav-card class="xd-grow">
+      <div class="xd-flex xd-gap-15 xd-f-sb">
+        <label>Text Align</label>
+        <xd-icon [class.active]="element.textAlign == 'left'" (click)="setStyle({textAlign:'left'}, 'textAlign')"
+                 class="icon-sm" icon="text-left"></xd-icon>
+        <xd-icon [class.active]="element.textAlign == 'center'" (click)="setStyle({textAlign:'center'}, 'textAlign')"
+                 class="icon-sm" icon="text-center"></xd-icon>
+        <xd-icon [class.active]="element.textAlign == 'right'" (click)="setStyle({textAlign:'right'}, 'textAlign')"
+                 class="icon-sm text-right" icon="text-left"></xd-icon>
+        <xd-icon [class.active]="element.textAlign == 'justify'" (click)="setStyle({textAlign:'justify'}, 'textAlign')"
+                 class="icon-sm" icon="text-justify"></xd-icon>
+      </div>
+    </nav-card>
+  </div>
   <div class="xd-flex">
     <nav-card class="xd-grow xd-br-2">
       <div class="xd-flex xd-gap-15 xd-f-center">
-        <xd-icon [class.active]="element.textAlign == 'left'" (click)="setStyle({textAlign:'left'})" class="icon-sm" icon="text-left"></xd-icon>
-        <xd-icon [class.active]="element.textAlign == 'center'" (click)="setStyle({textAlign:'center'})" class="icon-sm" icon="text-center"></xd-icon>
-        <xd-icon [class.active]="element.textAlign == 'right'" (click)="setStyle({textAlign:'right'})" class="icon-sm text-right" icon="text-left"></xd-icon>
-        <xd-icon [class.active]="element.textAlign == 'justify'" (click)="setStyle({textAlign:'justify'})" class="icon-sm" icon="text-justify"></xd-icon>
+        <xd-icon [width]="13" [height]="14" [class.active]="element.textDecoration == 'underline'"
+                 (click)="setStyle({textDecoration:'underline'}, 'textDecoration')" class="icon-sm"
+                 icon="underline"></xd-icon>
+        <xd-icon [width]="13" [height]="14" [class.active]="element.textDecoration == 'overline'"
+                 (click)="setStyle({textDecoration:'overline'}, 'textDecoration')" class="icon-sm"
+                 icon="overline"></xd-icon>
+        <xd-icon [height]="14" [class.active]="element.textDecoration == 'line-through'"
+                 (click)="setStyle({textDecoration:'line-through'}, 'textDecoration')" class="icon-sm"
+                 icon="line-through"></xd-icon>
+        <xd-icon [width]="14" [height]="14" [class.active]="element.fontStyle == 'italic'" (click)="setStyle({fontStyle:'italic'}, 'fontStyle')"
+                 class="icon-sm" icon="italics"></xd-icon>
       </div>
     </nav-card>
     <nav-card class="xd-grow">
       <div class="xd-flex xd-gap-15 xd-f-center">
-        <xd-icon [class.active]="element.textTransform == 'uppercase'" (click)="setStyle({textTransform:'uppercase'})" class="icon-sm " icon="text-upper"></xd-icon>
-        <xd-icon [class.active]="element.textTransform == 'lowercase'" (click)="setStyle({textTransform:'lowercase'})" class="icon-sm " icon="text-lower"></xd-icon>
-        <xd-icon [class.active]="element.textTransform == 'capitalize'" (click)="setStyle({textTransform:'capitalize'})" class="icon-sm " icon="text-title"></xd-icon>
+        <xd-icon [class.active]="element.textTransform == 'uppercase'"
+                 (click)="setStyle({textTransform:'uppercase'}, 'textTransform')" class="icon-sm "
+                 icon="text-upper"></xd-icon>
+        <xd-icon [width]="14" [class.active]="element.textTransform == 'lowercase'"
+                 (click)="setStyle({textTransform:'lowercase'}, 'textTransform')" class="icon-sm "
+                 icon="text-lower"></xd-icon>
+        <xd-icon [class.active]="element.textTransform == 'capitalize'"
+                 (click)="setStyle({textTransform:'capitalize'}, 'textTransform')" class="icon-sm "
+                 icon="text-title"></xd-icon>
       </div>
     </nav-card>
   </div>
+  <nav-card title="Text">
+    <xd-select label="Family" [options]="['']"></xd-select>
+    <div class="xd-flex xd-gap-20">
+      <xd-input type="number" label="Size" [width]="45" name="fontSize" [(ngModel)]="element.fontSize"
+                unit="px"></xd-input>
+      <xd-input type="number" label="Weight" name="fontWeight" [(ngModel)]="element.fontWeight"></xd-input>
+    </div>
+    <xd-color-picker label="Color" name="color" [(ngModel)]="element.color"></xd-color-picker>
+  </nav-card>
 </form>

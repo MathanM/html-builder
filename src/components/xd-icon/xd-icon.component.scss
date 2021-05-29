@@ -1,9 +1,11 @@
 img, object{
   vertical-align: middle;
+  width: 20px;
+  height: 20px;
 }
 :host-context(.icon-sm){
   img, object{
-    width: 15px !important;
-    height: 15px !important;
+    width: 15px;
+    height: 15px;
   }
 }

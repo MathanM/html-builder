@@ -6,5 +6,6 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./xd-select.component.scss']
 })
 export class XdSelectComponent {
+  @Input() label!: string;
   @Input() options: string[] = [];
 }

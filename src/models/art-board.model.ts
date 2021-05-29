@@ -22,6 +22,9 @@ export type TextModel = {
   marginRight?: string;
   marginTop?: string;
   marginBottom?: string;
+  textDecoration?: string;
+  fontStyle?: string;
+  fontWeight?: string;
 }
 export type ElementModel = {
   width?: string;

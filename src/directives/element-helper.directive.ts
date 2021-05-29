@@ -63,7 +63,7 @@ export class ElementHelperDirective implements OnInit, OnDestroy {
       distinctUntilChanged(),
       tap((activeTab) => {
         this.active = activeTab == this.type+'-'+this.xdId;
-        if(this.active){
+        if(this.active && this.type != 'inline-text'){
           this.createDragHandles();
           this.state.activeViewContainer = this.elementContainer;
         }else{

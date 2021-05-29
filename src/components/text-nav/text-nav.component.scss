@@ -7,6 +7,12 @@
     );
   }
 }
+label{
+  font-size: var(--font-s);
+  color: var(--primary-color);
+  letter-spacing: 1px;
+  display: contents;
+}
 .text-right{
   transform: rotate(180deg);
   transform-origin: center;

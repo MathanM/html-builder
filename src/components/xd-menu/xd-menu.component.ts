@@ -7,9 +7,11 @@ import {Component, ElementRef, HostListener, Input, OnInit, TemplateRef} from '@
 })
 export class XdMenuComponent {
   @Input() template!: TemplateRef<any>;
-  @HostListener('document:click')
-  closeMenu(){
-      this.elementRef.nativeElement.remove();
+  @HostListener('document:click', ['$event'])
+  closeMenu(e: PointerEvent){
+    e.preventDefault();
+    e.stopPropagation();
+    this.elementRef.nativeElement.remove();
   }
   constructor(private elementRef: ElementRef) { }
 }

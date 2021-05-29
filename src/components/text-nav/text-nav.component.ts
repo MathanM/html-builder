@@ -16,11 +16,12 @@ export class TextNavComponent implements OnInit, AfterViewInit, OnDestroy {
     textAlign: "left",
     color: "#000",
     lineHeight: "",
-    fontSize: "",
+    fontSize: "16px",
+    fontWeight: "500",
     fontFamily: "",
     textTransform: "",
   }
-  element!: TextModel;
+  element!: TextModel | any;
   transformTab: string = '';
   @ViewChild('textForm', { static: false }) textForm!: NgForm;
   destroy$: Subject<void> = new Subject<void>();
@@ -56,8 +57,12 @@ export class TextNavComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     }
   }
-  setStyle(prop: {[prop: string]: string}){
-    this.element = {...this.element, ...prop};
+  setStyle(prop: {[prop: string]: string}, key?: string){
+    if(key && this.element[key] === prop[key]){
+      this.element[key] = '';
+    }else{
+      this.element = {...this.element, ...prop};
+    }
     this.state.updateStyleData(this.textId, this.element);
   }
   onTabChange(){

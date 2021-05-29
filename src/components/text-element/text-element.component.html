@@ -1,16 +1,12 @@
-<ng-template #handleContainer></ng-template>
+{{textContent}}<ng-template #handleContainer></ng-template>
 <ng-template #elementContainer></ng-template>
-<ng-container *ngIf="!edit; else editTemplate">
-  <p>{{textContent}}</p>
-</ng-container>
-<ng-template #editTemplate>
-  <p [editableDiv]="true" [(ngModel)]="textContent">{{textContent}}</p>
-</ng-template>
+<ng-template #inlineContainer></ng-template>
 <ng-template #contextMenuTemplate>
   <div class="xd-context-menu">
     <ul>
       <li (click)="deleteElement()">Delete</li>
       <li (click)="copyElement()">Copy</li>
+      <li (click)="convertToNode()">Break Text</li>
     </ul>
   </div>
 </ng-template>
