@@ -1,19 +1,23 @@
-<app-side-nav class="xd-flex xd-pl-38 xd-overflow">
-  <xd-widget></xd-widget>
-  <xd-layers class="xd-grow"></xd-layers>
-</app-side-nav>
-<div class="main-content">
-  <router-outlet></router-outlet>
+<app-top-nav></app-top-nav>
+<div class="xd-flex">
+  <app-side-nav class="xd-flex xd-pl-38 xd-overflow">
+    <xd-widget></xd-widget>
+    <xd-layers class="xd-grow xd-pt-10"></xd-layers>
+  </app-side-nav>
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+  <app-side-nav>
+    <ng-container *ngIf="activeTab == 'artboard'">
+      <app-art-board-nav></app-art-board-nav>
+    </ng-container>
+    <ng-container *ngIf="activeTab.indexOf('element') != -1">
+      <app-element-nav [elementId]="activeTab"></app-element-nav>
+    </ng-container>
+    <ng-container *ngIf="activeTab.indexOf('text') != -1">
+      <app-text-nav [textId]="activeTab"></app-text-nav>
+    </ng-container>
+  </app-side-nav>
+  <ng-template #contextContainer></ng-template>
 </div>
-<app-side-nav>
-  <ng-container *ngIf="activeTab == 'artboard'">
-    <app-art-board-nav></app-art-board-nav>
-  </ng-container>
-  <ng-container *ngIf="activeTab.indexOf('element') != -1">
-    <app-element-nav [elementId]="activeTab"></app-element-nav>
-  </ng-container>
-  <ng-container *ngIf="activeTab.indexOf('text') != -1">
-    <app-text-nav [textId]="activeTab"></app-text-nav>
-  </ng-container>
-</app-side-nav>
-<ng-template #contextContainer></ng-template>
+

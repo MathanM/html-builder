@@ -16,7 +16,11 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
-
+.disabled{
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
 .xd-flex{
   display: flex;
 }
@@ -47,8 +51,22 @@ input[type=number] {
 .xd-pl-38{
   padding-left: 38px !important;
 }
+.xd-pt-10{
+  padding-top: 10px !important;
+}
 .xd-overflow{
   overflow: auto;
+}
+.xd-button{
+  background: var(--active-blue);
+  border: 0;
+  outline: 0;
+  color: var(--white);
+  border-radius: 5px;
+  font-size: var(--font-m);
+  height: 25px;
+  padding: 5px 15px;
+  cursor: pointer;
 }
 // handle knob styles
 
@@ -104,4 +122,16 @@ input[type=number] {
       }
     }
   }
+}
+
+// icons
+.xd{
+  width: 13px;
+  height: 13px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.xd-text{
+  background-image: url('assets/icons/text-title.svg');
+  background-position: bottom;
 }

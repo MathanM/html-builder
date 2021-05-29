@@ -13,11 +13,11 @@ import {takeUntil, tap, withLatestFrom} from "rxjs/operators";
 export class TextNavComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() textId: string = 'text-1';
   initValue: TextModel = {
-    textAlign: "left",
-    color: "#000",
+    textAlign: "",
+    color: "",
     lineHeight: "",
-    fontSize: "16px",
-    fontWeight: "500",
+    fontSize: "",
+    fontWeight: "",
     fontFamily: "",
     textTransform: "",
   }
@@ -65,8 +65,11 @@ export class TextNavComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.state.updateStyleData(this.textId, this.element);
   }
-  onTabChange(){
-    this.state.activeUtility.next(this.transformTab);
+  onCardClick(card: string){
+    if(this.transformTab != card){
+      this.transformTab = card;
+      this.state.activeUtility.next(this.transformTab);
+    }
   }
   ngOnDestroy(): void {
     this.destroy$.next();

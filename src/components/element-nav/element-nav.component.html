@@ -32,25 +32,12 @@
     </nav-card>
   </div>
 
-  <nav-card title="Transform">
+  <nav-card title="Transform" (click)="onCardClick('Size')">
     <div class="xd-flex xd-gap-20">
       <xd-input type="number" label="W" name="width" [(ngModel)]="element.width" unit="px"></xd-input>
       <xd-input type="number" label="H" name="height" [(ngModel)]="element.height" unit="px"></xd-input>
     </div>
-    <nav-tabs [tabs]="['Size','Padding','Margin']" [(tab)]="transformTab" (tabChange)="onTabChange()"></nav-tabs>
-    <div [class.xd-hidden]="transformTab != 'Padding'" class="xd-flex xd-gap-10">
-      <xd-input class="input-col" type="number" label="PT" [width]="43" name="paddingTop" [(ngModel)]="element.paddingTop" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="PR" [width]="43" name="paddingRight" [(ngModel)]="element.paddingRight" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="PB" [width]="43" name="paddingBottom" [(ngModel)]="element.paddingBottom" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="PL" [width]="43" name="paddingLeft" [(ngModel)]="element.paddingLeft" unit="px"></xd-input>
-    </div>
-    <div [class.xd-hidden]="transformTab != 'Margin'" class="xd-flex xd-gap-10">
-      <xd-input class="input-col" type="number" label="MT" [width]="43" name="marginTop" [(ngModel)]="element.marginTop" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="MR" [width]="43" name="marginRight" [(ngModel)]="element.marginRight" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="MB" [width]="43" name="marginBottom" [(ngModel)]="element.marginBottom" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="ML" [width]="43" name="marginLeft" [(ngModel)]="element.marginLeft" unit="px"></xd-input>
-    </div>
-    <div [class.xd-hidden]="transformTab != 'Size'">
+    <div>
       <div class="xd-flex xd-gap-20">
         <xd-input type="number" label="Max W" [width]="40" name="maxWidth" [(ngModel)]="element.maxWidth" unit="px"></xd-input>
         <xd-input type="number" label="Max H" [width]="40" name="maxHeight" [(ngModel)]="element.maxHeight" unit="px"></xd-input>
@@ -61,7 +48,31 @@
       </div>
     </div>
   </nav-card>
-  <nav-card title="Appearance">
+  <nav-card title="Margin" (click)="onCardClick('Margin')">
+    <div class="xd-flex xd-gap-10">
+      <xd-input class="input-col" type="number" label="Top" [width]="43" name="marginTop" [(ngModel)]="element.marginTop"
+                unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="Right" [width]="43" name="marginRight"
+                [(ngModel)]="element.marginRight" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="Bottom" [width]="43" name="marginBottom"
+                [(ngModel)]="element.marginBottom" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="Left" [width]="43" name="marginLeft"
+                [(ngModel)]="element.marginLeft" unit="px"></xd-input>
+    </div>
+  </nav-card>
+  <nav-card title="Padding" (click)="onCardClick('Padding')">
+    <div class="xd-flex xd-gap-10">
+      <xd-input class="input-col" type="number" label="Top" [width]="43" name="paddingTop"
+                [(ngModel)]="element.paddingTop" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="Right" [width]="43" name="paddingRight"
+                [(ngModel)]="element.paddingRight" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="Bottom" [width]="43" name="paddingBottom"
+                [(ngModel)]="element.paddingBottom" unit="px"></xd-input>
+      <xd-input class="input-col" type="number" label="Left" [width]="43" name="paddingLeft"
+                [(ngModel)]="element.paddingLeft" unit="px"></xd-input>
+    </div>
+  </nav-card>
+  <nav-card title="Appearance" (click)="onCardClick('Size')">
     <xd-color-picker label="Fill" name="backgroundColor" [(ngModel)]="element.backgroundColor"></xd-color-picker>
     <xd-color-picker label="Border" name="borderColor" [(ngModel)]="element.borderColor"></xd-color-picker>
   </nav-card>

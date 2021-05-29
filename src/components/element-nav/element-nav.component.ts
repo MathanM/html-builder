@@ -76,8 +76,11 @@ export class ElementNavComponent implements OnInit, AfterViewInit, OnDestroy {
     this.element = {...this.element, ...prop};
     this.state.updateStyleData(this.elementId, this.element);
   }
-  onTabChange(){
-    this.state.activeUtility.next(this.transformTab);
+  onCardClick(card: string){
+    if(this.transformTab != card){
+      this.transformTab = card;
+      this.state.activeUtility.next(this.transformTab);
+    }
   }
   ngOnDestroy(): void {
     this.destroy$.next();

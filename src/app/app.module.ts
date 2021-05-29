@@ -28,33 +28,35 @@ import {TreeModule} from "primeng/tree";
 import { EditableDivDirective} from "../directives/content-editable.directive";
 import {TextElementComponent} from "../components/text-element/text-element.component";
 import {TextNavComponent} from "../components/text-nav/text-nav.component";
+import {TopNavComponent} from "../components/top-nav/top-nav.component";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    SideNavComponent,
-    NavCardComponent,
-    ArtBoardComponent,
-    XdInputComponent,
-    XdColorPickerComponent,
-    XdSelectComponent,
-    XdCheckboxComponent,
-    XdFileUploadComponent,
-    ArtBoardNavComponent,
-    ElementComponent,
-    TextElementComponent,
-    ElementNavComponent,
-    ElementHelperDirective,
-    XdHandleComponent,
-    XdLayersComponent,
-    NavTabsComponent,
-    XdIconComponent,
-    XdWidgetComponent,
-    XdMenuComponent,
-    EditableDivDirective,
-    TextNavComponent
-  ],
+    declarations: [
+        AppComponent,
+        HomeComponent,
+        SideNavComponent,
+        NavCardComponent,
+        ArtBoardComponent,
+        XdInputComponent,
+        XdColorPickerComponent,
+        XdSelectComponent,
+        XdCheckboxComponent,
+        XdFileUploadComponent,
+        ArtBoardNavComponent,
+        ElementComponent,
+        TextElementComponent,
+        ElementNavComponent,
+        ElementHelperDirective,
+        XdHandleComponent,
+        XdLayersComponent,
+        NavTabsComponent,
+        XdIconComponent,
+        XdWidgetComponent,
+        XdMenuComponent,
+        EditableDivDirective,
+        TextNavComponent,
+        TopNavComponent
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,

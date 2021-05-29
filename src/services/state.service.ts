@@ -55,8 +55,8 @@ export class StateService {
           sortOrder: activeLayer.children?.length || 1,
           children: [],
           allChildren: [],
-          expandedIcon: "pi pi-list",
-          collapsedIcon: "pi pi-list",
+          expandedIcon: "xd xd-text",
+          collapsedIcon: "xd xd-text",
           tag:'p'
         };
         activeLayer.children?.push(newLayer);

@@ -6,7 +6,7 @@
     <ul>
       <li (click)="deleteElement()">Delete</li>
       <li (click)="copyElement()">Copy</li>
-      <li (click)="convertToNode()">Break Text</li>
+      <li [class.disabled]="breakTextDisabled()" (click)="convertToNode()">Break Text</li>
     </ul>
   </div>
 </ng-template>

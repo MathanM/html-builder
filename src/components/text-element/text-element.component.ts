@@ -57,18 +57,24 @@ export class TextElementComponent extends ElementComponent implements OnInit, On
   }
   convertToNode(): void{
     const selection: any = fetchSelection();
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(TextElementComponent);
-    const xdId = randomId(6);
-    let componentRef: ComponentRef<TextElementComponent>;
-    componentRef = this.inlineContainer.createComponent<TextElementComponent>(componentFactory);
-    componentRef.instance.xdId = xdId;
-    componentRef.instance.textContent = selection.selectedText;
-    componentRef.instance.type = 'inline-text';
-    this.renderer.addClass(componentRef.location.nativeElement, 'inline');
-    this.renderer.removeChild(this.elementRef.nativeElement,selection.textNode);
-    this.renderer.appendChild(this.elementRef.nativeElement, selection.startNode);
-    this.renderer.appendChild(this.elementRef.nativeElement, componentRef.location.nativeElement);
-    this.renderer.appendChild(this.elementRef.nativeElement, selection.endNode);
+    if(selection){
+      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(TextElementComponent);
+      const xdId = randomId(6);
+      let componentRef: ComponentRef<TextElementComponent>;
+      componentRef = this.inlineContainer.createComponent<TextElementComponent>(componentFactory);
+      componentRef.instance.xdId = xdId;
+      componentRef.instance.textContent = selection.selectedText;
+      componentRef.instance.type = 'inline-text';
+      this.renderer.addClass(componentRef.location.nativeElement, 'inline');
+      this.renderer.removeChild(this.elementRef.nativeElement,selection.textNode);
+      this.renderer.appendChild(this.elementRef.nativeElement, selection.startNode);
+      this.renderer.appendChild(this.elementRef.nativeElement, componentRef.location.nativeElement);
+      this.renderer.appendChild(this.elementRef.nativeElement, selection.endNode);
+    }
+  }
+  breakTextDisabled(): boolean{
+    const sel = document.getSelection();
+    return !(sel?.type === "Range")
   }
   ngOnDestroy(): void{
     super.ngOnDestroy();
