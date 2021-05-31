@@ -1,16 +1,22 @@
 import {
+  AfterViewInit,
   Component,
-  ComponentFactoryResolver, ComponentRef,
-  ElementRef, HostBinding,
-  HostListener, Input,
+  ComponentFactoryResolver,
+  ComponentRef,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  Input,
   OnDestroy,
   OnInit,
-  Renderer2, ViewChild, ViewContainerRef
+  Renderer2,
+  ViewChild,
+  ViewContainerRef
 } from '@angular/core';
 import {StateService} from "../../services/state.service";
 import {ElementComponent} from "../element/element.component";
-import {distinctUntilChanged, takeUntil, tap} from "rxjs/operators";
 import {fetchSelection, randomId} from "../../models/constant";
+import {textNode} from "../../models/art-board.model";
 
 @Component({
   selector: 'text-element',
@@ -19,11 +25,9 @@ import {fetchSelection, randomId} from "../../models/constant";
 })
 export class TextElementComponent extends ElementComponent implements OnInit, OnDestroy {
   @Input() type='text';
-  @Input() textContent = 'Lorem Ipsum'
-  @ViewChild('inlineContainer', { read: ViewContainerRef }) inlineContainer!: ViewContainerRef;
   @HostBinding('class.editable')
   @HostBinding('attr.contenteditable') edit = false;
-
+  @Input() textNodes: Array<string | textNode> = ["Lorem Ipsum"];
   constructor(
     protected elementRef: ElementRef,
     protected renderer: Renderer2,
@@ -40,43 +44,67 @@ export class TextElementComponent extends ElementComponent implements OnInit, On
     this.edit = true;
   }
 
-  @HostListener('input', ['$event'])
-  onEdit(e: Event){
-    console.log(e);
+  @HostListener('blur', ['$event'])
+  onBlur(e: Event){
+    e.preventDefault();
+    e.stopPropagation();
+    const target: any = e.target;
+    this.textNodes = this.getTextNodes(target.childNodes);
+    this.state.updateStyleData(this.type+"-"+this.xdId, { textNodes: this.textNodes });
   }
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.state.activeItem.pipe(
-      distinctUntilChanged(),
-      tap(() => {
-        this.edit = false;
-      }),
-      takeUntil(this.destroy$)
-    ).subscribe();
   }
-  convertToNode(): void{
+
+  breakTextNode(): void{
     const selection: any = fetchSelection();
     if(selection){
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(TextElementComponent);
-      const xdId = randomId(6);
-      let componentRef: ComponentRef<TextElementComponent>;
-      componentRef = this.inlineContainer.createComponent<TextElementComponent>(componentFactory);
-      componentRef.instance.xdId = xdId;
-      componentRef.instance.textContent = selection.selectedText;
-      componentRef.instance.type = 'inline-text';
-      this.renderer.addClass(componentRef.location.nativeElement, 'inline');
-      this.renderer.removeChild(this.elementRef.nativeElement,selection.textNode);
-      this.renderer.appendChild(this.elementRef.nativeElement, selection.startNode);
-      this.renderer.appendChild(this.elementRef.nativeElement, componentRef.location.nativeElement);
-      this.renderer.appendChild(this.elementRef.nativeElement, selection.endNode);
+      const i = this.textNodes.findIndex((node) => node === selection.textNode.nodeValue);
+      this.textNodes.splice(i, 1);
+      this.textNodes.splice(i, 0, selection.startNode.nodeValue, {
+        id: randomId(6),
+        textNodes: [selection.selectedText]
+      }, selection.endNode.nodeValue);
+      this.state.updateStyleData(this.type + "-" + this.xdId, {textNodes: this.textNodes});
     }
   }
   breakTextDisabled(): boolean{
     const sel = document.getSelection();
     return !(sel?.type === "Range")
   }
+  onActiveItem() {
+    super.onActiveItem();
+    this.edit = false;
+  }
+  getTextNodes(nodes: any[]){
+    const textNodes: any[] = [];
+    if(nodes && nodes.length > 0){
+      nodes.forEach((node: any) => {
+        if(node.nodeName == "#text"){
+          textNodes.push(node.nodeValue);
+        }else if(node.nodeName == "TEXT-ELEMENT"){
+          const subNodes = this.getTextNodes(node.childNodes);
+          textNodes.push({
+            id: node.getAttribute('xd-id'),
+            textNodes: subNodes
+          });
+        }
+      });
+    }
+    return textNodes;
+  }
+
+  onStyleData(){
+    super.onStyleData();
+    if(this.elementData.text){
+      this.textNodes = this.elementData.textNodes;
+    }
+  }
   ngOnDestroy(): void{
     super.ngOnDestroy();
+  }
+  getNodeType(node: string | textNode): boolean{
+    return typeof node !== "string";
   }
 }

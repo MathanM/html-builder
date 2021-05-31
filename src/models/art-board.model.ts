@@ -25,6 +25,7 @@ export type TextModel = {
   textDecoration?: string;
   fontStyle?: string;
   fontWeight?: string;
+  textNodes?: Array<string | textNode>;
 }
 export type ElementModel = {
   width?: string;
@@ -50,7 +51,6 @@ export type ElementModel = {
   maxWidth?: string;
   minHeight?: string;
   maxHeight?: string;
-  text?: string;
 }
 export interface LayerModel {
   expanded?: boolean;
@@ -67,6 +67,10 @@ export interface LayerModel {
   id?: string;
   tag?: string;
   parent?: any;
+}
+export interface textNode {
+  id: string;
+  textNodes: Array<string | textNode>;
 }
 export interface FileUploadEvent {
   name: string;

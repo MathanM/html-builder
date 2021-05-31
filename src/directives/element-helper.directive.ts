@@ -62,6 +62,7 @@ export class ElementHelperDirective implements OnInit, OnDestroy {
     this.state.activeItem.pipe(
       distinctUntilChanged(),
       tap((activeTab) => {
+        this.onActiveItem();
         this.active = activeTab == this.type+'-'+this.xdId;
         if(this.active && this.type != 'inline-text'){
           this.createDragHandles();
@@ -113,4 +114,5 @@ export class ElementHelperDirective implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+  onActiveItem(){}
 }

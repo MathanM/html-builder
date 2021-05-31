@@ -65,6 +65,7 @@ export class ElementComponent extends ElementHelperDirective implements OnInit, 
           this.watchStyles(false);
           this.elementData = elementStyle;
           this.updateStyles();
+          this.onStyleData();
           setTimeout(() => {
             this.watchStyles();
           })
@@ -105,6 +106,7 @@ export class ElementComponent extends ElementHelperDirective implements OnInit, 
   copyElement(){
     this.state.copyElement(this.type+'-'+this.xdId);
   }
+  onStyleData(){}
   ngOnDestroy(): void {
     super.ngOnDestroy();
     this.destroy$.next();
