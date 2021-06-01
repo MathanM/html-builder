@@ -62,10 +62,10 @@ export class TextElementComponent extends ElementComponent implements OnInit, On
     if(selection){
       const i = this.textNodes.findIndex((node) => node === selection.textNode.nodeValue);
       this.textNodes.splice(i, 1);
-      this.textNodes.splice(i, 0, selection.startNode.nodeValue, {
+      this.textNodes.splice(i, 0, selection.startText, {
         id: randomId(6),
         textNodes: [selection.selectedText]
-      }, selection.endNode.nodeValue);
+      }, selection.endText);
       this.state.updateStyleData(this.type + "-" + this.xdId, {textNodes: this.textNodes});
     }
   }

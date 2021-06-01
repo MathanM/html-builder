@@ -65,9 +65,7 @@ export const fetchSelection = (): any => {
     const selectedText = textNode?.nodeValue?.substring(startIndex, endIndex);
     const textNodes = textNode?.nodeValue?.split(selectedText || "");
     if(textNodes){
-      const startNode = document.createTextNode(textNodes[0]);
-      const endNode = document.createTextNode(textNodes[1]);
-      return {startNode, endNode, selectedText, textNode}
+      return {startText: textNodes[0], endText: textNodes[1], selectedText, textNode}
     }
   }
 }
