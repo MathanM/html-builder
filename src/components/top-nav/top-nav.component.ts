@@ -53,17 +53,7 @@ export class TopNavComponent implements OnInit {
   }
   createBody(layerData: LayerModel[] | null | undefined){
     if(layerData && layerData.length > 0){
-      layerData.forEach(layer => {
-        //wait for viewContainerRef
-        setTimeout(() => {
-          if(layer.elementId.indexOf("element-") != -1){
-            this.state.createElement(layer.elementId, true);
-          }else if(layer.elementId.indexOf("text-") != -1){
-            this.state.createText(layer.elementId, true);
-          }
-          this.createBody(layer.children);
-        });
-      });
+      this.state.createElements(layerData);
     }
   }
 }

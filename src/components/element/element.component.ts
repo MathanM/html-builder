@@ -106,6 +106,9 @@ export class ElementComponent extends ElementHelperDirective implements OnInit, 
   copyElement(){
     this.state.copyElement(this.type+'-'+this.xdId);
   }
+  pasteElement(){
+    this.state.pasteElement();
+  }
   onStyleData(){}
   ngOnDestroy(): void {
     super.ngOnDestroy();

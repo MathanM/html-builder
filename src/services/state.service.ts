@@ -28,6 +28,10 @@ export class StateService {
   layersData: BehaviorSubject<LayerModel[]> = new BehaviorSubject<LayerModel[]>([initArtBoard]);
   activeLayer: BehaviorSubject<LayerModel> = new BehaviorSubject<LayerModel>(initArtBoard);
   activeUtility: BehaviorSubject<string> = new BehaviorSubject<string>('Size');
+  copyData: any = {
+    styleData: {},
+    layersData: []
+  };
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
   updateStyleData(id: string, data: any){
@@ -127,6 +131,10 @@ export class StateService {
     ).subscribe();
   }
   copyElement(elementId: string){
+    this.copyData = {
+      styleData: {},
+      layersData: []
+    }
     const id = randomId(6);
     const xdId = 'element-'+id;
     combineLatest([
@@ -135,17 +143,13 @@ export class StateService {
     ]).pipe(
       take(1),
       tap(([styleData, activeLayer]) => {
-        styleData[xdId] = cloneDeep(styleData[elementId]);
-        //this.styleData.next(styleData);
-        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ElementComponent);
-        let componentRef: ComponentRef<ElementComponent>;
-        componentRef = this.artBoardViewContainer.createComponent<ElementComponent>(componentFactory);
-        componentRef.instance.xdId = id;
-        setTimeout(() => {
-          this.activeItem.next(xdId);
-        })
+        this.copyData.styleData[xdId] = cloneDeep(styleData[elementId]);
+        const layers: LayerModel = cloneDeep(activeLayer);
+        layers.elementId = xdId;
+        layers.allChildren = this.copySubLayers(layers.children, styleData);
+        this.copyData.layersData = layers;
       })
-    )
+    ).subscribe();
   }
   updateAllChildren(childId: string, activeLayer: LayerModel){
     activeLayer.allChildren?.push(childId);
@@ -167,6 +171,50 @@ export class StateService {
           this.deleteLayer(id, layerData[i].children);
         }
       }
+    }
+  }
+  copySubLayers(layers: LayerModel[] | null | undefined, styleData: any): string[]{
+    const childId: string[] = [];
+    if(layers && layers.length > 0){
+      layers.forEach((layer: LayerModel) => {
+        const id = 'element-'+randomId(6);
+        childId.push(id);
+        this.copyData.styleData[id] = styleData[layer.elementId];
+        layer.elementId = id;
+        const subChildLayers: string[] = this.copySubLayers(layer.children, styleData);
+        childId.push(...subChildLayers);
+      });
+    }
+    return childId;
+  }
+  pasteElement(){
+    combineLatest([
+      this.styleData,
+      this.activeLayer
+    ]).pipe(
+      take(1),
+      tap(([styleData, activeLayer]) => {
+        activeLayer.children?.push(this.copyData.layersData);
+        activeLayer.allChildren?.push(this.copyData.layersData.elementId, ...this.copyData.layersData.allChildren);
+        styleData = { ...styleData, ...this.copyData.styleData };
+        this.styleData.next(styleData);
+        this.createElements([this.copyData.layersData]);
+      })
+    ).subscribe();
+  }
+  createElements(layerData: LayerModel[] | null | undefined) {
+    if (layerData && layerData.length > 0) {
+      layerData.forEach(layer => {
+        //wait for viewContainerRef
+        setTimeout(() => {
+          if (layer.elementId.indexOf("element-") != -1) {
+            this.createElement(layer.elementId, true);
+          } else if (layer.elementId.indexOf("text-") != -1) {
+            this.createText(layer.elementId, true);
+          }
+          this.createElements(layer.children);
+        });
+      });
     }
   }
 }

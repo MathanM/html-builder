@@ -97,7 +97,7 @@ export class TextElementComponent extends ElementComponent implements OnInit, On
 
   onStyleData(){
     super.onStyleData();
-    if(this.elementData.text){
+    if(this.elementData.textNodes){
       this.textNodes = this.elementData.textNodes;
     }
   }
