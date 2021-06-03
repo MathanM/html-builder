@@ -1,4 +1,6 @@
 import {LayerModel, XDType} from "./art-board.model";
+import {ElementComponent} from "../components/element/element.component";
+import {TextElementComponent} from "../components/text-element/text-element.component";
 
 export const initArtBoard: LayerModel = {
   expanded: true,
@@ -9,6 +11,20 @@ export const initArtBoard: LayerModel = {
   allChildren: [],
   children: [],
   tag: 'body'
+}
+export const XDComponent: any = {
+  element: {
+    component: ElementComponent,
+    expandIcon: "pi pi-folder-open",
+    collapseIcon: "pi pi-folder",
+    tag: "div"
+  },
+  text: {
+    component: TextElementComponent,
+    expandIcon: "xd xd-text",
+    collapseIcon: "xd xd-text",
+    tag: "p"
+  }
 }
 export function eventPosition(e: TouchEvent | MouseEvent) {
   if (e instanceof TouchEvent) {

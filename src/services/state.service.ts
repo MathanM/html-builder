@@ -2,7 +2,7 @@ import {ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef} fr
 import {BehaviorSubject, combineLatest} from "rxjs";
 import {CopyId, LayerModel, XDType} from "../models/art-board.model";
 import {ElementComponent} from "../components/element/element.component";
-import {isType, initArtBoard, randomId} from "../models/constant";
+import {isType, initArtBoard, randomId, getType, XDComponent} from "../models/constant";
 import {take, tap} from "rxjs/operators";
 import {cloneDeep} from 'lodash';
 import {TextElementComponent} from "../components/text-element/text-element.component";
@@ -43,48 +43,10 @@ export class StateService {
     this.styleData.next({ ...styleData, [id]: elementData });
   }
 
-  createText(id?: string, isImport?: boolean){
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(TextElementComponent);
-    const xdId = id || randomId(6, XDType.Text);
-    let componentRef: ComponentRef<TextElementComponent>;
-    let activeElement;
-    combineLatest([
-      this.activeItem,
-      this.activeLayer
-    ]).pipe(
-      take(1),
-      tap(([activeItem, activeLayer]) => {
-        activeElement = activeItem;
-        if(!isImport) {
-          let newLayer: LayerModel = {
-            elementId: xdId,
-            label: 'p',
-            sortOrder: activeLayer.children?.length || 1,
-            children: [],
-            allChildren: [],
-            expandedIcon: "xd xd-text",
-            collapsedIcon: "xd xd-text",
-            tag: 'p'
-          };
-          activeLayer.children?.push(newLayer);
-          this.updateAllChildren(newLayer.elementId, activeLayer);
-        }
-        if (this.activeViewContainer && activeElement != XDType.ArtBoard ) {
-          componentRef = this.activeViewContainer.createComponent<TextElementComponent>(componentFactory);
-        } else {
-          componentRef = this.artBoardViewContainer.createComponent<TextElementComponent>(componentFactory);
-        }
-        componentRef.instance.xdId = xdId.split("-")[1];
-        setTimeout(() => {
-          this.activeItem.next(xdId);
-        })
-      }),
-    ).subscribe();
-  }
-  createElement(id?: string, isImport?: boolean){
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ElementComponent);
-    const xdId = id || ('element-'+randomId(6));
-    let componentRef: ComponentRef<ElementComponent>;
+  createElement(type: string, id?: string, isImport?: boolean, layer?: LayerModel){
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(XDComponent[type].component);
+    const xdId = id || randomId(6, type);
+    let componentRef: ComponentRef<any>;
     let activeElement;
     combineLatest([
       this.activeItem,
@@ -96,23 +58,31 @@ export class StateService {
         if(!isImport){
           let newLayer: LayerModel = {
             elementId: xdId,
-            label: 'div',
+            label: XDComponent[type].tag,
             sortOrder: activeLayer.children?.length || 1,
             children: [],
             allChildren: [],
-            expandedIcon: "pi pi-folder-open",
-            collapsedIcon: "pi pi-folder",
-            tag:'div'
+            expandedIcon: XDComponent[type].expandIcon,
+            collapsedIcon: XDComponent[type].collapseIcon,
+            tag:XDComponent[type].tag
           };
           activeLayer.children?.push(newLayer);
           this.updateAllChildren(newLayer.elementId, activeLayer);
         }
         if (this.activeViewContainer && activeElement != XDType.ArtBoard ) {
-          componentRef = this.activeViewContainer.createComponent<ElementComponent>(componentFactory);
+          componentRef = this.activeViewContainer.createComponent<any>(componentFactory);
         } else {
-          componentRef = this.artBoardViewContainer.createComponent<ElementComponent>(componentFactory);
+          componentRef = this.artBoardViewContainer.createComponent<any>(componentFactory);
         }
         componentRef.instance.xdId = xdId.split("-")[1];
+        if(layer) {
+          if (layer.id) {
+            componentRef.location.nativeElement.id = layer.id;
+          }
+          if(layer.classList){
+            componentRef.location.nativeElement.className += " "+layer.classList.join(" ");
+          }
+        }
         setTimeout(() => {
           this.activeItem.next(xdId);
         });
@@ -212,11 +182,8 @@ export class StateService {
       layerData.forEach(layer => {
         //wait for viewContainerRef
         setTimeout(() => {
-          if (isType(layer.elementId, XDType.Element)) {
-            this.createElement(layer.elementId, true);
-          } else if (isType(layer.elementId, XDType.Text)) {
-            this.createText(layer.elementId, true);
-          }
+          const type = getType(layer.elementId);
+          this.createElement(type, layer.elementId, true, layer);
           this.createElements(layer.children);
         });
       });

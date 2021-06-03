@@ -5,7 +5,7 @@
     <ul>
       <li (click)="deleteElement()">Delete</li>
       <li (click)="copyElement()">Copy</li>
-      <li [class.disabled]="!isPasteEnable" (click)="pasteElement()">Paste</li>
+      <li [class.disabled]="isPasteEnable" (click)="pasteElement()">Paste</li>
       <li [class.disabled]="breakTextDisabled()" (click)="breakTextNode()">Break Text</li>
     </ul>
   </div>

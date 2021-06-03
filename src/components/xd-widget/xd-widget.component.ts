@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {StateService} from "../../services/state.service";
+import {XDType} from "../../models/art-board.model";
 
 @Component({
   selector: 'xd-widget',
@@ -13,9 +14,9 @@ export class XdWidgetComponent implements OnInit {
   ngOnInit(): void {
   }
   createElement(){
-    this.state.createElement();
+    this.state.createElement(XDType.Element);
   }
   createText(){
-    this.state.createText();
+    this.state.createElement(XDType.Text);
   }
 }
