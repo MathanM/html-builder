@@ -1,9 +1,20 @@
-import {AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {
+  AfterViewInit,
+  Component, ComponentFactoryResolver,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import {StateService} from "../../services/state.service";
 import {distinctUntilChanged, takeUntil, tap} from "rxjs/operators";
 import {Subject} from "rxjs";
-import {ArtBoardModel} from "../../models/art-board.model";
+import {ArtBoardModel, XDType} from "../../models/art-board.model";
 import {isEmpty} from "lodash";
+import {eventPosition} from "../../models/constant";
+import {XdMenuComponent} from "../xd-menu/xd-menu.component";
 
 @Component({
   selector: 'app-art-board',
@@ -16,13 +27,16 @@ export class ArtBoardComponent implements OnInit,AfterViewInit, OnDestroy {
   artBoard!: ArtBoardModel;
   designHelper = false;
   @ViewChild('elementContainer', { read: ViewContainerRef }) elementContainer!: ViewContainerRef;
-  constructor(private state: StateService) {}
+  @ViewChild('contextMenuTemplate', { read: TemplateRef, static: false })
+  contextMenuTemplate!: TemplateRef<any>;
+  isPasteEnable: boolean = false;
+  constructor(private state: StateService, private componentFactoryResolver: ComponentFactoryResolver,) {}
 
   ngOnInit(): void {
     this.state.activeItem.pipe(
       distinctUntilChanged(),
       tap((activeTab) => {
-        this.active = activeTab == 'artboard';
+        this.active = activeTab == XDType.ArtBoard;
       }),
       takeUntil(this.destroy$)
     ).subscribe();
@@ -32,6 +46,12 @@ export class ArtBoardComponent implements OnInit,AfterViewInit, OnDestroy {
         this.checkDesignHelper();
       })
     ).subscribe();
+    this.state.copyId.pipe(
+      tap((copy) => {
+        this.isPasteEnable = !copy.id
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe()
   }
   ngAfterViewInit() {
     this.state.artBoardViewContainer = this.elementContainer;
@@ -41,6 +61,20 @@ export class ArtBoardComponent implements OnInit,AfterViewInit, OnDestroy {
   onArtBoardClick(e: MouseEvent): void {
     e.stopPropagation();
     this.state.activeItem.next('artboard');
+  }
+
+  @HostListener('contextmenu', ['$event'])
+  openMenu(e: MouseEvent){
+    e.preventDefault();
+    this.state.contextViewContainer.clear();
+    e.stopPropagation();
+    const [x, y] = eventPosition(e);
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(XdMenuComponent);
+    const ref = this.state.contextViewContainer.createComponent<XdMenuComponent>(componentFactory);
+    ref.instance.template = this.contextMenuTemplate;
+    ref.location.nativeElement.style.left = x + 'px';
+    ref.location.nativeElement.style.top = y + 'px';
+    ref.location.nativeElement.classList.add('visible');
   }
 
   checkDesignHelper(){
@@ -57,6 +91,9 @@ export class ArtBoardComponent implements OnInit,AfterViewInit, OnDestroy {
     }else{
       this.designHelper = false;
     }
+  }
+  pasteElement(){
+    this.state.pasteElement();
   }
   ngOnDestroy(): void {
     this.destroy$.next();

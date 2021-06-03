@@ -78,3 +78,14 @@ export interface FileUploadEvent {
   height?: string;
   url: string;
 }
+
+export enum XDType {
+  Element = "element",
+  Text = "text",
+  InlineText = "inline-text",
+  ArtBoard = "artboard"
+}
+export interface CopyId{
+  id: string;
+  layer: LayerModel | object;
+}

@@ -16,7 +16,7 @@ import {
 import {StateService} from "../../services/state.service";
 import {ElementComponent} from "../element/element.component";
 import {fetchSelection, randomId} from "../../models/constant";
-import {textNode} from "../../models/art-board.model";
+import {textNode, XDType} from "../../models/art-board.model";
 
 @Component({
   selector: 'text-element',
@@ -24,7 +24,7 @@ import {textNode} from "../../models/art-board.model";
   styleUrls: ['./text-element.component.scss']
 })
 export class TextElementComponent extends ElementComponent implements OnInit, OnDestroy {
-  @Input() type='text';
+  @Input() type: string = XDType.Text;
   @HostBinding('class.editable')
   @HostBinding('attr.contenteditable') edit = false;
   @Input() textNodes: Array<string | textNode> = ["Lorem Ipsum"];

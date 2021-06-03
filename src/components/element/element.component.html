@@ -6,7 +6,7 @@
       <ul>
         <li (click)="deleteElement()">Delete</li>
         <li (click)="copyElement()">Copy</li>
-        <li (click)="pasteElement()">Paste</li>
+        <li [class.disabled]="isPasteEnable" (click)="pasteElement()">Paste</li>
       </ul>
   </div>
 </ng-template>

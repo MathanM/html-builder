@@ -13,6 +13,7 @@ import {distinctUntilChanged, takeUntil, tap} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {XdMenuComponent} from "../components/xd-menu/xd-menu.component";
 import {eventPosition} from "../models/constant";
+import {XDType} from "../models/art-board.model";
 
 @Directive({
   selector: '[elementHelper]',
@@ -64,7 +65,7 @@ export class ElementHelperDirective implements OnInit, OnDestroy {
       tap((activeTab) => {
         this.onActiveItem();
         this.active = activeTab == this.type+'-'+this.xdId;
-        if(this.active && this.type != 'inline-text'){
+        if(this.active && this.type != XDType.InlineText){
           this.createDragHandles();
           this.state.activeViewContainer = this.elementContainer;
         }else{

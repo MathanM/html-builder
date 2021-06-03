@@ -1,9 +1,8 @@
 import {ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef} from '@angular/core';
-import {BehaviorSubject, combineLatest, Subject} from "rxjs";
-import {LayerModel} from "../models/art-board.model";
-import {XdHandleComponent} from "../components/xd-handle/xd-handle.component";
+import {BehaviorSubject, combineLatest} from "rxjs";
+import {CopyId, LayerModel, XDType} from "../models/art-board.model";
 import {ElementComponent} from "../components/element/element.component";
-import {initArtBoard, randomId} from "../models/constant";
+import {isType, initArtBoard, randomId} from "../models/constant";
 import {take, tap} from "rxjs/operators";
 import {cloneDeep} from 'lodash';
 import {TextElementComponent} from "../components/text-element/text-element.component";
@@ -28,6 +27,10 @@ export class StateService {
   layersData: BehaviorSubject<LayerModel[]> = new BehaviorSubject<LayerModel[]>([initArtBoard]);
   activeLayer: BehaviorSubject<LayerModel> = new BehaviorSubject<LayerModel>(initArtBoard);
   activeUtility: BehaviorSubject<string> = new BehaviorSubject<string>('Size');
+  copyId: BehaviorSubject<CopyId> = new BehaviorSubject<CopyId>({
+    id: '',
+    layer: {}
+  });
   copyData: any = {
     styleData: {},
     layersData: []
@@ -42,7 +45,7 @@ export class StateService {
 
   createText(id?: string, isImport?: boolean){
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(TextElementComponent);
-    const xdId = id || ('text-'+randomId(6));
+    const xdId = id || randomId(6, XDType.Text);
     let componentRef: ComponentRef<TextElementComponent>;
     let activeElement;
     combineLatest([
@@ -66,7 +69,7 @@ export class StateService {
           activeLayer.children?.push(newLayer);
           this.updateAllChildren(newLayer.elementId, activeLayer);
         }
-        if (this.activeViewContainer && activeElement != 'artboard' ) {
+        if (this.activeViewContainer && activeElement != XDType.ArtBoard ) {
           componentRef = this.activeViewContainer.createComponent<TextElementComponent>(componentFactory);
         } else {
           componentRef = this.artBoardViewContainer.createComponent<TextElementComponent>(componentFactory);
@@ -104,7 +107,7 @@ export class StateService {
           activeLayer.children?.push(newLayer);
           this.updateAllChildren(newLayer.elementId, activeLayer);
         }
-        if (this.activeViewContainer && activeElement != 'artboard' ) {
+        if (this.activeViewContainer && activeElement != XDType.ArtBoard ) {
           componentRef = this.activeViewContainer.createComponent<ElementComponent>(componentFactory);
         } else {
           componentRef = this.artBoardViewContainer.createComponent<ElementComponent>(componentFactory);
@@ -131,23 +134,10 @@ export class StateService {
     ).subscribe();
   }
   copyElement(elementId: string){
-    this.copyData = {
-      styleData: {},
-      layersData: []
-    }
-    const id = randomId(6);
-    const xdId = 'element-'+id;
-    combineLatest([
-      this.styleData,
-      this.activeLayer
-    ]).pipe(
+    this.activeLayer.pipe(
       take(1),
-      tap(([styleData, activeLayer]) => {
-        this.copyData.styleData[xdId] = cloneDeep(styleData[elementId]);
-        const layers: LayerModel = cloneDeep(activeLayer);
-        layers.elementId = xdId;
-        layers.allChildren = this.copySubLayers(layers.children, styleData);
-        this.copyData.layersData = layers;
+      tap(layer => {
+        this.copyId.next({id: elementId, layer});
       })
     ).subscribe();
   }
@@ -177,7 +167,7 @@ export class StateService {
     const childId: string[] = [];
     if(layers && layers.length > 0){
       layers.forEach((layer: LayerModel) => {
-        const id = 'element-'+randomId(6);
+        const id = randomId(6, XDType.Element);
         childId.push(id);
         this.copyData.styleData[id] = styleData[layer.elementId];
         layer.elementId = id;
@@ -188,12 +178,27 @@ export class StateService {
     return childId;
   }
   pasteElement(){
+    this.copyData = {
+      styleData: {},
+      layersData: []
+    }
+    const xdId = randomId(6, XDType.Element);
     combineLatest([
       this.styleData,
-      this.activeLayer
+      this.activeLayer,
+      this.copyId
     ]).pipe(
       take(1),
-      tap(([styleData, activeLayer]) => {
+      tap(([styleData, activeLayer, copy]) => {
+
+        //copy layers
+        this.copyData.styleData[xdId] = cloneDeep(styleData[copy.id]);
+        const layers: LayerModel = cloneDeep(copy.layer) as LayerModel;
+        layers.elementId = xdId;
+        layers.allChildren = this.copySubLayers(layers.children, styleData);
+        this.copyData.layersData = layers;
+
+        //paste layers
         activeLayer.children?.push(this.copyData.layersData);
         activeLayer.allChildren?.push(this.copyData.layersData.elementId, ...this.copyData.layersData.allChildren);
         styleData = { ...styleData, ...this.copyData.styleData };
@@ -207,9 +212,9 @@ export class StateService {
       layerData.forEach(layer => {
         //wait for viewContainerRef
         setTimeout(() => {
-          if (layer.elementId.indexOf("element-") != -1) {
+          if (isType(layer.elementId, XDType.Element)) {
             this.createElement(layer.elementId, true);
-          } else if (layer.elementId.indexOf("text-") != -1) {
+          } else if (isType(layer.elementId, XDType.Text)) {
             this.createText(layer.elementId, true);
           }
           this.createElements(layer.children);
@@ -217,4 +222,5 @@ export class StateService {
       });
     }
   }
+
 }

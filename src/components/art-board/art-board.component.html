@@ -5,3 +5,10 @@
 >
   <ng-template #elementContainer></ng-template>
 </div>
+<ng-template #contextMenuTemplate>
+  <div class="xd-context-menu">
+    <ul>
+      <li [class.disabled]="isPasteEnable" (click)="pasteElement()">Paste</li>
+    </ul>
+  </div>
+</ng-template>

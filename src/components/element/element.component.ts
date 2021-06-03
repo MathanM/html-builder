@@ -11,6 +11,7 @@ import {StateService} from "../../services/state.service";
 import {pluck, takeUntil, tap} from "rxjs/operators";
 import {pick} from 'lodash';
 import {ElementHelperDirective} from "../../directives/element-helper.directive";
+import {XDType} from "../../models/art-board.model";
 
 @Component({
   selector: 'app-element',
@@ -19,7 +20,8 @@ import {ElementHelperDirective} from "../../directives/element-helper.directive"
 })
 export class ElementComponent extends ElementHelperDirective implements OnInit, OnDestroy {
   elementData!: any;
-  type = 'element';
+  isPasteEnable: boolean = false;
+  type: string = XDType.Element;
   @HostListener('mousedown', ['$event'])
   onElementClick(e: MouseEvent): void {
     e.stopPropagation();
@@ -78,7 +80,13 @@ export class ElementComponent extends ElementHelperDirective implements OnInit, 
         this.property = prop.toLowerCase();
       }),
       takeUntil(this.destroy$)
-    ).subscribe()
+    ).subscribe();
+    this.state.copyId.pipe(
+      tap((copy) => {
+        this.isPasteEnable = !copy.id;
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe();
   }
 
   updateStyles(){

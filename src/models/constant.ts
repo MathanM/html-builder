@@ -1,4 +1,4 @@
-import {LayerModel} from "./art-board.model";
+import {LayerModel, XDType} from "./art-board.model";
 
 export const initArtBoard: LayerModel = {
   expanded: true,
@@ -69,9 +69,23 @@ export const fetchSelection = (): any => {
     }
   }
 }
-export const randomId = (length: number): string => {
+export const randomId = (length: number, type?: string): string => {
   let chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   let result = '';
   for (let i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
-  return result;
+  return type?`${type}-${result}`:result;
+}
+
+export const isType = (id: string, type: string): boolean => {
+  return id.indexOf(type) != -1;
+}
+export const getType = (id: string): string => {
+  if(id.indexOf(XDType.Element) != -1){
+    return XDType.Element
+  }else if(id.indexOf(XDType.InlineText) != -1){
+    return XDType.InlineText
+  }else if(id.indexOf(XDType.Text) != -1){
+    return XDType.Text
+  }
+  return ''
 }
