@@ -1,0 +1,8 @@
+<nav-card title="Images">
+  <div class="img-container">
+    <div class="xd-img" *ngFor="let i of getImagesName()">
+      <img  [attr.src]="imgList[i]">
+      <p>{{i}}</p>
+    </div>
+  </div>
+</nav-card>

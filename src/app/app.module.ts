@@ -29,34 +29,38 @@ import { EditableDivDirective} from "../directives/content-editable.directive";
 import {TextElementComponent} from "../components/text-element/text-element.component";
 import {TextNavComponent} from "../components/text-nav/text-nav.component";
 import {TopNavComponent} from "../components/top-nav/top-nav.component";
+import {XdModalComponent} from "../components/xd-modal/xd-modal.component";
+import {ImageNavComponent} from "../components/image-nav/image-nav.component";
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        HomeComponent,
-        SideNavComponent,
-        NavCardComponent,
-        ArtBoardComponent,
-        XdInputComponent,
-        XdColorPickerComponent,
-        XdSelectComponent,
-        XdCheckboxComponent,
-        XdFileUploadComponent,
-        ArtBoardNavComponent,
-        ElementComponent,
-        TextElementComponent,
-        ElementNavComponent,
-        ElementHelperDirective,
-        XdHandleComponent,
-        XdLayersComponent,
-        NavTabsComponent,
-        XdIconComponent,
-        XdWidgetComponent,
-        XdMenuComponent,
-        EditableDivDirective,
-        TextNavComponent,
-        TopNavComponent
-    ],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    SideNavComponent,
+    NavCardComponent,
+    ArtBoardComponent,
+    XdInputComponent,
+    XdColorPickerComponent,
+    XdSelectComponent,
+    XdCheckboxComponent,
+    XdFileUploadComponent,
+    ArtBoardNavComponent,
+    ElementComponent,
+    TextElementComponent,
+    ElementNavComponent,
+    ElementHelperDirective,
+    XdHandleComponent,
+    XdLayersComponent,
+    NavTabsComponent,
+    XdIconComponent,
+    XdWidgetComponent,
+    XdMenuComponent,
+    EditableDivDirective,
+    TextNavComponent,
+    TopNavComponent,
+    XdModalComponent,
+    ImageNavComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

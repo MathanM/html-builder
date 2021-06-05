@@ -1,0 +1,32 @@
+:host{
+
+}
+.img-container{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.xd-img{
+  max-width: 100%;
+  img{
+    background: var(--white);
+    border-radius: 7px;
+    border: 1px solid var(--grey-bg);
+    padding: 7px;
+    max-width: 100%;
+  }
+  p{
+    margin: 0;
+    font-size: var(--font-m);
+    color: var(--primary-color);
+    text-align: center;
+  }
+  &:hover{
+    img{
+      border-color: var(--active-blue);
+    }
+    p{
+      color: var(--active-blue);
+    }
+  }
+}

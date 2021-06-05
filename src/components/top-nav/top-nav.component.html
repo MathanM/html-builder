@@ -1,6 +1,25 @@
-<input
-  style="display: none"
-  type="file" (change)="onImport($event)"
-  #fileInput>
-<button class="xd-button xd-mr-10" (click)="fileInput.click()">Import</button>
-<button class="xd-button" (click)="onSave()">Save</button>
+<ul class="xd-menu">
+  <li>
+    <a>File</a>
+    <ul>
+      <li (click)="this.newProjectOpen = true">New Project</li>
+      <li (click)="openProject()">Open Project</li>
+      <li (click)="onSave()">Save</li>
+    </ul>
+  </li>
+  <li>
+    <a>Edit</a>
+  </li>
+</ul>
+<xd-modal [title]="'Create New Project'" [(isOpen)]="newProjectOpen">
+  <div class="content ">
+    <xd-input [label]="'Project Name'" [(ngModel)]="projectName" [type]="'text'" [width]="300"></xd-input>
+    <div (click)="newProject()">
+      <xd-input [readonly]="true" [(ngModel)]="projectDir" [label]="'Project Directory'" [type]="'text'" [width]="300"></xd-input>
+    </div>
+  </div>
+  <div class="footer xd-btn-group">
+    <button (click)="newProjectOpen = false" class="xd-button default">Cancel</button>
+    <button class="xd-button" (click)="createProject()">Create</button>
+  </div>
+</xd-modal>

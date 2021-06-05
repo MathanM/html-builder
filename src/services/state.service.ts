@@ -35,6 +35,7 @@ export class StateService {
     styleData: {},
     layersData: []
   };
+  projectDirHandle: any;
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
   updateStyleData(id: string, data: any){
@@ -189,5 +190,4 @@ export class StateService {
       });
     }
   }
-
 }

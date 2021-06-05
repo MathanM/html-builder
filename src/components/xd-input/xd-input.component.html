@@ -1,2 +1,10 @@
 <label>{{ label }}</label>
-<input [type]="type" [(ngModel)]="value" [style]="{ width: width+'px' }" (blur)="onBlur()" (keyup.enter)="onBlur()"/>
+<input
+  [readOnly]="readonly"
+  [type]="type"
+  [disabled]="disabled"
+  [(ngModel)]="value"
+  [style]="{ width: width+'px' }"
+  (blur)="onBlur()"
+  (keyup.enter)="onBlur()"
+/>

@@ -1,0 +1,12 @@
+<div class="xd-modal">
+  <div class="xd-modal-header">
+    {{title}}
+    <span (click)="onClose()" class="pi pi-minus-circle xd-modal-close"></span>
+  </div>
+  <div class="xd-modal-content">
+    <ng-content select=".content"></ng-content>
+  </div>
+  <div class="xd-modal-footer">
+    <ng-content select=".footer"></ng-content>
+  </div>
+</div>

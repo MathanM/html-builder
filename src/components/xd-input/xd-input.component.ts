@@ -23,7 +23,8 @@ export class XdInputComponent implements ControlValueAccessor  {
   onChange = (value: any) => {};
   onTouched = () => {};
   touched = false;
-  disabled = false;
+  @Input() disabled = false;
+  @Input() readonly!: boolean;
 
   onBlur(): void {
     this.markAsTouched();

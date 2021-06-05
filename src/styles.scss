@@ -66,10 +66,22 @@ input[type=number] {
   outline: 0;
   color: var(--white);
   border-radius: 5px;
-  font-size: var(--font-m);
-  height: 25px;
-  padding: 5px 15px;
+  font-size: var(--font-l);
+  padding: 7px 15px;
   cursor: pointer;
+  &.default{
+    background: var(--grey-bg);
+    color: var(--black);
+  }
+  &:hover{
+    opacity: 0.7;
+  }
+}
+.xd-btn-group{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
 }
 // handle knob styles
 

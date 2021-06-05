@@ -1,0 +1,42 @@
+:host{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgb(0 0 0 / 30%);
+  z-index: 999999;
+  display: none;
+}
+:host-context(.show){
+  display: block;
+}
+.xd-modal{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--menu-bg);
+  width: 500px;
+  border-radius: 7px;
+  box-shadow: 1px 1px 20px 0 rgba(67, 72, 92, 0.2);
+  .xd-modal-header{
+    width: 100%;
+    padding: 10px;
+    border-bottom: 2px solid var(--grey-bg);
+    font-size: var(--font-xl);
+    color: var(--dark-color);
+    display: flex;
+    justify-content: space-between;
+    .xd-modal-close{
+      cursor: pointer;
+    }
+  }
+  .xd-modal-content{
+    padding: 10px;
+  }
+  .xd-modal-footer{
+    padding: 10px;
+    border-top: 2px solid var(--grey-bg);
+  }
+}
