@@ -1,0 +1,12 @@
+<ng-template #handleContainer></ng-template>
+<ng-template #contextMenuTemplate>
+  <div class="xd-context-menu">
+    <ul>
+      <li (click)="deleteElement()">Delete</li>
+      <li (click)="copyElement()">Copy</li>
+    </ul>
+  </div>
+</ng-template>
+<ng-container *ngIf="elementData && elementData.src">
+  <img [src]="elementData.src" [alt]="elementData.alt">
+</ng-container>

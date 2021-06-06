@@ -12,9 +12,10 @@ import {StateService} from "../../services/state.service";
 import {distinctUntilChanged, takeUntil, tap} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {ArtBoardModel, XDType} from "../../models/art-board.model";
-import {isEmpty} from "lodash";
+import {isEmpty, isEqual} from "lodash";
 import {eventPosition} from "../../models/constant";
 import {XdMenuComponent} from "../xd-menu/xd-menu.component";
+import {ImageService} from "../../services/image.service";
 
 @Component({
   selector: 'app-art-board',
@@ -30,7 +31,7 @@ export class ArtBoardComponent implements OnInit,AfterViewInit, OnDestroy {
   @ViewChild('contextMenuTemplate', { read: TemplateRef, static: false })
   contextMenuTemplate!: TemplateRef<any>;
   isPasteEnable: boolean = false;
-  constructor(private state: StateService, private componentFactoryResolver: ComponentFactoryResolver,) {}
+  constructor(private state: StateService, private componentFactoryResolver: ComponentFactoryResolver,private imageService: ImageService) {}
 
   ngOnInit(): void {
     this.state.activeItem.pipe(
@@ -42,8 +43,10 @@ export class ArtBoardComponent implements OnInit,AfterViewInit, OnDestroy {
     ).subscribe();
     this.state.styleData.pipe(
       tap((data:any) => {
-        this.artBoard = data.artBoard;
-        this.checkDesignHelper();
+        if(!isEqual(this.artBoard, data.artBoard)){
+          this.artBoard = data.artBoard;
+          this.checkDesignHelper();
+        }
       })
     ).subscribe();
     this.state.copyId.pipe(
@@ -77,11 +80,12 @@ export class ArtBoardComponent implements OnInit,AfterViewInit, OnDestroy {
     ref.location.nativeElement.classList.add('visible');
   }
 
-  checkDesignHelper(){
+  async checkDesignHelper(){
     if(this.artBoard && !isEmpty(this.artBoard.designHelper)){
       this.designHelper = true
       const root: any = document.querySelector(':root');
       if (root) {
+        this.artBoard.designHelper.url = await this.getHelperImageUrl();
         root.style.setProperty('--design-helper-width', this.artBoard.designHelper.width);
         root.style.setProperty('--design-helper-height', this.artBoard.designHelper.height);
         root.style.setProperty('--design-helper-offset', this.artBoard.designHelper.top);
@@ -91,6 +95,12 @@ export class ArtBoardComponent implements OnInit,AfterViewInit, OnDestroy {
     }else{
       this.designHelper = false;
     }
+  }
+  async getHelperImageUrl(){
+    const helperHandle = await this.state.projectDirHandle.getDirectoryHandle('design-helper',{ create: true });
+    const fileHandle = await helperHandle.getFileHandle(this.artBoard.designHelper.name);
+    const file = await fileHandle.getFile();
+    return this.imageService.getImgUrl(file, false);
   }
   pasteElement(){
     this.state.pasteElement();

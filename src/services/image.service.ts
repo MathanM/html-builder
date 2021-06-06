@@ -14,12 +14,19 @@ export class ImageService {
     let imgFile = await imgList.next();
     while (!imgFile.done) {
       let file = await imgFile.value[1].getFile();
-      console.log(file);
-      const blob = new Blob([file],{type: file.type});
-      const url = URL.createObjectURL(blob)
-      images[file.name] = this.domSanitizer.bypassSecurityTrustUrl(url);
+      images[file.name] = this.getImgUrl(file);
       imgFile = await imgList.next();
     }
     this.imageList.next(images);
+  }
+  getImgUrl(file: File, sanitize: boolean = true){
+    const blob = new Blob([file],{type: file.type});
+    const url = URL.createObjectURL(blob)
+    if(sanitize){
+      return this.domSanitizer.bypassSecurityTrustUrl(url);
+    }else{
+      return url;
+    }
+
   }
 }

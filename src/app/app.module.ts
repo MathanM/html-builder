@@ -31,6 +31,7 @@ import {TextNavComponent} from "../components/text-nav/text-nav.component";
 import {TopNavComponent} from "../components/top-nav/top-nav.component";
 import {XdModalComponent} from "../components/xd-modal/xd-modal.component";
 import {ImageNavComponent} from "../components/image-nav/image-nav.component";
+import {ImageElementComponent} from "../components/image-element/image-element.component";
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import {ImageNavComponent} from "../components/image-nav/image-nav.component";
     TextNavComponent,
     TopNavComponent,
     XdModalComponent,
-    ImageNavComponent
+    ImageNavComponent,
+    ImageElementComponent
   ],
   imports: [
     BrowserModule,

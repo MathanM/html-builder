@@ -64,6 +64,7 @@ export class TopNavComponent implements OnInit {
     const imgHandle = await assets.getDirectoryHandle('images', { create: true });
     const fontHandle = await assets.getDirectoryHandle('fonts', { create: true });
     this.state.projectDirHandle = projectHandle;
+    this.newProjectOpen = false;
   }
   async openProject(){
     this.state.projectDirHandle = await (window as any).showDirectoryPicker();

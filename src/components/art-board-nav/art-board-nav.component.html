@@ -19,6 +19,7 @@
       </div>
       <xd-input type="number" label="Offset" name="design-offset" [(ngModel)]="artBoard.designHelper.top"
                 unit="px"></xd-input>
+      <xd-checkbox [(ngModel)]="artBoard.designHelper.is2x" name="2x" label="2x" (ngModelChange)="on2x()"></xd-checkbox>
     </ng-container>
   </nav-card>
 </form>

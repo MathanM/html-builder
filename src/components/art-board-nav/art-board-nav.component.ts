@@ -4,6 +4,7 @@ import {NgForm} from "@angular/forms";
 import {StateService} from "../../services/state.service";
 import {take, takeUntil, tap, withLatestFrom} from "rxjs/operators";
 import {Subject} from "rxjs";
+import {ImageService} from "../../services/image.service";
 
 @Component({
   selector: 'app-art-board-nav',
@@ -19,7 +20,8 @@ export class ArtBoardNavComponent implements OnInit, AfterViewInit, OnDestroy {
     this.state.styleData.pipe(
       take(1)
     ).subscribe((styleData: any) => {
-      this.artBoard = styleData.artBoard
+      this.artBoard = {...styleData.artBoard};
+      this.on2x();
     });
   }
 
@@ -42,8 +44,32 @@ export class ArtBoardNavComponent implements OnInit, AfterViewInit, OnDestroy {
     this.artBoard.width = e.width;
     this.artBoard.height = e.height;
     this.calcArtBoardZoom(parseFloat(e.width || ''));
-    this.artBoard.designHelper = {...e, top: "0px", toggle: true};
+    this.artBoard.designHelper = {...e, originalWidth: e.width, originalHeight: e.height, top: "0px", toggle: true};
     this.state.updateStyleData('artBoard', this.artBoard);
+    this.createDesignImage(e.file);
+  }
+  on2x(){
+    if(this.artBoard.designHelper.is2x){
+      this.artBoard.designHelper.width = (parseFloat(this.artBoard.designHelper.originalWidth) / 2) + "px";
+      this.artBoard.designHelper.height = (parseFloat(this.artBoard.designHelper.originalHeight) / 2) + "px";
+    }else{
+      this.artBoard.designHelper.width = this.artBoard.designHelper.originalWidth;
+      this.artBoard.designHelper.height = this.artBoard.designHelper.originalHeight;
+    }
+    this.artBoard.width = this.artBoard.designHelper.width;
+    this.artBoard.height = this.artBoard.designHelper.height;
+    this.calcArtBoardZoom(parseFloat(this.artBoard.width || ''));
+    this.state.updateStyleData('artBoard', this.artBoard);
+  }
+  async createDesignImage(file: File){
+    if(this.state.projectDirHandle){
+      const helperHandle = await this.state.projectDirHandle.getDirectoryHandle('design-helper',{ create: true });
+      const fileHandle = await helperHandle.getFileHandle(file.name, { create: true });
+      const blob = new Blob([file],{type: file.type});
+      const writableStream = await fileHandle.createWritable();
+      await writableStream.write(blob);
+      await writableStream.close();
+    }
   }
   calcArtBoardZoom(width: number){
     const appHome = document.getElementsByTagName('app-home');

@@ -17,7 +17,10 @@
     <ng-container *ngIf="activeTab.indexOf('text') != -1">
       <app-text-nav [textId]="activeTab"></app-text-nav>
     </ng-container>
-    <app-image-nav></app-image-nav>
+    <ng-container *ngIf="activeTab.indexOf('image') != -1">
+      <app-image-nav [imgId]="activeTab"></app-image-nav>
+    </ng-container>
+
   </app-side-nav>
   <ng-template #contextContainer></ng-template>
 </div>

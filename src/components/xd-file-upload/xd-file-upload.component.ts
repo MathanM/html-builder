@@ -19,7 +19,7 @@ export class XdFileUploadComponent implements OnInit {
     if(this.type == 'image'){
       const image = new Image();
       image.onload = (e: any) => {
-        this.fileUploadEvent.emit({ name: files[0].name, height: e.target.height+'px', width: e.target.width+'px', url: fileUrl});
+        this.fileUploadEvent.emit({ name: files[0].name, height: e.target.height+'px', width: e.target.width+'px', url: fileUrl, file: files[0]});
       }
       image.src = fileUrl;
     }

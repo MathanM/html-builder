@@ -5,6 +5,26 @@ export type ArtBoardModel = {
   zoom: number;
   designHelper: any;
 }
+export type ImageModel = {
+  width?: string;
+  height?: string;
+  paddingLeft?: string;
+  paddingRight?: string;
+  paddingTop?: string;
+  paddingBottom?: string;
+  marginLeft?: string;
+  marginRight?: string;
+  marginTop?: string;
+  marginBottom?: string;
+  backgroundColor?: string;
+  borderRadius?: string;
+  minWidth?: string;
+  maxWidth?: string;
+  minHeight?: string;
+  maxHeight?: string;
+  src?: string;
+  alt?: string;
+}
 export type TextModel = {
   textAlign?: string;
   color?: string;
@@ -77,13 +97,15 @@ export interface FileUploadEvent {
   width?: string;
   height?: string;
   url: string;
+  file: File
 }
 
 export enum XDType {
   Element = "element",
   Text = "text",
   InlineText = "inline-text",
-  ArtBoard = "artboard"
+  ArtBoard = "artboard",
+  Image = "image"
 }
 export interface CopyId{
   id: string;

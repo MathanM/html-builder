@@ -1,6 +1,7 @@
 import {LayerModel, XDType} from "./art-board.model";
 import {ElementComponent} from "../components/element/element.component";
 import {TextElementComponent} from "../components/text-element/text-element.component";
+import {ImageElementComponent} from "../components/image-element/image-element.component";
 
 export const initArtBoard: LayerModel = {
   expanded: true,
@@ -24,6 +25,12 @@ export const XDComponent: any = {
     expandIcon: "xd xd-text",
     collapseIcon: "xd xd-text",
     tag: "p"
+  },
+  image: {
+    component: ImageElementComponent,
+    expandIcon: "pi pi-image",
+    collapseIcon: "pi pi-image",
+    tag: "img"
   }
 }
 export function eventPosition(e: TouchEvent | MouseEvent) {
@@ -102,6 +109,8 @@ export const getType = (id: string): string => {
     return XDType.InlineText
   }else if(id.indexOf(XDType.Text) != -1){
     return XDType.Text
+  }else if(id.indexOf(XDType.Image) != -1){
+    return XDType.Image
   }
   return ''
 }
