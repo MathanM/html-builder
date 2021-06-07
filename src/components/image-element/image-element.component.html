@@ -7,6 +7,6 @@
     </ul>
   </div>
 </ng-template>
-<ng-container *ngIf="elementData && elementData.src">
-  <img [src]="elementData.src" [alt]="elementData.alt">
+<ng-container *ngIf="elementData && imageList[elementData.src]">
+  <img [src]="imageList[elementData.src]" [alt]="elementData.alt">
 </ng-container>

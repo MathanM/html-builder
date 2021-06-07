@@ -2,9 +2,10 @@ import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/c
 import {ArtBoardModel, FileUploadEvent} from "../../models/art-board.model";
 import {NgForm} from "@angular/forms";
 import {StateService} from "../../services/state.service";
-import {take, takeUntil, tap, withLatestFrom} from "rxjs/operators";
+import {take, takeUntil, withLatestFrom} from "rxjs/operators";
 import {Subject} from "rxjs";
-import {ImageService} from "../../services/image.service";
+import {cloneDeep} from 'lodash';
+import {FontFamilyService} from "../../services/font-family.service";
 
 @Component({
   selector: 'app-art-board-nav',
@@ -15,13 +16,21 @@ export class ArtBoardNavComponent implements OnInit, AfterViewInit, OnDestroy {
   artBoard!: ArtBoardModel;
   @ViewChild('artBoardForm', { static: false }) artBoardForm!: NgForm;
   destroy$: Subject<void> = new Subject<void>();
-  constructor(private state: StateService) {}
+  fontOpen: boolean = false;
+  fontList: any;
+  constructor(private state: StateService, private fontService: FontFamilyService) {}
   ngOnInit() : void{
     this.state.styleData.pipe(
       take(1)
     ).subscribe((styleData: any) => {
       this.artBoard = {...styleData.artBoard};
       this.on2x();
+    });
+    this.fontService.fontFamilyList.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe((fonts) => {
+      this.fontList = fonts;
+
     });
   }
 
@@ -49,17 +58,19 @@ export class ArtBoardNavComponent implements OnInit, AfterViewInit, OnDestroy {
     this.createDesignImage(e.file);
   }
   on2x(){
-    if(this.artBoard.designHelper.is2x){
-      this.artBoard.designHelper.width = (parseFloat(this.artBoard.designHelper.originalWidth) / 2) + "px";
-      this.artBoard.designHelper.height = (parseFloat(this.artBoard.designHelper.originalHeight) / 2) + "px";
-    }else{
-      this.artBoard.designHelper.width = this.artBoard.designHelper.originalWidth;
-      this.artBoard.designHelper.height = this.artBoard.designHelper.originalHeight;
+    if(this.artBoard.designHelper){
+      if(this.artBoard.designHelper.is2x){
+        this.artBoard.designHelper.width = (parseFloat(this.artBoard.designHelper.originalWidth) / 2) + "px";
+        this.artBoard.designHelper.height = (parseFloat(this.artBoard.designHelper.originalHeight) / 2) + "px";
+      }else{
+        this.artBoard.designHelper.width = this.artBoard.designHelper.originalWidth;
+        this.artBoard.designHelper.height = this.artBoard.designHelper.originalHeight;
+      }
+      this.artBoard.width = this.artBoard.designHelper.width;
+      this.artBoard.height = this.artBoard.designHelper.height;
+      this.calcArtBoardZoom(parseFloat(this.artBoard.width || ''));
+      this.state.updateStyleData('artBoard', this.artBoard);
     }
-    this.artBoard.width = this.artBoard.designHelper.width;
-    this.artBoard.height = this.artBoard.designHelper.height;
-    this.calcArtBoardZoom(parseFloat(this.artBoard.width || ''));
-    this.state.updateStyleData('artBoard', this.artBoard);
   }
   async createDesignImage(file: File){
     if(this.state.projectDirHandle){

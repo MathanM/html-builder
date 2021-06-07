@@ -1,10 +1,11 @@
 .img-container{
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
 }
 .xd-img{
-  max-width: 100%;
+  max-width: 200px;
   img{
     background: var(--white);
     border-radius: 7px;
@@ -30,5 +31,9 @@
     img{
       background: var(--blue-light);
     }
+  }
+  &.style-1{
+    max-width: 100%;
+    padding: 15px;
   }
 }

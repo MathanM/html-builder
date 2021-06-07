@@ -33,6 +33,7 @@ export class ImageNavComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('imgForm', { static: false }) imgForm!: NgForm;
   imgList: any = {};
   destroy$: Subject<void> = new Subject<void>();
+  imgPickerOpen: boolean = false;
 
   constructor(private state: StateService, private imageService: ImageService) { }
 
@@ -81,8 +82,8 @@ export class ImageNavComponent implements OnInit, AfterViewInit, OnDestroy {
       this.state.activeUtility.next(this.transformTab);
     }
   }
-  onImgClick(link: string){
-    this.element.src = link;
+  onImgClick(name: string){
+    this.element.src = name;
     this.state.updateStyleData(this.imgId, this.element);
   }
   ngOnDestroy(): void {

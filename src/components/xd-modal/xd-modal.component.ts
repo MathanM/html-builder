@@ -6,10 +6,12 @@ import {Component, EventEmitter, HostBinding, Input, OnInit, Output} from '@angu
   styleUrls: ['./xd-modal.component.scss']
 })
 export class XdModalComponent implements OnInit {
-  @Input() title: string;
+  @Input() title!: string;
   @HostBinding('class.show')
-  @Input() isOpen: boolean;
+  @Input() isOpen: boolean = false;
   @Output() isOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() width: string = '';
+  @Input() height: string = '';
   constructor() { }
 
   ngOnInit(): void {

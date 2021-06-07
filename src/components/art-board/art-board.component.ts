@@ -31,6 +31,7 @@ export class ArtBoardComponent implements OnInit,AfterViewInit, OnDestroy {
   @ViewChild('contextMenuTemplate', { read: TemplateRef, static: false })
   contextMenuTemplate!: TemplateRef<any>;
   isPasteEnable: boolean = false;
+  designHelperUrl: string = '';
   constructor(private state: StateService, private componentFactoryResolver: ComponentFactoryResolver,private imageService: ImageService) {}
 
   ngOnInit(): void {
@@ -43,10 +44,8 @@ export class ArtBoardComponent implements OnInit,AfterViewInit, OnDestroy {
     ).subscribe();
     this.state.styleData.pipe(
       tap((data:any) => {
-        if(!isEqual(this.artBoard, data.artBoard)){
           this.artBoard = data.artBoard;
           this.checkDesignHelper();
-        }
       })
     ).subscribe();
     this.state.copyId.pipe(
@@ -82,14 +81,17 @@ export class ArtBoardComponent implements OnInit,AfterViewInit, OnDestroy {
 
   async checkDesignHelper(){
     if(this.artBoard && !isEmpty(this.artBoard.designHelper)){
-      this.designHelper = true
+      this.designHelper = true;
       const root: any = document.querySelector(':root');
       if (root) {
-        this.artBoard.designHelper.url = await this.getHelperImageUrl();
         root.style.setProperty('--design-helper-width', this.artBoard.designHelper.width);
         root.style.setProperty('--design-helper-height', this.artBoard.designHelper.height);
         root.style.setProperty('--design-helper-offset', this.artBoard.designHelper.top);
-        root.style.setProperty('--design-helper-url', `url(${this.artBoard.designHelper.url})`);
+        if(this.designHelperUrl != this.artBoard.designHelper.url){
+          this.artBoard.designHelper.url = await this.getHelperImageUrl();
+          root.style.setProperty('--design-helper-url', `url(${this.artBoard.designHelper.url})`);
+          this.designHelperUrl = this.artBoard.designHelper.url
+        }
         root.style.setProperty('--design-helper-opacity', this.artBoard.designHelper.toggle?0.5:0);
       }
     }else{

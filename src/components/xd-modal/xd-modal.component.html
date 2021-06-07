@@ -1,9 +1,9 @@
-<div class="xd-modal">
+<div class="xd-modal" [style.width]="width">
   <div class="xd-modal-header">
     {{title}}
     <span (click)="onClose()" class="pi pi-minus-circle xd-modal-close"></span>
   </div>
-  <div class="xd-modal-content">
+  <div class="xd-modal-content" [style.height]="height">
     <ng-content select=".content"></ng-content>
   </div>
   <div class="xd-modal-footer">

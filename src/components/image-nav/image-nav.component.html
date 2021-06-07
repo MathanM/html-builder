@@ -46,15 +46,27 @@
   <nav-card title="Images">
     <xd-input type="text" label="Src" name="src" [(ngModel)]="element.src" [width]="165"></xd-input>
     <xd-input type="text" label="Alt" name="alt" [(ngModel)]="element.alt" [width]="165"></xd-input>
+    <button style="margin: 10px 0;" class="xd-button" (click)="imgPickerOpen = true">
+      <span class="pi pi-image"></span>
+      Browse Image
+    </button>
     <div class="img-container">
-      <div class="xd-img"
-           *ngFor="let i of getImagesName()"
-           (click)="onImgClick(imgList[i])"
-           [class.active]="element.src === imgList[i]"
-      >
-        <img [attr.src]="imgList[i]">
-        <p>{{i}}</p>
-      </div>
+      <div class="xd-img active style-1"><img [attr.src]="imgList[element.src]"><p>{{element.src}}</p></div>
     </div>
   </nav-card>
 </form>
+<xd-modal [title]="'Image Picker'" [width]="'60%'" [height]="'60vh'" [(isOpen)]="imgPickerOpen">
+  <div class="img-container content">
+    <div class="xd-img"
+         *ngFor="let name of getImagesName()"
+         (click)="onImgClick(name)"
+         [class.active]="element.src === name"
+    >
+      <img [attr.src]="imgList[name]">
+      <p>{{name}}</p>
+    </div>
+  </div>
+  <div class="footer xd-btn-group">
+    <button (click)="imgPickerOpen = false" class="xd-button default">Close</button>
+  </div>
+</xd-modal>

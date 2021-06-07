@@ -22,4 +22,18 @@
       <xd-checkbox [(ngModel)]="artBoard.designHelper.is2x" name="2x" label="2x" (ngModelChange)="on2x()"></xd-checkbox>
     </ng-container>
   </nav-card>
+  <nav-card title="Fonts">
+    <button style="margin: 10px 0;" class="xd-button" (click)="fontOpen = true">
+      <span class="pi pi-plus"></span>
+      Add Font
+    </button>
+  </nav-card>
 </form>
+<xd-modal [title]="'Add Font Family'" [width]="'60%'" [height]="'60vh'" [(isOpen)]="fontOpen">
+  <div class="content">
+
+  </div>
+  <div class="footer xd-btn-group">
+    <button (click)="fontOpen = false" class="xd-button default">Close</button>
+  </div>
+</xd-modal>

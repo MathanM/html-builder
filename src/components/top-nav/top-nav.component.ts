@@ -5,6 +5,7 @@ import {take, tap} from "rxjs/operators";
 import {LayerModel} from "../../models/art-board.model";
 import {DomSanitizer} from "@angular/platform-browser";
 import {ImageService} from "../../services/image.service";
+import {FontFamilyService} from "../../services/font-family.service";
 
 @Component({
   selector: 'app-top-nav',
@@ -16,7 +17,7 @@ export class TopNavComponent implements OnInit {
   projectDir: string = '';
   projectName: string = '';
   directory: any;
-  constructor(private state: StateService, private imageService: ImageService) { }
+  constructor(private state: StateService, private imageService: ImageService, private fontService: FontFamilyService) { }
 
   ngOnInit(): void {
   }
@@ -69,9 +70,6 @@ export class TopNavComponent implements OnInit {
   async openProject(){
     this.state.projectDirHandle = await (window as any).showDirectoryPicker();
     const metaHandle = await this.state.projectDirHandle.getFileHandle('meta.json');
-    const assets = await this.state.projectDirHandle.getDirectoryHandle('assets', { create: true });
-    const imgHandle = await assets.getDirectoryHandle('images', { create: true });
-    await this.imageService.getImageLinks(imgHandle);
     const metaJson = await metaHandle.getFile();
     const metaString = await metaJson.text();
     if(metaString){
@@ -80,5 +78,14 @@ export class TopNavComponent implements OnInit {
       this.state.layersData.next(response.layerData);
       this.createBody(response.layerData[0].children)
     }
+
+    const assets = await this.state.projectDirHandle.getDirectoryHandle('assets', { create: true });
+
+    const imgHandle = await assets.getDirectoryHandle('images', { create: true });
+    await this.imageService.getImageLinks(imgHandle);
+
+    const fontHandle = await assets.getDirectoryHandle('fonts', { create: true });
+    await this.fontService.getFonts(fontHandle);
+
   }
 }

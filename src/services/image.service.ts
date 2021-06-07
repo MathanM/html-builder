@@ -27,6 +27,5 @@ export class ImageService {
     }else{
       return url;
     }
-
   }
 }
