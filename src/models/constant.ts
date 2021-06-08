@@ -40,6 +40,7 @@ export function eventPosition(e: TouchEvent | MouseEvent) {
     return [e.clientX, e.clientY];
   }
 }
+export const fontFormats = ['.ttf','.woff','.woff2'];
 export const normalizePosition = (mouseX: number, mouseY: number, scope: HTMLElement, contextMenu: HTMLElement) => {
   const {
     left: scopeOffsetX,
@@ -113,4 +114,32 @@ export const getType = (id: string): string => {
     return XDType.Image
   }
   return ''
+}
+export const getFontFamilyProps = (fontFileName: string): { italic: boolean, weight: number } => {
+  const name = fontFileName.toLowerCase();
+  let italic = false;
+  let weight = 400;
+  if(name.indexOf("italic") != -1){
+    italic = true;
+  }
+  if(name.indexOf('thin') != -1){
+    weight = 100;
+  }else if(name.indexOf("extra-light") != -1 || name.indexOf("extralight") != -1){
+    weight = 200;
+  }else if(name.indexOf("light") != -1){
+    weight = 300;
+  }else if(name.indexOf("regular") != -1){
+    weight = 400;
+  }else if(name.indexOf("medium") != -1){
+    weight = 500;
+  }else if(name.indexOf("semi-bold") != -1 || name.indexOf("semibold") != -1){
+    weight = 600;
+  }else if(name.indexOf("extra-bold") != -1 || name.indexOf("extrabold") != -1){
+    weight = 800;
+  }else if(name.indexOf("bold") != -1){
+    weight = 700;
+  }else if(name.indexOf("black") != -1){
+    weight = 900;
+  }
+  return { italic, weight };
 }

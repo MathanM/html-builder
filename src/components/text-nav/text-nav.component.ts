@@ -4,6 +4,7 @@ import {NgForm} from "@angular/forms";
 import {combineLatest, Subject} from "rxjs";
 import {StateService} from "../../services/state.service";
 import {takeUntil, tap, withLatestFrom} from "rxjs/operators";
+import {FontFamilyService} from "../../services/font-family.service";
 
 @Component({
   selector: 'app-text-nav',
@@ -25,7 +26,8 @@ export class TextNavComponent implements OnInit, AfterViewInit, OnDestroy {
   transformTab: string = '';
   @ViewChild('textForm', { static: false }) textForm!: NgForm;
   destroy$: Subject<void> = new Subject<void>();
-  constructor(private state: StateService) { }
+  fontList: string[] = [];
+  constructor(private state: StateService, private fontService: FontFamilyService) { }
 
   ngOnInit(): void {
     combineLatest([
@@ -38,6 +40,12 @@ export class TextNavComponent implements OnInit, AfterViewInit, OnDestroy {
         }else{
           this.element = this.initValue;
         }
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe();
+    this.fontService.fontFamilyList.pipe(
+      tap((fonts) => {
+        this.fontList = Object.keys(fonts);
       }),
       takeUntil(this.destroy$)
     ).subscribe();

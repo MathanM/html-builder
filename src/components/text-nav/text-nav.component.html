@@ -75,7 +75,7 @@
     </nav-card>
   </div>
   <nav-card title="Text" (click)="onCardClick('Size')">
-    <xd-select label="Family" [options]="['']"></xd-select>
+    <xd-select label="Family" name="fontFamily" [options]="fontList" [(ngModel)]="element.fontFamily"></xd-select>
     <div class="xd-flex xd-gap-20">
       <xd-input type="number" label="Size" [width]="45" name="fontSize" [(ngModel)]="element.fontSize"
                 unit="px"></xd-input>

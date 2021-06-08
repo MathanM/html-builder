@@ -4,7 +4,6 @@ import {NgForm} from "@angular/forms";
 import {StateService} from "../../services/state.service";
 import {take, takeUntil, withLatestFrom} from "rxjs/operators";
 import {Subject} from "rxjs";
-import {cloneDeep} from 'lodash';
 import {FontFamilyService} from "../../services/font-family.service";
 
 @Component({
@@ -30,7 +29,6 @@ export class ArtBoardNavComponent implements OnInit, AfterViewInit, OnDestroy {
       takeUntil(this.destroy$)
     ).subscribe((fonts) => {
       this.fontList = fonts;
-
     });
   }
 

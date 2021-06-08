@@ -1,4 +1,5 @@
 <label *ngIf="label">{{ label }}</label>
-<select *ngIf="options && options.length > 0">
-  <option *ngFor="let i of options">{{i}}</option>
+<select *ngIf="options && options.length > 0" [(ngModel)]="value" (change)="onToggle()">
+  <option value=""></option>
+  <option *ngFor="let i of options" [value]="i">{{i}}</option>
 </select>

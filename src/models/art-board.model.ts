@@ -4,6 +4,15 @@ export type ArtBoardModel = {
   background: string;
   zoom: number;
   designHelper: any;
+  fonts: {
+    [key: string]: FontFamilyModel[];
+  }
+}
+export type FontFamilyModel = {
+  name: string;
+  fontWeight: number;
+  fontStyle: string;
+  fontFamily: string;
 }
 export type ImageModel = {
   width?: string;

@@ -24,14 +24,25 @@
   </nav-card>
   <nav-card title="Fonts">
     <button style="margin: 10px 0;" class="xd-button" (click)="fontOpen = true">
-      <span class="pi pi-plus"></span>
-      Add Font
+      <span class="pi pi-book"></span>
+      Font Library
     </button>
   </nav-card>
 </form>
-<xd-modal [title]="'Add Font Family'" [width]="'60%'" [height]="'60vh'" [(isOpen)]="fontOpen">
+<xd-modal [title]="'Font Library'" [width]="'60%'" [height]="'60vh'" [(isOpen)]="fontOpen">
   <div class="content">
-
+    <div class="font-family" *ngFor="let font of fontList | keyvalue">
+      <h4>{{font.key}}</h4>
+      <ul class="font-family-cards">
+        <li *ngFor="let file of $any(font.value) | keyvalue">
+          <p>{{file.key}}</p>
+          <div class="xd-flex xd-gap-15">
+            <xd-input type="number" label="Weight" [readonly]="true" [(ngModel)]="$any(file.value).fontWeight"></xd-input>
+            <xd-input type="text" label="Style" [readonly]="true" [(ngModel)]="$any(file.value).fontStyle"></xd-input>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
   <div class="footer xd-btn-group">
     <button (click)="fontOpen = false" class="xd-button default">Close</button>

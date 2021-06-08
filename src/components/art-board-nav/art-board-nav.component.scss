@@ -1,0 +1,29 @@
+h4{
+  font-size: var(--font-xl);
+  color: var(--active-blue);
+  margin: 15px 0;
+  text-align: center;
+}
+.font-family-cards{
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 20px;
+  padding: 15px;
+  flex-wrap: wrap;
+  list-style: none;
+  li{
+    padding: 15px;
+    border: 2px solid var(--grey-bg);
+    border-radius: 5px;
+    p{
+      font-size: var(--font-l);
+      color: var(--dark-color-2);
+      font-weight: 500;
+    }
+    &:hover{
+      border-color: var(--active-blue);
+      background: var(--blue-light);
+    }
+  }
+}
