@@ -1,7 +1,7 @@
 <form #artBoardForm="ngForm">
   <nav-card title="Transform">
-    <xd-input type="number" label="W" name="width" [(ngModel)]="artBoard.width" (ngModelChange)="onArtBoardWidthChange()" unit="px"></xd-input>
-    <xd-input type="number" label="Zoom" name="zoom" [(ngModel)]="artBoard.zoom"></xd-input>
+    <xd-input label="W" name="width" [(ngModel)]="artBoard.width" (ngModelChange)="onArtBoardWidthChange()"></xd-input>
+    <xd-input [step]="0.01" type="number" label="Zoom" name="zoom" [(ngModel)]="artBoard.zoom"></xd-input>
   </nav-card>
   <nav-card title="Appearance">
     <xd-color-picker label="Fill" name="background" [(ngModel)]="artBoard.background"></xd-color-picker>
@@ -12,18 +12,18 @@
       <xd-checkbox [label]="artBoard.designHelper.name" id="design-toggle" name="design-toggle"
                    [(ngModel)]="artBoard.designHelper.toggle"></xd-checkbox>
       <div class="xd-flex xd-gap-20">
-        <xd-input type="number" label="W" name="design-width" [(ngModel)]="artBoard.designHelper.width"
-                  unit="px"></xd-input>
-        <xd-input type="number" label="H" name="design-height" [(ngModel)]="artBoard.designHelper.height"
-                  unit="px"></xd-input>
+        <xd-input label="W" name="design-width" [(ngModel)]="artBoard.designHelper.width"
+        ></xd-input>
+        <xd-input label="H" name="design-height" [(ngModel)]="artBoard.designHelper.height"
+        ></xd-input>
       </div>
-      <xd-input type="number" label="Offset" name="design-offset" [(ngModel)]="artBoard.designHelper.top"
-                unit="px"></xd-input>
+      <xd-input label="Offset" name="design-offset" [(ngModel)]="artBoard.designHelper.top"
+      ></xd-input>
       <xd-checkbox [(ngModel)]="artBoard.designHelper.is2x" name="2x" label="2x" (ngModelChange)="on2x()"></xd-checkbox>
     </ng-container>
   </nav-card>
   <nav-card title="Fonts">
-    <button style="margin: 10px 0;" class="xd-button" (click)="fontOpen = true">
+    <button type="button" style="margin: 10px 0;" class="xd-button" (click)="fontOpen = true">
       <span class="pi pi-book"></span>
       Font Library
     </button>
@@ -37,7 +37,7 @@
         <li *ngFor="let file of $any(font.value) | keyvalue">
           <p>{{file.key}}</p>
           <div class="xd-flex xd-gap-15">
-            <xd-input type="number" label="Weight" [readonly]="true" [(ngModel)]="$any(file.value).fontWeight"></xd-input>
+            <xd-input label="Weight" [readonly]="true" [(ngModel)]="$any(file.value).fontWeight"></xd-input>
             <xd-input type="text" label="Style" [readonly]="true" [(ngModel)]="$any(file.value).fontStyle"></xd-input>
           </div>
         </li>
@@ -45,6 +45,6 @@
     </div>
   </div>
   <div class="footer xd-btn-group">
-    <button (click)="fontOpen = false" class="xd-button default">Close</button>
+    <button type="button" (click)="fontOpen = false" class="xd-button default">Close</button>
   </div>
 </xd-modal>

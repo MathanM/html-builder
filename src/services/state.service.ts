@@ -138,7 +138,8 @@ export class StateService {
     const childId: string[] = [];
     if(layers && layers.length > 0){
       layers.forEach((layer: LayerModel) => {
-        const id = randomId(6, XDType.Element);
+        const type = getType(layer.elementId);
+        const id = randomId(6, type);
         childId.push(id);
         this.copyData.styleData[id] = styleData[layer.elementId];
         layer.elementId = id;
@@ -153,7 +154,6 @@ export class StateService {
       styleData: {},
       layersData: []
     }
-    const xdId = randomId(6, XDType.Element);
     combineLatest([
       this.styleData,
       this.activeLayer,
@@ -161,7 +161,8 @@ export class StateService {
     ]).pipe(
       take(1),
       tap(([styleData, activeLayer, copy]) => {
-
+        const type = getType(copy.id);
+        const xdId = randomId(6, type);
         //copy layers
         this.copyData.styleData[xdId] = cloneDeep(styleData[copy.id]);
         const layers: LayerModel = cloneDeep(copy.layer) as LayerModel;

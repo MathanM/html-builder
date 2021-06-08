@@ -34,42 +34,41 @@
 
   <nav-card title="Transform" (click)="onCardClick('Size')">
     <div class="xd-flex xd-gap-20">
-      <xd-input type="number" label="W" name="width" [(ngModel)]="element.width" unit="px"></xd-input>
-      <xd-input type="number" label="H" name="height" [(ngModel)]="element.height" unit="px"></xd-input>
+      <xd-input type="text" label="W" name="width" [(ngModel)]="element.width"></xd-input>
+      <xd-input type="text" label="H" name="height" [(ngModel)]="element.height"></xd-input>
     </div>
     <div>
       <div class="xd-flex xd-gap-20">
-        <xd-input type="number" label="Max W" [width]="40" name="maxWidth" [(ngModel)]="element.maxWidth" unit="px"></xd-input>
-        <xd-input type="number" label="Max H" [width]="40" name="maxHeight" [(ngModel)]="element.maxHeight" unit="px"></xd-input>
+        <xd-input type="text" label="Max W" [width]="40" name="maxWidth" [(ngModel)]="element.maxWidth"></xd-input>
+        <xd-input type="text" label="Max H" [width]="40" name="maxHeight" [(ngModel)]="element.maxHeight"></xd-input>
       </div>
       <div class="xd-flex xd-gap-20">
-        <xd-input type="number" label="Min W" [width]="40" name="maxWidth" [(ngModel)]="element.minWidth" unit="px"></xd-input>
-        <xd-input type="number" label="Min H" [width]="40" name="maxHeight" [(ngModel)]="element.minHeight" unit="px"></xd-input>
+        <xd-input type="text" label="Min W" [width]="40" name="maxWidth" [(ngModel)]="element.minWidth"></xd-input>
+        <xd-input type="text" label="Min H" [width]="40" name="maxHeight" [(ngModel)]="element.minHeight"></xd-input>
       </div>
     </div>
   </nav-card>
   <nav-card title="Margin" (click)="onCardClick('Margin')">
     <div class="xd-flex xd-gap-10">
-      <xd-input class="input-col" type="number" label="Top" [width]="43" name="marginTop" [(ngModel)]="element.marginTop"
-                unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="Right" [width]="43" name="marginRight"
-                [(ngModel)]="element.marginRight" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="Bottom" [width]="43" name="marginBottom"
-                [(ngModel)]="element.marginBottom" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="Left" [width]="43" name="marginLeft"
-                [(ngModel)]="element.marginLeft" unit="px"></xd-input>
+      <xd-input class="input-col" type="text" label="Top" [width]="43" name="marginTop" [(ngModel)]="element.marginTop"></xd-input>
+      <xd-input class="input-col" type="text" label="Right" [width]="43" name="marginRight"
+                [(ngModel)]="element.marginRight"></xd-input>
+      <xd-input class="input-col" type="text" label="Bottom" [width]="43" name="marginBottom"
+                [(ngModel)]="element.marginBottom"></xd-input>
+      <xd-input class="input-col" type="text" label="Left" [width]="43" name="marginLeft"
+                [(ngModel)]="element.marginLeft"></xd-input>
     </div>
   </nav-card>
   <nav-card title="Padding" (click)="onCardClick('Padding')">
     <div class="xd-flex xd-gap-10">
-      <xd-input class="input-col" type="number" label="Top" [width]="43" name="paddingTop"
-                [(ngModel)]="element.paddingTop" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="Right" [width]="43" name="paddingRight"
-                [(ngModel)]="element.paddingRight" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="Bottom" [width]="43" name="paddingBottom"
-                [(ngModel)]="element.paddingBottom" unit="px"></xd-input>
-      <xd-input class="input-col" type="number" label="Left" [width]="43" name="paddingLeft"
-                [(ngModel)]="element.paddingLeft" unit="px"></xd-input>
+      <xd-input class="input-col" type="text" label="Top" [width]="43" name="paddingTop"
+                [(ngModel)]="element.paddingTop"></xd-input>
+      <xd-input class="input-col" type="text" label="Right" [width]="43" name="paddingRight"
+                [(ngModel)]="element.paddingRight"></xd-input>
+      <xd-input class="input-col" type="text" label="Bottom" [width]="43" name="paddingBottom"
+                [(ngModel)]="element.paddingBottom"></xd-input>
+      <xd-input class="input-col" type="text" label="Left" [width]="43" name="paddingLeft"
+                [(ngModel)]="element.paddingLeft"></xd-input>
     </div>
   </nav-card>
   <nav-card title="Appearance" (click)="onCardClick('Size')">

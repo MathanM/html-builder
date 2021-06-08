@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 @Component({
@@ -18,7 +18,7 @@ export class XdInputComponent implements ControlValueAccessor  {
   @Input() type = 'text'
   @Input() value!: any;
   @Input() width = 50;
-  @Input() unit!: string;
+  @Input() step = 1;
 
   onChange = (value: any) => {};
   onTouched = () => {};
@@ -26,21 +26,50 @@ export class XdInputComponent implements ControlValueAccessor  {
   @Input() disabled = false;
   @Input() readonly!: boolean;
 
-  onBlur(): void {
-    this.markAsTouched();
-    if(this.unit){
-      this.onChange(this.value+this.unit);
+  onKeyDown(e: KeyboardEvent){
+    if(this.type == 'number'){
+      let factor = this.step;
+      if(e.ctrlKey){
+        factor = 100 * this.step;
+      }else if(e.shiftKey){
+        factor = 10 * this.step;
+      }
+      if(e.key == "ArrowUp"){
+        e.preventDefault();
+        this.value = Math.round((this.value + factor) * 100) / 100;
+      }else if(e.key == "ArrowDown"){
+        e.preventDefault();
+        this.value = Math.round((this.value - factor) * 100) / 100;
+      }
     }else{
-      this.onChange(this.value);
+      const numSelector = /(-\d+|\d+)/;
+      const numMatch = this.value.match(numSelector);
+      if(numMatch){
+        const num = parseInt(numMatch[0]);
+        let factor = this.step;
+        if(e.ctrlKey){
+          factor = 100 * this.step;
+        }else if(e.shiftKey){
+          factor = 10 * this.step;
+        }
+        if(e.key == "ArrowUp"){
+          const numStr = (num + factor).toString();
+          this.value = this.value.replace(numMatch[0], numStr);
+        }else if(e.key == "ArrowDown"){
+          const numStr = (num - factor).toString();
+          this.value = this.value.replace(numMatch[0], numStr);
+        }
+      }
     }
   }
 
+  onBlur(): void {
+    this.markAsTouched();
+    this.onChange(this.value);
+  }
+
   writeValue(value: any) {
-    if(this.type == 'number'){
-      this.value = parseFloat(value);
-    }else{
-      this.value = value;
-    }
+    this.value = value;
   }
 
   registerOnChange(onChange: any) {

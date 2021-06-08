@@ -6,5 +6,6 @@
   [(ngModel)]="value"
   [style]="{ width: width+'px' }"
   (blur)="onBlur()"
+  (keydown)="onKeyDown($event)"
   (keyup.enter)="onBlur()"
 />
