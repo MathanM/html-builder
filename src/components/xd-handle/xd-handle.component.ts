@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, HostBinding, Inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {fromEvent, Observable, Subject} from "rxjs";
 import {switchMapTo, takeUntil, tap} from "rxjs/operators";
 import {DOCUMENT} from "@angular/common";
@@ -27,6 +27,8 @@ export class XdHandleComponent implements OnInit, OnDestroy {
   startValue: number = 0;
   currentValue: number = 0;
   private destroy$ = new Subject<void>();
+
+  @HostBinding('attr.contenteditable') edit = false;
 
   constructor(private elementRef: ElementRef, @Inject(DOCUMENT) private document: Document) {}
 

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {StateService} from "../../services/state.service";
 import {combineLatest} from "rxjs";
 import {take, tap} from "rxjs/operators";
-import {LayerModel} from "../../models/art-board.model";
+import {LayerModel, XDType} from "../../models/art-board.model";
 import {DomSanitizer} from "@angular/platform-browser";
 import {ImageService} from "../../services/image.service";
 import {FontFamilyService} from "../../services/font-family.service";
@@ -68,6 +68,10 @@ export class TopNavComponent implements OnInit {
     this.newProjectOpen = false;
   }
   async openProject(){
+    this.state.artBoardViewContainer.clear();
+    this.releaseAssetFiles();
+    this.state.activeViewContainer = null;
+    this.state.activeItem.next(XDType.ArtBoard);
     this.state.projectDirHandle = await (window as any).showDirectoryPicker();
     const metaHandle = await this.state.projectDirHandle.getFileHandle('meta.json');
     const metaJson = await metaHandle.getFile();
@@ -87,5 +91,25 @@ export class TopNavComponent implements OnInit {
     const fontHandle = await assets.getDirectoryHandle('fonts', { create: true });
     await this.fontService.getFonts(fontHandle);
 
+  }
+  releaseAssetFiles(){
+    combineLatest([
+      this.imageService.imageList,
+      this.fontService.fontFamilyList
+    ]).pipe(
+      take(1),
+      tap(([images, fonts])=>{
+        for(const key in images){
+          URL.revokeObjectURL(images[key]);
+        }
+        for(const family in fonts){
+          for(const font in fonts[family]){
+            URL.revokeObjectURL(fonts[family][font].url);
+          }
+        }
+        this.imageService.imageList.next({});
+        this.fontService.fontFamilyList.next({});
+      }),
+    ).subscribe();
   }
 }
