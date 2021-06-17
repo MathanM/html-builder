@@ -81,6 +81,11 @@
       ></xd-input>
       <xd-input type="number" [step]="100" label="Weight" name="fontWeight" [(ngModel)]="element.fontWeight"></xd-input>
     </div>
+    <div class="xd-flex xd-gap-20">
+      <xd-input type="text" label="LH" [width]="60" name="lineHeight" [(ngModel)]="element.lineHeight"
+      ></xd-input>
+      <xd-input type="text" [width]="60" label="LS" name="letterSpacing" [(ngModel)]="element.letterSpacing"></xd-input>
+    </div>
     <xd-color-picker label="Color" name="color" [(ngModel)]="element.color"></xd-color-picker>
   </nav-card>
 </form>

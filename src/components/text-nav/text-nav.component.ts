@@ -17,6 +17,7 @@ export class TextNavComponent implements OnInit, AfterViewInit, OnDestroy {
     textAlign: "",
     color: "",
     lineHeight: "",
+    letterSpacing: "",
     fontSize: "",
     fontWeight: "",
     fontFamily: "",
@@ -45,7 +46,7 @@ export class TextNavComponent implements OnInit, AfterViewInit, OnDestroy {
     ).subscribe();
     this.fontService.fontFamilyList.pipe(
       tap((fonts) => {
-        this.fontList = Object.keys(fonts);
+        this.fontList = [...Object.keys(fonts), 'Times','sans-serif','monospace'];
       }),
       takeUntil(this.destroy$)
     ).subscribe();

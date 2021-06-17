@@ -89,7 +89,7 @@ export const fetchSelection = (): any => {
     const selectedText = textNode?.nodeValue?.substring(startIndex, endIndex);
     const textNodes = textNode?.nodeValue?.split(selectedText || "");
     if(textNodes){
-      return {startText: textNodes[0], endText: textNodes[1], selectedText, textNode}
+      return {startText: textNodes[0], endText: textNodes[1], selectedText, text: textNode?.nodeValue }
     }
   }
 }

@@ -38,6 +38,7 @@ export type TextModel = {
   textAlign?: string;
   color?: string;
   lineHeight?: string;
+  letterSpacing?: string;
   fontSize?: string;
   fontFamily?: string;
   textTransform?: string;

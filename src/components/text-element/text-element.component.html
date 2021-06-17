@@ -11,8 +11,15 @@
   </div>
 </ng-template>
 <ng-template #inlineText let-node><text-element class="inline" [xdId]="node.id" [type]="'inline-text'" [textNodes]="node.textNodes"></text-element></ng-template>
-<ng-template #text let-node>{{node}}</ng-template>
-<ng-container *ngIf="textNodes && textNodes.length > 0">
+<ng-template #text let-node>
+  <ng-container *ngIf="node != '\n';else emptyNode">
+    {{node}}
+  </ng-container>
+</ng-template>
+<ng-template #emptyNode>
+  <br>
+</ng-template>
+<ng-container *ngIf="textNodes && textNodes.length > 0; else emptyNode">
   <ng-container *ngFor="let node of textNodes">
     <ng-container *ngTemplateOutlet="getNodeType(node) ? inlineText:text; context: { $implicit: node } "></ng-container>
   </ng-container>

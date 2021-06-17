@@ -28,6 +28,7 @@ export class TextElementComponent extends ElementComponent implements OnInit, On
   @HostBinding('class.editable')
   @HostBinding('attr.contenteditable') edit = false;
   @Input() textNodes: Array<string | textNode> = ["Lorem Ipsum"];
+  selectedText!: any;
   constructor(
     protected elementRef: ElementRef,
     protected renderer: Renderer2,
@@ -43,14 +44,29 @@ export class TextElementComponent extends ElementComponent implements OnInit, On
     e.stopPropagation();
     this.edit = true;
   }
-
+  @HostListener('keydown', ['$event'])
+  onChangeEvent(e: KeyboardEvent){
+    if(this.edit && e.key == "Backspace"){
+      e.preventDefault();
+      e.stopPropagation();
+      this.inputManipulation();
+    }
+  }
   @HostListener('blur', ['$event'])
   onBlur(e: Event){
     e.preventDefault();
     e.stopPropagation();
+    this.selectedText = fetchSelection();
     const target: any = e.target;
-    this.textNodes = this.getTextNodes(target.childNodes);
-    this.state.updateStyleData(this.type+"-"+this.xdId, { textNodes: this.textNodes });
+    const txt = this.getTextNodes(target.childNodes);
+    setTimeout(() => {
+      this.textNodes = [];
+      this.removeTextNodes(target);
+      setTimeout(() => {
+        this.textNodes = txt;
+        this.state.updateStyleData(this.type + "-" + this.xdId, {textNodes: this.textNodes});
+      });
+    });
   }
 
   ngOnInit(): void {
@@ -58,14 +74,13 @@ export class TextElementComponent extends ElementComponent implements OnInit, On
   }
 
   breakTextNode(): void{
-    const selection: any = fetchSelection();
-    if(selection){
-      const i = this.textNodes.findIndex((node) => node === selection.textNode.nodeValue);
+    if(this.selectedText){
+      const i = this.textNodes.findIndex((node) => node === this.selectedText.nodeValue);
       this.textNodes.splice(i, 1);
-      this.textNodes.splice(i, 0, selection.startText, {
+      this.textNodes.splice(i, 0, this.selectedText.startText, {
         id: randomId(6),
-        textNodes: [selection.selectedText]
-      }, selection.endText);
+        textNodes: [this.selectedText.selectedText]
+      }, this.selectedText.endText);
       this.state.updateStyleData(this.type + "-" + this.xdId, {textNodes: this.textNodes});
     }
   }
@@ -89,6 +104,8 @@ export class TextElementComponent extends ElementComponent implements OnInit, On
             id: node.getAttribute('xd-id'),
             textNodes: subNodes
           });
+        }else if(node.nodeName == "BR"){
+          textNodes.push("\n");
         }
       });
     }
@@ -106,5 +123,48 @@ export class TextElementComponent extends ElementComponent implements OnInit, On
   }
   getNodeType(node: string | textNode): boolean{
     return typeof node !== "string";
+  }
+  inputManipulation(){
+    const sel: Selection | null = document.getSelection();
+    if(sel){
+      if(sel.isCollapsed){
+        const node: Node | null = sel.anchorNode;
+        if(node && node.nodeName == "#text" && node.nodeValue){
+          const offset = sel.anchorOffset;
+          const textValue = node.nodeValue.slice(0, sel.anchorOffset-1) + node.nodeValue.slice(sel.anchorOffset);
+          node.nodeValue = textValue ? textValue: " ";
+          this.resetCaretPosition(sel,offset);
+        }
+      }
+    }
+  }
+  resetCaretPosition(sel: Selection, offset: number){
+    const range = document.createRange();
+    if(sel.anchorNode){
+      range.setStart(sel.anchorNode, offset > 1 ?offset + -1:offset);
+    }
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+  removeTextNodes(parent: any){
+    const nodes: NodeList = parent.childNodes;
+    if(nodes && nodes.length > 0){
+      for(let i=0;i<nodes.length;i++){
+        if(nodes[i].nodeName == "#text"){
+          this.renderer.removeChild(parent, nodes[i], true);
+          i--;
+        }
+      }
+    }
+    const children = parent.children;
+    if(children && children.length > 0){
+      for(let i=0;i<children.length;i++){
+        if(children[i].nodeName == "BR"){
+          this.renderer.removeChild(parent, children[i], true);
+          i--;
+        }
+      }
+    }
   }
 }
