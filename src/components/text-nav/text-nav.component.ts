@@ -60,9 +60,7 @@ export class TextNavComponent implements OnInit, AfterViewInit, OnDestroy {
         withLatestFrom(this.state.styleData),
         takeUntil(this.destroy$)
       ).subscribe(([val, styleData]) => {
-        setTimeout(()=> {
           this.state.styleData.next({...styleData, [this.textId]: this.element});
-        })
       });
     }
   }

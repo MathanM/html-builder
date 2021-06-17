@@ -2,8 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {StateService} from "../../services/state.service";
 import {combineLatest} from "rxjs";
 import {take, tap} from "rxjs/operators";
-import {LayerModel, XDType} from "../../models/art-board.model";
-import {DomSanitizer} from "@angular/platform-browser";
+import {XDType} from "../../models/art-board.model";
 import {ImageService} from "../../services/image.service";
 import {FontFamilyService} from "../../services/font-family.service";
 
@@ -48,12 +47,6 @@ export class TopNavComponent implements OnInit {
     }
     return value
   }
-
-  createBody(layerData: LayerModel[] | null | undefined){
-    if(layerData && layerData.length > 0){
-      this.state.createElements(layerData);
-    }
-  }
   async createProject(){
     const projectHandle = await this.directory.getDirectoryHandle(this.projectName, {
       create: true
@@ -80,7 +73,7 @@ export class TopNavComponent implements OnInit {
       const response = JSON.parse(metaString);
       this.state.styleData.next(response.styleData);
       this.state.layersData.next(response.layerData);
-      this.createBody(response.layerData[0].children)
+      this.state.createElements(response.layerData[0].children);
     }
 
     const assets = await this.state.projectDirHandle.getDirectoryHandle('assets', { create: true });
