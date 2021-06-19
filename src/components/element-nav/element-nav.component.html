@@ -43,8 +43,8 @@
         <xd-input type="text" label="Max H" [width]="40" name="maxHeight" [(ngModel)]="element.maxHeight"></xd-input>
       </div>
       <div class="xd-flex xd-gap-20">
-        <xd-input type="text" label="Min W" [width]="40" name="maxWidth" [(ngModel)]="element.minWidth"></xd-input>
-        <xd-input type="text" label="Min H" [width]="40" name="maxHeight" [(ngModel)]="element.minHeight"></xd-input>
+        <xd-input type="text" label="Min W" [width]="40" name="minWidth" [(ngModel)]="element.minWidth"></xd-input>
+        <xd-input type="text" label="Min H" [width]="40" name="minHeight" [(ngModel)]="element.minHeight"></xd-input>
       </div>
     </div>
   </nav-card>
@@ -72,7 +72,11 @@
     </div>
   </nav-card>
   <nav-card title="Appearance" (click)="onCardClick('Size')">
-    <xd-color-picker label="Fill" name="backgroundColor" [(ngModel)]="element.backgroundColor"></xd-color-picker>
-    <xd-color-picker label="Border" name="borderColor" [(ngModel)]="element.borderColor"></xd-color-picker>
+    <xd-color-picker label="Fill" name="backgroundColor" [(toggle)]="element.backgroundToggle" (toggleChange)="onBackground($event)" [(ngModel)]="element.backgroundColor"></xd-color-picker>
+    <xd-color-picker label="Border" name="borderColor" [(toggle)]="element.borderToggle" (toggleChange)="onBorder($event)" [(ngModel)]="element.borderColor"></xd-color-picker>
+    <div class="xd-flex xd-gap-20" *ngIf="element.borderToggle">
+      <xd-input type="text" label="Size" [width]="40" name="borderWidth" [(ngModel)]="element.borderWidth"></xd-input>
+      <xd-input type="text" label="Style" [width]="40" name="borderStyle" [(ngModel)]="element.borderStyle"></xd-input>
+    </div>
   </nav-card>
 </form>

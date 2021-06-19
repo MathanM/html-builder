@@ -14,30 +14,25 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
   ]
 })
 export class XdColorPickerComponent implements ControlValueAccessor {
-  defaultColor = 'none';
-  isApplied: boolean = true;
-  @Input() color: string = '#fff';
+  @Input() toggle: boolean = false;
+  @Input() color: string = '';
   @Input() label: string = '';
 
   touched = false;
   disabled = false;
+  @Output() toggleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   onTouched = () => {};
   onChange = (color: string) => {};
-  onApplyColor(flag: any): void{
+  onApplyColor(): void{
     this.markAsTouched();
-    this.isApplied = flag
-    if(this.isApplied) {
-      this.onChange(this.color);
-    }else{
-      this.onChange(this.defaultColor);
-    }
+    this.toggleChange.emit(this.toggle);
+    this.onChange(this.color);
   }
   onColorChange(color: string): void{
     this.markAsTouched();
     this.color = color;
-    if(this.isApplied){
-      this.onChange(this.color);
-    }
+    this.toggleChange.emit(this.toggle);
+    this.onChange(this.color);
   }
 
   markAsTouched() {

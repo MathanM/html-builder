@@ -1,9 +1,12 @@
 export type ArtBoardModel = {
   width?: string;
   height?: string;
-  background: string;
+  backgroundColor?: string;
+  color?: string;
   zoom: number;
   designHelper: any;
+  backgroundToggle: boolean;
+  colorToggle: boolean;
   fonts: {
     [key: string]: FontFamilyModel[];
   }
@@ -33,6 +36,10 @@ export type ImageModel = {
   maxHeight?: string;
   src?: string;
   alt?: string;
+  borderStyle?: string;
+  borderWidth?: string;
+  borderToggle: boolean;
+  backgroundToggle: boolean;
 }
 export type TextModel = {
   textAlign?: string;
@@ -56,6 +63,7 @@ export type TextModel = {
   fontStyle?: string;
   fontWeight?: string;
   textNodes?: Array<string | textNode>;
+  colorToggle: boolean;
 }
 export type ElementModel = {
   width?: string;
@@ -81,6 +89,10 @@ export type ElementModel = {
   maxWidth?: string;
   minHeight?: string;
   maxHeight?: string;
+  borderStyle?: string;
+  borderWidth?: string;
+  borderToggle: boolean;
+  backgroundToggle: boolean;
 }
 export interface LayerModel {
   expanded?: boolean;

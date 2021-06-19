@@ -1,3 +1,3 @@
-<xd-checkbox class="inline" [value]="color != 'none'" (change)="onApplyColor($any($event.target).checked)"></xd-checkbox>
+<xd-checkbox class="inline" [(ngModel)]="toggle" (ngModelChange)="onApplyColor()"></xd-checkbox>
 <span [colorPicker]="color" (colorPickerChange)="onColorChange($event)" [style.background]="color"></span>
 <label>{{ label }}</label>

@@ -17,9 +17,11 @@ export class StateService {
   styleData: BehaviorSubject<any> = new BehaviorSubject<any>({
     artBoard: {
       width: "1440px",
-      background: '#fff',
+      backgroundColor: '#fff',
       zoom: 0.82,
-      designHelper: null
+      designHelper: null,
+      backgroundToggle: true,
+      colorToggle: false
     }
   });
   layersData: BehaviorSubject<LayerModel[]> = new BehaviorSubject<LayerModel[]>([initArtBoard]);

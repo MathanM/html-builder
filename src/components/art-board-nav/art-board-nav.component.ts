@@ -22,7 +22,8 @@ export class ArtBoardNavComponent implements OnInit, AfterViewInit, OnDestroy {
     this.state.styleData.pipe(
       take(1)
     ).subscribe((styleData: any) => {
-      this.artBoard = {...styleData.artBoard};
+      // this.artBoard = {...styleData.artBoard};
+      this.artBoard = styleData.artBoard;
       this.on2x();
     });
     this.fontService.fontFamilyList.pipe(
@@ -41,10 +42,21 @@ export class ArtBoardNavComponent implements OnInit, AfterViewInit, OnDestroy {
         withLatestFrom(this.state.styleData),
         takeUntil(this.destroy$)
       ).subscribe(([val, styleData]) => {
-        setTimeout(()=> {
+          if(!this.artBoard.backgroundToggle){
+            this.artBoard.backgroundColor = "";
+          }
           this.state.styleData.next({...styleData, artBoard: this.artBoard});
-        })
       });
+    }
+  }
+  onBackground(flag: boolean): void{
+    if(!flag){
+      this.artBoard.backgroundColor = "";
+    }
+  }
+  onColor(flag: boolean): void{
+    if(!flag){
+      this.artBoard.color = "";
     }
   }
   onDesignHelperUpload(e: FileUploadEvent){

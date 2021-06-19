@@ -26,7 +26,9 @@ export class ImageNavComponent implements OnInit, AfterViewInit, OnDestroy {
     marginBottom: "",
     backgroundColor: "",
     src: "assets/images/placeholder.jpg",
-    alt: "placeholder"
+    alt: "placeholder",
+    backgroundToggle: false,
+    borderToggle: false
   }
   element!: ImageModel | any;
   transformTab: string = '';
@@ -78,6 +80,20 @@ export class ImageNavComponent implements OnInit, AfterViewInit, OnDestroy {
     if(this.transformTab != card){
       this.transformTab = card;
       this.state.activeUtility.next(this.transformTab);
+    }
+  }
+  onBorder(flag: boolean): void{
+    if(flag){
+      this.element.borderWidth = "1px";
+      this.element.borderStyle = "solid";
+    }else{
+      this.element.borderWidth = "";
+      this.element.borderStyle = "";
+    }
+  }
+  onBackground(flag: boolean): void{
+    if(!flag){
+      this.element.backgroundColor = "";
     }
   }
   onImgClick(name: string){

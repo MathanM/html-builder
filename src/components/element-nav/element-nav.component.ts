@@ -33,7 +33,11 @@ export class ElementNavComponent implements OnInit, AfterViewInit, OnDestroy {
     minHeight:"",
     maxHeight:"",
     maxWidth:"",
-    minWidth:""
+    minWidth:"",
+    borderStyle: "",
+    borderWidth: "",
+    borderToggle: false,
+    backgroundToggle: false
   }
   element!: ElementModel;
   transformTab: string = 'Size';
@@ -78,6 +82,20 @@ export class ElementNavComponent implements OnInit, AfterViewInit, OnDestroy {
     if(this.transformTab != card){
       this.transformTab = card;
       this.state.activeUtility.next(this.transformTab);
+    }
+  }
+  onBorder(flag: boolean): void{
+    if(flag){
+      this.element.borderWidth = "1px";
+      this.element.borderStyle = "solid";
+    }else{
+      this.element.borderWidth = "";
+      this.element.borderStyle = "";
+    }
+  }
+  onBackground(flag: boolean): void{
+    if(!flag){
+      this.element.backgroundColor = "";
     }
   }
   ngOnDestroy(): void {

@@ -7,6 +7,9 @@
     </ul>
   </div>
 </ng-template>
-<ng-container *ngIf="elementData && imageList[elementData.src]">
+<ng-container *ngIf="elementData && imageList[elementData.src]; else placeholderImg">
   <img [src]="imageList[elementData.src]" [alt]="elementData.alt">
 </ng-container>
+<ng-template #placeholderImg>
+  <img src="assets/images/placeholder.jpg" [alt]="'placeholder'">
+</ng-template>

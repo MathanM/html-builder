@@ -4,7 +4,8 @@
     <xd-input [step]="0.01" type="number" label="Zoom" name="zoom" [(ngModel)]="artBoard.zoom"></xd-input>
   </nav-card>
   <nav-card title="Appearance">
-    <xd-color-picker label="Fill" name="background" [(ngModel)]="artBoard.background"></xd-color-picker>
+    <xd-color-picker label="Fill" name="backgroundColor" [(toggle)]="artBoard.backgroundToggle" (toggleChange)="onBackground($event)" [(ngModel)]="artBoard.backgroundColor"></xd-color-picker>
+    <xd-color-picker label="Color" name="color" [(toggle)]="artBoard.colorToggle" (toggleChange)="onColor($event)" [(ngModel)]="artBoard.color"></xd-color-picker>
   </nav-card>
   <nav-card title="Design Helper">
     <xd-file-upload id="designHelper" (fileUploadEvent)="onDesignHelperUpload($event)" type="image"></xd-file-upload>

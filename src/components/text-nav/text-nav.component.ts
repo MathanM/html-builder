@@ -22,6 +22,7 @@ export class TextNavComponent implements OnInit, AfterViewInit, OnDestroy {
     fontWeight: "",
     fontFamily: "",
     textTransform: "",
+    colorToggle: false
   }
   element!: TextModel | any;
   transformTab: string = '';
@@ -62,6 +63,11 @@ export class TextNavComponent implements OnInit, AfterViewInit, OnDestroy {
       ).subscribe(([val, styleData]) => {
           this.state.styleData.next({...styleData, [this.textId]: this.element});
       });
+    }
+  }
+  onColor(flag: boolean): void{
+    if(!flag){
+      this.element.color = "";
     }
   }
   setStyle(prop: {[prop: string]: string}, key?: string){

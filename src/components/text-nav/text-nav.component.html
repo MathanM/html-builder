@@ -86,6 +86,6 @@
       ></xd-input>
       <xd-input type="text" [width]="60" label="LS" name="letterSpacing" [(ngModel)]="element.letterSpacing"></xd-input>
     </div>
-    <xd-color-picker label="Color" name="color" [(ngModel)]="element.color"></xd-color-picker>
+    <xd-color-picker label="Color" name="color" [(toggle)]="element.colorToggle" (toggleChange)="onColor($event)" [(ngModel)]="element.color"></xd-color-picker>
   </nav-card>
 </form>
