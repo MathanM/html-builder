@@ -5,6 +5,10 @@
   background: var(--menu-bg);
   padding-left: 40px;
   padding-right: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
 }
 .xd-menu{
   list-style: none;

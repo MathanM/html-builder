@@ -1,11 +1,9 @@
 import {ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef} from '@angular/core';
 import {BehaviorSubject, combineLatest} from "rxjs";
 import {CopyId, LayerModel, XDType} from "../models/art-board.model";
-import {ElementComponent} from "../components/element/element.component";
-import {isType, initArtBoard, randomId, getType, XDComponent} from "../models/constant";
+import {getType, initArtBoard, randomId, XDComponent} from "../models/constant";
 import {take, tap} from "rxjs/operators";
 import {cloneDeep} from 'lodash';
-import {TextElementComponent} from "../components/text-element/text-element.component";
 
 @Injectable({
   providedIn: 'root'

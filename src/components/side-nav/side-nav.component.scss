@@ -4,8 +4,14 @@
   min-height: 100vh;
   border-right: 2px solid var(--grey-bg);
   border-left: 2px solid var(--grey-bg);
-  position: relative;
   z-index: 99;
   color: var(--primary-color);
   background: var(--menu-bg);
+  position: fixed;
+  top: 30px;
+  left: 0;
+}
+:host-context(.right-pane){
+  right: 0;
+  left: auto;
 }
