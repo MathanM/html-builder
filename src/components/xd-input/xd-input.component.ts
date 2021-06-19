@@ -41,7 +41,7 @@ export class XdInputComponent implements ControlValueAccessor  {
         e.preventDefault();
         this.value = Math.round((this.value - factor) * 100) / 100;
       }
-    }else{
+    }else if(this.value){
       const numSelector = /(-\d+|\d+)/;
       const numMatch = this.value.match(numSelector);
       if(numMatch){

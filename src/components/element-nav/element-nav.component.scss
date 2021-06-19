@@ -19,3 +19,42 @@
     );
   }
 }
+.img-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+.xd-img{
+  max-width: 200px;
+  img{
+    background: var(--white);
+    border-radius: 7px;
+    border: 1px solid var(--grey-bg);
+    padding: 7px;
+    max-width: 100%;
+  }
+  p{
+    margin: 0;
+    font-size: var(--font-m);
+    color: var(--primary-color);
+    text-align: center;
+  }
+  &:hover, &.active{
+    img{
+      border-color: var(--active-blue);
+    }
+    p{
+      color: var(--active-blue);
+    }
+  }
+  &.active{
+    img{
+      background: var(--blue-light);
+    }
+  }
+  &.style-1{
+    max-width: 100%;
+    padding: 15px;
+  }
+}

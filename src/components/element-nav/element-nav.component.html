@@ -2,10 +2,10 @@
   <div class="xd-flex">
     <nav-card class="xd-grow xd-br-2">
       <div class="xd-flex xd-gap-15 xd-f-center">
-        <xd-icon [class.active]="element.alignItems == 'flex-start'" (click)="setStyle({display:'flex',alignItems:'flex-start'})" class="icon-sm justify-top" icon="align-bottom"></xd-icon>
-        <xd-icon [class.active]="element.alignItems == 'center'" (click)="setStyle({display:'flex',alignItems:'center'})" class="icon-sm" icon="align-center"></xd-icon>
-        <xd-icon [class.active]="element.alignItems == 'flex-end'" (click)="setStyle({display:'flex',alignItems:'flex-end'})" class="icon-sm" icon="align-bottom"></xd-icon>
-        <xd-icon [class.active]="element.alignItems == 'stretch'" (click)="setStyle({display:'flex',alignItems:'stretch'})" class="icon-sm" icon="stretch"></xd-icon>
+        <xd-icon title="align-items: start" [class.active]="element.alignItems == 'flex-start'" (click)="setStyle({display:'flex',alignItems:'flex-start'})" class="icon-sm justify-top" icon="align-bottom"></xd-icon>
+        <xd-icon title="align-items: center" [class.active]="element.alignItems == 'center'" (click)="setStyle({display:'flex',alignItems:'center'})" class="icon-sm" icon="align-center"></xd-icon>
+        <xd-icon title="align-items: end" [class.active]="element.alignItems == 'flex-end'" (click)="setStyle({display:'flex',alignItems:'flex-end'})" class="icon-sm" icon="align-bottom"></xd-icon>
+        <xd-icon title="align-items: stretch" [class.active]="element.alignItems == 'stretch'" (click)="setStyle({display:'flex',alignItems:'stretch'})" class="icon-sm" icon="stretch"></xd-icon>
       </div>
     </nav-card>
     <nav-card class="xd-grow">
@@ -18,10 +18,10 @@
   <div class="xd-flex">
     <nav-card class="xd-grow xd-br-2">
       <div class="xd-flex xd-gap-15 xd-f-center">
-        <xd-icon [class.active]="element.justifyContent == 'flex-start'" (click)="setStyle({display:'flex',justifyContent:'flex-start'})" class="icon-sm align-top" icon="align-bottom"></xd-icon>
-        <xd-icon [class.active]="element.justifyContent == 'center'" (click)="setStyle({display:'flex',justifyContent:'center'})" class="icon-sm align-center" icon="align-center"></xd-icon>
-        <xd-icon [class.active]="element.justifyContent == 'flex-end'" (click)="setStyle({display:'flex',justifyContent:'flex-end'})" class="icon-sm align-bottom" icon="align-bottom"></xd-icon>
-        <xd-icon [class.active]="element.justifyContent == 'space-between'" (click)="setStyle({display:'flex',justifyContent:'space-between'})" class="icon-sm" icon="space-btw"></xd-icon>
+        <xd-icon title="justify-content: start" [class.active]="element.justifyContent == 'flex-start'" (click)="setStyle({display:'flex',justifyContent:'flex-start'})" class="icon-sm align-top" icon="align-bottom"></xd-icon>
+        <xd-icon title="justify-content: center" [class.active]="element.justifyContent == 'center'" (click)="setStyle({display:'flex',justifyContent:'center'})" class="icon-sm align-center" icon="align-center"></xd-icon>
+        <xd-icon title="justify-content: end" [class.active]="element.justifyContent == 'flex-end'" (click)="setStyle({display:'flex',justifyContent:'flex-end'})" class="icon-sm align-bottom" icon="align-bottom"></xd-icon>
+        <xd-icon title="justify-content: space-between" [class.active]="element.justifyContent == 'space-between'" (click)="setStyle({display:'flex',justifyContent:'space-between'})" class="icon-sm" icon="space-btw"></xd-icon>
       </div>
     </nav-card>
     <nav-card class="xd-grow">
@@ -73,6 +73,21 @@
   </nav-card>
   <nav-card title="Appearance" (click)="onCardClick('Size')">
     <xd-color-picker label="Fill" name="backgroundColor" [(toggle)]="element.backgroundToggle" (toggleChange)="onBackground($event)" [(ngModel)]="element.backgroundColor"></xd-color-picker>
+    <div *ngIf="element.backgroundToggle">
+      <button style="margin: 10px 0;" class="xd-button" (click)="imgPickerOpen = true">
+        <span class="pi pi-image"></span>
+        Browse Image
+      </button>
+      <ng-container *ngIf="element.imageUrl && imgList[element.imageUrl]">
+        <div class="img-container">
+          <div class="xd-img active style-1"><img [attr.src]="imgList[element.imageUrl]"><p>{{element.imageUrl}}</p></div>
+        </div>
+        <xd-input type="text" label="Size" [width]="120" name="backgroundSize" [(ngModel)]="element.backgroundSize"></xd-input>
+        <xd-input type="text" label="Position" [width]="120" name="backgroundPosition" [(ngModel)]="element.backgroundPosition"></xd-input>
+        <xd-input type="text" label="Repeat" [width]="120" name="backgroundRepeat" [(ngModel)]="element.backgroundRepeat"></xd-input>
+      </ng-container>
+
+    </div>
     <xd-color-picker label="Border" name="borderColor" [(toggle)]="element.borderToggle" (toggleChange)="onBorder($event)" [(ngModel)]="element.borderColor"></xd-color-picker>
     <div class="xd-flex xd-gap-20" *ngIf="element.borderToggle">
       <xd-input type="text" label="Size" [width]="40" name="borderWidth" [(ngModel)]="element.borderWidth"></xd-input>
@@ -80,3 +95,18 @@
     </div>
   </nav-card>
 </form>
+<xd-modal [title]="'Image Picker'" [width]="'60%'" [height]="'60vh'" [(isOpen)]="imgPickerOpen">
+  <div class="img-container content">
+    <div class="xd-img"
+         *ngFor="let name of getImagesName()"
+         (click)="onImgClick(name)"
+         [class.active]="element.imageUrl === name"
+    >
+      <img [attr.src]="imgList[name]">
+      <p>{{name}}</p>
+    </div>
+  </div>
+  <div class="footer xd-btn-group">
+    <button (click)="imgPickerOpen = false" class="xd-button default">Close</button>
+  </div>
+</xd-modal>

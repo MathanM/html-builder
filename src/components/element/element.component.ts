@@ -12,6 +12,7 @@ import {pluck, takeUntil, tap} from "rxjs/operators";
 import {pick} from 'lodash';
 import {ElementHelperDirective} from "../../directives/element-helper.directive";
 import {XDType} from "../../models/art-board.model";
+import {ImageService} from "../../services/image.service";
 
 @Component({
   selector: 'app-element',
@@ -47,12 +48,14 @@ export class ElementComponent extends ElementHelperDirective implements OnInit, 
     this.state.updateStyleData(this.type+'-'+this.xdId, elementData);
   }
   styleObserver$ = new MutationObserver(this.styleChange);
+  imageList: any = {};
 
   constructor(
     protected elementRef: ElementRef,
     protected renderer: Renderer2,
     protected componentFactoryResolver: ComponentFactoryResolver,
-    protected state: StateService
+    protected state: StateService,
+    protected imageService: ImageService
   ) {
     super(elementRef,renderer,componentFactoryResolver, state);
   }
@@ -66,6 +69,7 @@ export class ElementComponent extends ElementHelperDirective implements OnInit, 
         if(elementStyle){
           this.watchStyles(false);
           this.elementData = elementStyle;
+          this.checkImageUrl();
           this.updateStyles();
           this.onStyleData();
           setTimeout(() => {
@@ -87,8 +91,20 @@ export class ElementComponent extends ElementHelperDirective implements OnInit, 
       }),
       takeUntil(this.destroy$)
     ).subscribe();
+    this.imageService.imageList.pipe(
+      tap((imgData) => {
+        this.imageList = imgData;
+        this.checkImageUrl();
+        this.state.updateStyleData(this.type+'-'+this.xdId, this.elementData);
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe();
   }
-
+  checkImageUrl(){
+    if(this.elementData.imageUrl && this.imageList[this.elementData.imageUrl]){
+      this.elementData.backgroundImage = `url(${this.imageList[this.elementData.imageUrl]["changingThisBreaksApplicationSecurity"]})`
+    }
+  }
   updateStyles(){
     if(this.elementData){
       Object.keys(this.elementData).forEach(style => {

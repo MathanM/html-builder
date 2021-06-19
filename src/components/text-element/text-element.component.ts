@@ -17,6 +17,7 @@ import {StateService} from "../../services/state.service";
 import {ElementComponent} from "../element/element.component";
 import {fetchSelection, randomId} from "../../models/constant";
 import {textNode, XDType} from "../../models/art-board.model";
+import {ImageService} from "../../services/image.service";
 
 @Component({
   selector: 'text-element',
@@ -33,9 +34,10 @@ export class TextElementComponent extends ElementComponent implements OnInit, On
     protected elementRef: ElementRef,
     protected renderer: Renderer2,
     protected componentFactoryResolver: ComponentFactoryResolver,
-    protected state: StateService
+    protected state: StateService,
+    protected imageService: ImageService
   ) {
-    super(elementRef,renderer,componentFactoryResolver, state);
+    super(elementRef,renderer,componentFactoryResolver, state, imageService);
   }
 
   @HostListener('dblclick', ['$event'])

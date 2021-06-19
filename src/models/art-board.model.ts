@@ -69,7 +69,11 @@ export type ElementModel = {
   width?: string;
   height?: string;
   backgroundColor?: string;
-  borderColor?: string;
+  backgroundImage?: string;
+  backgroundSize?: string;
+  backgroundRepeat?: string;
+  backgroundPosition?: string;
+  imageUrl?: string;
   boxShadow?: string;
   borderRadius?: string;
   paddingLeft?: string;
@@ -89,6 +93,7 @@ export type ElementModel = {
   maxWidth?: string;
   minHeight?: string;
   maxHeight?: string;
+  borderColor?: string;
   borderStyle?: string;
   borderWidth?: string;
   borderToggle: boolean;

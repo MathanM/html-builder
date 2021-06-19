@@ -54,7 +54,7 @@
       <span class="pi pi-image"></span>
       Browse Image
     </button>
-    <div class="img-container">
+    <div class="img-container" *ngIf="imgList[element.src]">
       <div class="xd-img active style-1"><img [attr.src]="imgList[element.src]"><p>{{element.src}}</p></div>
     </div>
   </nav-card>

@@ -4,6 +4,7 @@ import {NgForm} from "@angular/forms";
 import {combineLatest, Subject} from "rxjs";
 import {StateService} from "../../services/state.service";
 import {takeUntil, tap, withLatestFrom} from "rxjs/operators";
+import {ImageService} from "../../services/image.service";
 
 @Component({
   selector: 'app-element-nav',
@@ -43,9 +44,17 @@ export class ElementNavComponent implements OnInit, AfterViewInit, OnDestroy {
   transformTab: string = 'Size';
   @ViewChild('elementForm', { static: false }) elementForm!: NgForm;
   destroy$: Subject<void> = new Subject<void>();
-  constructor(private state: StateService) { }
+  imgPickerOpen: boolean = false;
+  imgList: any = {};
+  constructor(private state: StateService, private imageService: ImageService) { }
 
   ngOnInit(): void {
+    this.imageService.imageList.pipe(
+      tap((images) => {
+        this.imgList = images;
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe();
     combineLatest([
       this.state.activeItem,
       this.state.styleData
@@ -96,7 +105,22 @@ export class ElementNavComponent implements OnInit, AfterViewInit, OnDestroy {
   onBackground(flag: boolean): void{
     if(!flag){
       this.element.backgroundColor = "";
+      this.element.imageUrl = "";
+      this.element.backgroundPosition = "";
+      this.element.backgroundSize = "";
+      this.element.backgroundRepeat = "";
+      this.element.backgroundImage = "";
     }
+  }
+  getImagesName(){
+    return Object.keys(this.imgList);
+  }
+  onImgClick(name: string){
+    this.element.imageUrl = name;
+    this.element.backgroundPosition = "top center";
+    this.element.backgroundSize = "cover";
+    this.element.backgroundRepeat = "no-repeat"
+    this.state.updateStyleData(this.elementId, this.element);
   }
   ngOnDestroy(): void {
     this.destroy$.next();

@@ -21,25 +21,18 @@ import {pluck, takeUntil, tap} from "rxjs/operators";
 })
 export class ImageElementComponent extends ElementComponent implements OnInit, OnDestroy {
   @Input() type: string = XDType.Image;
-  imageList: any = {};
   constructor(
     protected elementRef: ElementRef,
     protected renderer: Renderer2,
     protected componentFactoryResolver: ComponentFactoryResolver,
     protected state: StateService,
-    private imageService: ImageService
+    protected imageService: ImageService
   ) {
-    super(elementRef,renderer,componentFactoryResolver, state);
+    super(elementRef,renderer,componentFactoryResolver, state, imageService);
   }
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.imageService.imageList.pipe(
-      tap((imgData) => {
-        this.imageList = imgData;
-      }),
-      takeUntil(this.destroy$)
-    ).subscribe();
   }
   ngOnDestroy(): void{
     super.ngOnDestroy();
