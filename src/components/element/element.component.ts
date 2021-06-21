@@ -99,6 +99,11 @@ export class ElementComponent extends ElementHelperDirective implements OnInit, 
       }),
       takeUntil(this.destroy$)
     ).subscribe();
+    this.state.cssRules.pipe(
+      tap(() => {
+        this.getCssRules();
+      })
+    ).subscribe();
   }
   checkImageUrl(){
     if(this.elementData.imageUrl && this.imageList[this.elementData.imageUrl]){
@@ -134,6 +139,10 @@ export class ElementComponent extends ElementHelperDirective implements OnInit, 
     this.state.pasteElement();
   }
   onStyleData(){}
+  getCssRules(){
+    const rest = window.getMatchedCSSRules(this.elementRef.nativeElement);
+    console.log(rest);
+  }
   ngOnDestroy(): void {
     super.ngOnDestroy();
     this.destroy$.next();

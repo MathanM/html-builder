@@ -58,3 +58,14 @@
     padding: 15px;
   }
 }
+.nav-header{
+  font-size: var(--font-l);
+  color: var(--dark-color-2);
+  font-weight: 600;
+  padding: 10px;
+  border-bottom: 2px solid var(--grey-bg);
+}
+.vertical-tab{
+  position: absolute;
+  left: -24px;
+}

@@ -36,12 +36,18 @@ export class StateService {
     layersData: []
   };
   projectDirHandle: any;
+  cssRules: BehaviorSubject<any> = new BehaviorSubject<any>({});
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
   updateStyleData(id: string, data: any){
     const styleData = this.styleData.getValue();
     const elementData = {...styleData[id], ...data};
     this.styleData.next({ ...styleData, [id]: elementData });
+  }
+  updateCssRuleData(id: string, data: any){
+    const cssData = this.cssRules.getValue();
+    const elementData = {...cssData[id], ...data};
+    this.cssRules.next({ ...cssData, [id]: elementData });
   }
 
   createElement(type: string, id?: string, isImport?: boolean, layer?: LayerModel){

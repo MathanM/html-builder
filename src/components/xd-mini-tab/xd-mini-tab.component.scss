@@ -1,0 +1,22 @@
+:host{
+  display: flex;
+}
+.xd-mini-tab{
+  padding: 4px 8px;
+  font-size: var(--font-s);
+  border: 1px solid var(--grey-bg);
+  border-radius: 3px;
+  letter-spacing: 0.7px;
+  background: var(--menu-bg);
+  cursor: pointer;
+  &.active{
+    color: var(--active-blue);
+    background: var(--blue-light);
+  }
+}
+:host-context(.vertical-tab){
+  writing-mode: vertical-lr;
+  .xd-mini-tab{
+    padding: 8px 4px;
+  }
+}

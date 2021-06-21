@@ -46,6 +46,7 @@ export class ElementNavComponent implements OnInit, AfterViewInit, OnDestroy {
   destroy$: Subject<void> = new Subject<void>();
   imgPickerOpen: boolean = false;
   imgList: any = {};
+  selector: string = "Element";
   constructor(private state: StateService, private imageService: ImageService) { }
 
   ngOnInit(): void {
@@ -120,6 +121,18 @@ export class ElementNavComponent implements OnInit, AfterViewInit, OnDestroy {
     this.element.backgroundPosition = "top center";
     this.element.backgroundSize = "cover";
     this.element.backgroundRepeat = "no-repeat"
+    this.state.updateStyleData(this.elementId, this.element);
+  }
+  extractCssRules(){
+    const css: any = {};
+    for(const prop in this.element){
+      if(this.element[prop as keyof ElementModel]){
+        css[prop] = this.element[prop as keyof ElementModel];
+        // @ts-ignore
+        this.element[prop as keyof ElementModel] = "";
+      }
+    }
+    console.log(css);
     this.state.updateStyleData(this.elementId, this.element);
   }
   ngOnDestroy(): void {
