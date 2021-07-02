@@ -33,6 +33,8 @@ import {XdModalComponent} from "../components/xd-modal/xd-modal.component";
 import {ImageNavComponent} from "../components/image-nav/image-nav.component";
 import {ImageElementComponent} from "../components/image-element/image-element.component";
 import {XdMiniTabComponent} from "../components/xd-mini-tab/xd-mini-tab.component";
+import {SafeHtmlPipe} from "../services/safe-html.pipe";
+import {KebabCasePipe} from "../services/kebab-case.pipe";
 
 @NgModule({
     declarations: [
@@ -63,7 +65,9 @@ import {XdMiniTabComponent} from "../components/xd-mini-tab/xd-mini-tab.componen
         XdModalComponent,
         ImageNavComponent,
         ImageElementComponent,
-        XdMiniTabComponent
+        XdMiniTabComponent,
+        SafeHtmlPipe,
+        KebabCasePipe
     ],
   imports: [
     BrowserModule,

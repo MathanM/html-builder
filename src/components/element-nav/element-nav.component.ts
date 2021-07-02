@@ -45,7 +45,9 @@ export class ElementNavComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('elementForm', { static: false }) elementForm!: NgForm;
   destroy$: Subject<void> = new Subject<void>();
   imgPickerOpen: boolean = false;
+  cssRuleOpen: boolean = false;
   imgList: any = {};
+  cssRule: any = {};
   selector: string = "Element";
   constructor(private state: StateService, private imageService: ImageService) { }
 
@@ -124,15 +126,50 @@ export class ElementNavComponent implements OnInit, AfterViewInit, OnDestroy {
     this.state.updateStyleData(this.elementId, this.element);
   }
   extractCssRules(){
-    const css: any = {};
+    this.cssRule = {};
     for(const prop in this.element){
       if(this.element[prop as keyof ElementModel]){
-        css[prop] = this.element[prop as keyof ElementModel];
-        // @ts-ignore
-        this.element[prop as keyof ElementModel] = "";
+        this.cssRule[prop] = this.element[prop as keyof ElementModel];
       }
     }
-    console.log(css);
+    this.cssRuleOpen = true;
+  }
+  saveCssRule(){
+    this.cssRuleOpen = false;
+    this.element = {
+      alignItems: "",
+      backgroundColor: "",
+      backgroundImage: "",
+      backgroundPosition: "",
+      backgroundRepeat: "",
+      backgroundSize: "",
+      backgroundToggle: false,
+      borderColor: "",
+      borderRadius: "",
+      borderStyle: "",
+      borderToggle: false,
+      borderWidth: "",
+      boxShadow: "",
+      display: "",
+      flexDirection: "",
+      flexWrap: "",
+      height: "",
+      imageUrl: "",
+      justifyContent: "",
+      marginBottom: "",
+      marginLeft: "",
+      marginRight: "",
+      marginTop: "",
+      maxHeight: "",
+      maxWidth: "",
+      minHeight: "",
+      minWidth: "",
+      paddingBottom: "",
+      paddingLeft: "",
+      paddingRight: "",
+      paddingTop: "",
+      width: ""
+    }
     this.state.updateStyleData(this.elementId, this.element);
   }
   ngOnDestroy(): void {

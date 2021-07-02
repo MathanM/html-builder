@@ -115,3 +115,18 @@
     <button (click)="imgPickerOpen = false" class="xd-button default">Close</button>
   </div>
 </xd-modal>
+<xd-modal [title]="'Add CSS Rule'" [width]="'50%'" [height]="'50vh'" [(isOpen)]="cssRuleOpen">
+  <div class="content">
+    <xd-input [label]="'Selector'" type="text" [width]="200"></xd-input>
+    <h5>Properties</h5>
+    <code>
+      <ng-container  *ngFor="let prop of cssRule | keyvalue">
+      {{prop.key | kebabCase}}: {{prop.value+'\n'}}
+      </ng-container>
+    </code>
+  </div>
+  <div class="footer xd-btn-group">
+    <button (click)="cssRuleOpen = false" class="xd-button default">Close</button>
+    <button (click)="saveCssRule()" class="xd-button">Save</button>
+  </div>
+</xd-modal>
